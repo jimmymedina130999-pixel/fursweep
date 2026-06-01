@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FurSweep™ – Elimina el pelo de mascotas al instante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- === CONFIGURACIÓN === -->
+  <script>
+    const CONFIG = {
+      storeUrl: 'https://yf2yyf-bz.myshopify.com',
+      productHandle: 'fursweep-pro',
+      variantIds: {
+        '1': '53856672842096',   // 1 Unidad — SKU: CJTE2695674
+        '2': '53856672874864',   // 2 Unidades — SKU: FUR-002
+        '3': '53856672907632'    // 3 Unidades — SKU: FUR-003
+      },
+      facebookPixelId: '' // Tu ID de Facebook Pixel (opcional)
+    };
+  </script>
+
+  <!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    if(CONFIG.facebookPixelId) {
+      fbq('init', CONFIG.facebookPixelId);
+      fbq('track', 'PageView');
+    }
+  </script>
+
+  <style>
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fafafa;
+      color: #111;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .top-bar span { color: #facc15; font-weight: 700; }
+
+    /* ===== HEADER ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fff;
+    }
+    .header .logo { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+    .header .logo span { color: #2563eb; }
+    .header nav { display: flex; gap: 24px; font-size: 14px; font-weight: 500; color: #555; }
+    .header nav a:hover { color: #111; }
+
+    /* ===== HERO (Product Layout) ===== */
+    .product-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      padding: 40px 0 60px;
+      background: #fff;
+    }
+
+    /* Gallery */
+    .gallery { position: relative; }
+    .gallery-main {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .gallery-main:hover img { transform: scale(1.03); }
+    .gallery-thumbs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .gallery-thumbs button {
+      flex: 0 0 72px;
+      height: 72px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      background: #f3f4f6;
+      cursor: pointer;
+      padding: 0;
+      transition: border-color 0.2s;
+    }
+    .gallery-thumbs button.active { border-color: #2563eb; }
+    .gallery-thumbs button img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Product Info */
+    .product-info { display: flex; flex-direction: column; gap: 16px; }
+    .product-info .badge {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+    .product-info h1 {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+    .product-info .reviews {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .product-info .reviews .stars { color: #facc15; font-size: 16px; letter-spacing: 2px; }
+    .product-info .reviews .count { color: #6b7280; }
+    .product-info .reviews .count strong { color: #111; }
+
+    .product-info .price-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+    }
+    .product-info .price-row .current {
+      font-size: 36px;
+      font-weight: 900;
+      color: #111;
+    }
+    .product-info .price-row .compare {
+      font-size: 20px;
+      color: #9ca3af;
+      text-decoration: line-through;
+    }
+    .product-info .price-row .discount {
+      background: #ef4444;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    /* Benefits bullets */
+    .benefits { display: flex; flex-direction: column; gap: 8px; padding: 8px 0; }
+    .benefits li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: #374151;
+      font-weight: 500;
+    }
+    .benefits li .icon { color: #2563eb; font-size: 18px; font-weight: 700; }
+
+    /* Variants */
+    .variants { padding: 8px 0; }
+    .variants label { font-size: 13px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: block; }
+    .variant-options { display: flex; gap: 8px; }
+    .variant-btn {
+      padding: 10px 20px;
+      border: 2px solid #d1d5db;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .variant-btn:hover { border-color: #9ca3af; }
+    .variant-btn.active { border-color: #2563eb; background: #eff6ff; color: #2563eb; }
+
+    /* Bundles */
+    .bundles { padding: 8px 0; }
+    .bundles h3 { font-size: 13px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .bundle-options { display: flex; flex-direction: column; gap: 8px; }
+    .bundle-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fff;
+      position: relative;
+    }
+    .bundle-card:hover { border-color: #2563eb; }
+    .bundle-card.active { border-color: #2563eb; background: #eff6ff; }
+    .bundle-card .popular {
+      position: absolute;
+      top: -10px;
+      right: 16px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .bundle-card .info { display: flex; flex-direction: column; gap: 2px; }
+    .bundle-card .info .title { font-size: 15px; font-weight: 600; }
+    .bundle-card .info .saving { font-size: 12px; color: #059669; font-weight: 600; }
+    .bundle-card .price { font-size: 18px; font-weight: 800; }
+
+    /* Buttons */
+    .btn-group { display: flex; flex-direction: column; gap: 10px; padding: 8px 0; }
+    .btn-primary {
+      width: 100%;
+      padding: 18px 24px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-secondary {
+      width: 100%;
+      padding: 16px 24px;
+      background: transparent;
+      color: #111;
+      border: 2px solid #d1d5db;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .btn-secondary:hover { border-color: #2563eb; color: #2563eb; }
+
+    /* Trust badges */
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      padding: 16px 0 4px;
+      border-top: 1px solid #f3f4f6;
+      margin-top: 8px;
+    }
+    .trust-row .item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .trust-row .item .ico { font-size: 18px; }
+
+    /* ===== SECTION STYLES ===== */
+    section { padding: 60px 0; }
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+    .section-sub {
+      text-align: center;
+      color: #6b7280;
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    /* ===== VIDEO SECTION ===== */
+    .video-section { background: #fff; }
+    .video-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #111;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+    }
+    .video-wrapper .play {
+      position: absolute;
+      width: 72px;
+      height: 72px;
+      background: rgba(37,99,235,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s;
+    }
+    .video-wrapper .play::after {
+      content: '▶';
+      color: #fff;
+      font-size: 28px;
+      margin-left: 4px;
+    }
+    .video-wrapper:hover .play { transform: scale(1.1); }
+    .video-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ===== PROBLEM → SOLUTION ===== */
+    .ps-section { background: #f3f4f6; }
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .ps-card {
+      padding: 32px;
+      border-radius: 20px;
+      text-align: center;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .ps-card.before { background: #fef2f2; border: 2px solid #fecaca; }
+    .ps-card.after { background: #f0fdf4; border: 2px solid #bbf7d0; }
+    .ps-card .emoji { font-size: 48px; }
+    .ps-card h3 { font-size: 20px; font-weight: 700; }
+    .ps-card p { font-size: 15px; color: #6b7280; max-width: 260px; }
+    .ps-card.after h3 { color: #166534; }
+    .ps-card.before h3 { color: #991b1b; }
+
+    /* ===== REVIEWS ===== */
+    .reviews-section { background: #fff; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .review-card {
+      background: #f9fafb;
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid #e5e7eb;
+      transition: transform 0.2s;
+    }
+    .review-card:hover { transform: translateY(-4px); }
+    .review-card .header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; border: none; padding: 0; }
+    .review-card .header .avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: #d1d5db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700; font-size: 16px; color: #fff;
+    }
+    .review-card .header .name { font-size: 14px; font-weight: 600; }
+    .review-card .stars { color: #facc15; font-size: 14px; letter-spacing: 1px; margin-bottom: 8px; }
+    .review-card p { font-size: 14px; color: #4b5563; line-height: 1.6; }
+
+    /* ===== DESCRIPTION ===== */
+    .desc-section { background: #fafafa; }
+    .desc-content {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .desc-content h2 { font-size: 22px; font-weight: 700; }
+    .desc-content p { font-size: 15px; color: #4b5563; line-height: 1.8; }
+    .desc-content ul { display: flex; flex-direction: column; gap: 10px; padding-left: 0; }
+    .desc-content ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      color: #374151;
+    }
+    .desc-content ul li::before {
+      content: '✓';
+      color: #2563eb;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .desc-content .cta-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2563eb;
+      text-align: center;
+      padding: 16px;
+      background: #eff6ff;
+      border-radius: 12px;
+    }
+
+    /* ===== FAQ ===== */
+    .faq-section { background: #fff; }
+    .faq-list { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+    .faq-item {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      padding: 18px 20px;
+      background: #fff;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: inherit;
+      color: #111;
+    }
+    .faq-question:hover { background: #f9fafb; }
+    .faq-question .arrow { transition: transform 0.3s; font-size: 14px; }
+    .faq-item.open .faq-question .arrow { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 20px;
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding: 0 20px 18px;
+    }
+
+    /* ===== STICKY BOTTOM BAR (Mobile) ===== */
+    .mobile-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      padding: 12px 20px;
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    }
+    .mobile-bar .inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .mobile-bar .price-mobile { display: flex; flex-direction: column; }
+    .mobile-bar .price-mobile .curr { font-size: 22px; font-weight: 800; }
+    .mobile-bar .price-mobile .comp { font-size: 14px; color: #9ca3af; text-decoration: line-through; }
+    .mobile-bar .btn-primary { width: auto; flex: 1; padding: 14px 20px; font-size: 15px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #111;
+      color: #9ca3af;
+      text-align: center;
+      padding: 32px 20px;
+      font-size: 13px;
+    }
+    footer strong { color: #fff; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .product-hero { grid-template-columns: 1fr; gap: 24px; padding: 20px 0 40px; }
+      .product-info h1 { font-size: 24px; }
+      .product-info .price-row .current { font-size: 28px; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .ps-grid { grid-template-columns: 1fr; }
+      .header nav { display: none; }
+      .section-title { font-size: 22px; }
+      .mobile-bar { display: block; }
+      body { padding-bottom: 80px; }
+      .gallery-thumbs button { flex: 0 0 56px; height: 56px; }
+    }
+
+    @media (max-width: 480px) {
+      .product-info h1 { font-size: 20px; }
+      .trust-row { gap: 12px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <div class="top-bar">
+    🎉 <span>50% OFF</span> por tiempo limitado — Envío gratis
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <div class="container">
+    <header class="header">
+      <div class="logo">Fur<span>Sweep</span>™</div>
+      <nav>
+        <a href="#">Inicio</a>
+        <a href="#video">Video</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </header>
+  </div>
+
+  <!-- ===== HERO SECTION ===== -->
+  <div class="container">
+    <div class="product-hero">
+
+      <!-- Gallery -->
+      <div class="gallery">
+        <div class="gallery-main">
+          <img id="mainImage" src="https://placehold.co/600x600/1e293b/f1f5f9?text=FurSweep+Pro" alt="FurSweep™" />
+        </div>
+        <div class="gallery-thumbs">
+          <button class="active" onclick="setImage(this, 'https://placehold.co/600x600/1e293b/f1f5f9?text=FurSweep+Pro')">
+            <img src="https://placehold.co/72x72/1e293b/f1f5f9?text=P1" alt="" />
+          </button>
+          <button onclick="setImage(this, 'https://placehold.co/600x600/334155/f1f5f9?text=En+acción')">
+            <img src="https://placehold.co/72x72/334155/f1f5f9?text=P2" alt="" />
+          </button>
+          <button onclick="setImage(this, 'https://placehold.co/600x600/475569/f1f5f9?text=Antes-Después')">
+            <img src="https://placehold.co/72x72/475569/f1f5f9?text=P3" alt="" />
+          </button>
+          <button onclick="setImage(this, 'https://placehold.co/600x600/1e293b/f1f5f9?text=Packaging')">
+            <img src="https://placehold.co/72x72/1e293b/f1f5f9?text=P4" alt="" />
+          </button>
+          <button onclick="setImage(this, 'https://placehold.co/600x600/0f172a/f1f5f9?text=Resultado')">
+            <img src="https://placehold.co/72x72/0f172a/f1f5f9?text=P5" alt="" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <span class="badge">🔥 Más vendido</span>
+        <h1>FurSweep™ — Limpiador de Pelo para Mascotas</h1>
+
+        <div class="reviews">
+          <span class="stars">★★★★★</span>
+          <span class="count"><strong>4.8</strong> (12,384 reviews)</span>
+        </div>
+
+        <div class="price-row">
+          <span class="current">$24.99</span>
+          <span class="compare">$49.99</span>
+          <span class="discount">-50%</span>
+        </div>
+
+        <ul class="benefits">
+          <li><span class="icon">✓</span> Elimina el pelo en 1 pasada</li>
+          <li><span class="icon">✓</span> Reutilizable — lava y usa de nuevo</li>
+          <li><span class="icon">✓</span> Funciona en sofá, ropa, cama y auto</li>
+          <li><span class="icon">✓</span> Para perros, gatos y cualquier mascota</li>
+        </ul>
+
+        <!-- Variants -->
+        <div class="variants">
+          <label>Color</label>
+          <div class="variant-options">
+            <button class="variant-btn active" onclick="selectVariant(this)">Negro</button>
+            <button class="variant-btn" onclick="selectVariant(this)">Gris</button>
+            <button class="variant-btn" onclick="selectVariant(this)">Blanco</button>
+          </div>
+        </div>
+
+        <!-- Bundles -->
+        <div class="bundles">
+          <h3>Elige tu pack — ahorra más</h3>
+          <div class="bundle-options">
+            <div class="bundle-card" onclick="selectBundle(this, 1, 24.99)">
+              <div class="info">
+                <span class="title">1 FurSweep™</span>
+                <span class="saving">Precio normal</span>
+              </div>
+              <span class="price">$24.99</span>
+            </div>
+            <div class="bundle-card active" onclick="selectBundle(this, 2, 39.99)">
+              <span class="popular">Más popular</span>
+              <div class="info">
+                <span class="title">2 FurSweep™</span>
+                <span class="saving">Ahorras $9.99</span>
+              </div>
+              <span class="price">$39.99</span>
+            </div>
+            <div class="bundle-card" onclick="selectBundle(this, 3, 49.99)">
+              <div class="info">
+                <span class="title">3 FurSweep™</span>
+                <span class="saving">Ahorras $24.98</span>
+              </div>
+              <span class="price">$49.99</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-group">
+          <button class="btn-primary" onclick="handleAddToCart()">🛒 Agregar al carrito</button>
+          <button class="btn-secondary" onclick="handleBuyNow()">⚡ Comprar ahora</button>
+        </div>
+
+        <!-- Trust -->
+        <div class="trust-row">
+          <div class="item"><span class="ico">🚚</span> Envío gratis</div>
+          <div class="item"><span class="ico">🛡️</span> Garantía 30 días</div>
+          <div class="item"><span class="ico">🔒</span> Pago seguro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VIDEO SECTION ===== -->
+  <section class="video-section" id="video">
+    <div class="container">
+      <h2 class="section-title">🎥 Mira cómo funciona</h2>
+      <p class="section-sub">Observa cómo FurSweep™ elimina el pelo de tu sofá en segundos.</p>
+      <div class="video-wrapper" onclick="alert('▶ Reproduciendo video demo de FurSweep™')">
+        <img src="https://placehold.co/800x450/1e293b/f1f5f9?text=FurSweep+Demo" alt="Video demostración" />
+        <div class="play"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROBLEMA → SOLUCIÓN ===== -->
+  <section class="ps-section">
+    <div class="container">
+      <h2 class="section-title">Antes vs. Después</h2>
+      <p class="section-sub">El resultado habla por sí solo.</p>
+      <div class="ps-grid">
+        <div class="ps-card before">
+          <div class="emoji">😫</div>
+          <h3>Antes</h3>
+          <p>Sofá lleno de pelos. Ropa siempre sucia. Frustración constante con rodillos que no funcionan.</p>
+        </div>
+        <div class="ps-card after">
+          <div class="emoji">✨</div>
+          <h3>Después</h3>
+          <p>Limpio en segundos. Superficies impecables. Paz mental y una casa lista para visitas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REVIEWS ===== -->
+  <section class="reviews-section" id="reviews">
+    <div class="container">
+      <h2 class="section-title">⭐ Lo que dicen nuestros clientes</h2>
+      <p class="section-sub">Más de 50,000 dueños de mascotas ya confían en FurSweep™</p>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="header">
+            <div class="avatar" style="background:#2563eb;">MC</div>
+            <span class="name">María C.</span>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p>“No sabía que mi sofá estaba así de sucio. Pasé el FurSweep una vez y quedé en shock. Compré otro para el auto.”</p>
+        </div>
+        <div class="review-card">
+          <div class="header">
+            <div class="avatar" style="background:#059669;">PL</div>
+            <span class="name">Pedro L.</span>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p>“Tenemos dos perros labrador y esto cambió nuestra vida. Dejamos de comprar rodillos desechables. 100% recomendado.”</p>
+        </div>
+        <div class="review-card">
+          <div class="header">
+            <div class="avatar" style="background:#d97706;">AG</div>
+            <span class="name">Ana G.</span>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p>“Lo compré por TikTok y llegó en 3 días. Funciona mejor de lo que esperaba. Ya lo usé en el sofá, la cama y hasta en la ropa.”</p>
+        </div>
+        <div class="review-card">
+          <div class="header">
+            <div class="avatar" style="background:#7c3aed;">CR</div>
+            <span class="name">Carlos R.</span>
+          </div>
+          <div class="stars">★★★★☆</div>
+          <p>“Muy buen producto. Ojalá hubiera comprado el pack de 2. La calidad se siente premium. Recomiendo el color gris.”</p>
+        </div>
+        <div class="review-card">
+          <div class="header">
+            <div class="avatar" style="background:#dc2626;">LJ</div>
+            <span class="name">Laura J.</span>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p>“Mi gato deja pelo por toda la casa. Esto es lo ÚNICO que funciona. Súper fácil de lavar y vuelve a quedar como nuevo.”</p>
+        </div>
+        <div class="review-card">
+          <div class="header">
+            <div class="avatar" style="background:#0891b2;">DM</div>
+            <span class="name">Diego M.</span>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p>“Compré el pack de 3 para regalar. Todos mis amigos con perros quedaron encantados. El mejor invento para dueños de mascotas.”</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DESCRIPTION ===== -->
+  <section class="desc-section">
+    <div class="container">
+      <div class="desc-content">
+        <h2>Di adiós al pelo de mascotas para siempre</h2>
+        <p>Si tienes perro o gato, sabes la frustración de encontrar pelo en tu ropa, sofá, cama y auto. Los rodillos desechables no funcionan, gastas dinero y nunca quedas realmente limpio.</p>
+        <p><strong>FurSweep™</strong> es la solución definitiva. Con un diseño ergonómico y material de alta densidad, elimina el pelo de mascotas en una sola pasada. Reutilizable, fácil de lavar y compatible con cualquier superficie.</p>
+        <h2>¿Por qué FurSweep™?</h2>
+        <ul>
+          <li>Elimina el pelo al instante — sin esfuerzo</li>
+          <li>Reutilizable — lava con agua y jabón, listo de nuevo</li>
+          <li>Funciona en sofá, ropa, cama, alfombras, tapicería de auto</li>
+          <li>Para perros, gatos, conejos y cualquier mascota</li>
+          <li>Diseño compacto — llévalo a cualquier parte</li>
+          <li>Ahorra hasta $50 al año vs. rodillos desechables</li>
+        </ul>
+        <p class="cta-text">🔥 50% OFF por tiempo limitado — No te quedes sin el tuyo</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <h2 class="section-title">Preguntas frecuentes</h2>
+      <p class="section-sub">Todo lo que necesitas saber antes de comprar</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            ¿Cómo se usa FurSweep™?
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-answer">Simplemente pasa FurSweep™ sobre la superficie con pelo. El material de alta densidad atrapa el pelo al instante. Para limpiarlo, solo pasa agua y jabón, déjalo secar y estará listo para usar de nuevo.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            ¿Funciona en todo tipo de telas?
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-answer">Sí. FurSweep™ funciona en sofás, ropa, sábanas, alfombras, tapicería de auto y cualquier tela. No daña las superficies y es seguro para todo tipo de tejidos.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            ¿Cuánto dura?
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-answer">FurSweep™ está diseñado para durar años. Es reutilizable cientos de veces. Cuando veas que acumula menos pelo, lávalo con agua tibia y jabón para restaurar su efectividad.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            ¿Tiene garantía?
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-answer">Sí. Ofrecemos 30 días de garantía de satisfacción. Si no te encanta FurSweep™, te devolvemos tu dinero sin preguntas.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            ¿Cuánto tarda el envío?
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-answer">El envío es gratis. Los pedidos se procesan en 24 horas y llegan en 3–7 días hábiles dependiendo de tu ubicación.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MOBILE BOTTOM BAR ===== -->
+  <div class="mobile-bar" id="mobileBar">
+    <div class="inner">
+      <div class="price-mobile">
+        <span class="curr">$39.99</span>
+        <span class="comp">$79.98</span>
+      </div>
+      <button class="btn-primary" onclick="handleAddToCart()">🛒 Agregar al carrito</button>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 <strong>FurSweep™</strong> — Todos los derechos reservados.</p>
+      <p style="margin-top:6px; font-size:12px;">Hecho con ❤️ para dueños de mascotas</p>
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    let currentBundle = { qty: 2, price: 39.99 };
+
+    function setImage(btn, src) {
+      document.querySelectorAll('.gallery-thumbs button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('mainImage').src = src;
+    }
+
+    function selectVariant(btn) {
+      document.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function selectBundle(el, qty, price) {
+      document.querySelectorAll('.bundle-card').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      currentBundle = { qty, price };
+      const totalItems = qty;
+      document.querySelector('.product-info .price-row .current').textContent = '$' + price.toFixed(2);
+      document.querySelector('.product-info .price-row .compare').textContent = '$' + (49.99 * qty).toFixed(2);
+      const discount = Math.round((1 - price / (49.99 * qty)) * 100);
+      document.querySelector('.product-info .price-row .discount').textContent = '-' + discount + '%';
+      const mobileCurr = document.querySelector('#mobileBar .curr');
+      const mobileComp = document.querySelector('#mobileBar .comp');
+      if(mobileCurr) mobileCurr.textContent = '$' + price.toFixed(2);
+      if(mobileComp) mobileComp.textContent = '$' + (49.99 * qty).toFixed(2);
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if(!isOpen) item.classList.add('open');
+    }
+
+    function handleAddToCart() {
+      const vid = CONFIG.variantIds[String(currentBundle.qty)];
+      if (vid) {
+        fbq('track', 'AddToCart', { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: currentBundle.price, currency: 'USD' });
+        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=' + currentBundle.qty;
+      } else {
+        window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
+      }
+    }
+
+    function handleBuyNow() {
+      const vid = CONFIG.variantIds[String(currentBundle.qty)];
+      if (vid) {
+        fbq('track', 'Purchase', { value: currentBundle.price, currency: 'USD' });
+        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1' + '&checkout=1';
+      } else {
+        window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
+      }
+    }
+  </script>
+
+</body>
+</html>
