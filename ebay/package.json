@@ -1,0 +1,13 @@
+{
+  "name": "fursweep-ebay-sync",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sincronización de inventario FurSweep™ entre Shopify y eBay",
+  "scripts": {
+    "sync": "node ebay-sync.js",
+    "feed": "node ebay-feed-generator.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
