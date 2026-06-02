@@ -12,16 +12,20 @@
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', CONFIG.pixels.facebook);
-    fbq('track', 'PageView');
+    if (CONFIG.pixels.facebook) {
+      fbq('init', CONFIG.pixels.facebook);
+      fbq('track', 'PageView');
+    }
   </script>
 
   <!-- TikTok Pixel -->
   <script>
     !function (w, d, t) {
       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a)};
-      ttq.load(CONFIG.pixels.tiktok);
-      ttq.page();
+      if (CONFIG.pixels.tiktok) {
+        ttq.load(CONFIG.pixels.tiktok);
+        ttq.page();
+      }
     }(window, document, 'ttq');
   </script>
   <meta name="description" content="PetPaw™ — Your one-stop shop for premium pet care products. FurSweep™ pet hair remover, grooming tools, and accessories for dogs and cats." />
@@ -36,15 +40,15 @@
         '2': '53856513818992',
         '3': '53856513851760'
       },
-      prices: { '1': 14.99, '2': 24.99, '3': 34.99 },
-      comparePrices: { '1': 29.99, '2': 59.98, '3': 89.97 },
+      prices: { '1': 24.99, '2': 39.99, '3': 49.99 },
+      comparePrices: { '1': 29.99, '2': 49.98, '3': 69.97 },
       currency: 'USD',
       pixels: {
         facebook: '{{FACEBOOK_PIXEL_ID}}',
         tiktok: '{{TIKTOK_PIXEL_ID}}'
       },
       products: {
-        fursweep: { handle: 'fursweep-quitapelos-mascotas', price: 14.99 },
+        fursweep: { handle: 'fursweep-quitapelos-mascotas', price: 24.99 },
         groomingGloves: { handle: 'petpaw-grooming-gloves', price: 9.99 },
         selfCleaningBrush: { handle: 'petpaw-self-cleaning-brush', price: 12.99 },
         hairRemoverRoller: { handle: 'petpaw-hair-remover-roller', price: 7.99 }
@@ -395,9 +399,9 @@
         </div>
 
         <div class="price-row">
-          <span class="current" id="mainPrice">$24.99</span>
-          <span class="compare" id="mainCompare">$59.98</span>
-          <span class="discount" id="mainDiscount">-58%</span>
+          <span class="current" id="mainPrice">$39.99</span>
+          <span class="compare" id="mainCompare">$49.98</span>
+          <span class="discount" id="mainDiscount">-20%</span>
           <span class="sold" id="mainSold">🔥 1,247 sold today</span>
         </div>
 
@@ -412,39 +416,39 @@
           <div class="pricing-card" onclick="selectBundle(this, 1)">
             <div class="info">
               <span class="title">1 FurSweep™</span>
-              <span class="saving">Save $15.00</span>
+              <span class="saving">Save $5.00</span>
             </div>
             <div class="price-col">
-              <div class="price">$14.99</div>
-              <div class="unit-price">$14.99 ea</div>
+              <div class="price">$24.99</div>
+              <div class="unit-price">$24.99 ea</div>
             </div>
           </div>
           <div class="pricing-card active" onclick="selectBundle(this, 2)">
             <span class="popular">Most Popular</span>
             <div class="info">
               <span class="title">2 FurSweep™</span>
-              <span class="saving">Save $34.99</span>
+              <span class="saving">Save $9.99</span>
             </div>
             <div class="price-col">
-              <div class="price">$24.99</div>
-              <div class="unit-price">$12.50 ea</div>
+              <div class="price">$39.99</div>
+              <div class="unit-price">$19.99 ea</div>
             </div>
           </div>
           <div class="pricing-card" onclick="selectBundle(this, 3)">
             <div class="info">
               <span class="title">3 FurSweep™</span>
-              <span class="saving">Save $54.98</span>
+              <span class="saving">Save $19.98</span>
             </div>
             <div class="price-col">
-              <div class="price">$34.99</div>
-              <div class="unit-price">$11.66 ea</div>
+              <div class="price">$49.99</div>
+              <div class="unit-price">$16.66 ea</div>
             </div>
           </div>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:10px;">
           <button class="btn-primary" onclick="handleAddToCart()">
-            🛒 Add to Cart — <span id="ctaPrice">$24.99</span>
+            🛒 Add to Cart — <span id="ctaPrice">$39.99</span>
           </button>
           <button class="btn-secondary" onclick="handleBuyNow()">
             ⚡ Buy Now — Free Shipping
@@ -476,7 +480,7 @@
           </div>
           <h3>FurSweep™</h3>
           <p>Reusable pet hair remover</p>
-          <span class="price-tag">from $14.99</span>
+          <span class="price-tag">from $24.99</span>
           <span class="badge badge-green" style="display:inline-block;margin-top:8px;font-size:11px;">✅ Available Now</span>
         </a>
         <a href="../petpaw-grooming-gloves-product-page/index.html" class="cat-card">
@@ -548,7 +552,7 @@
           </div>
           <h3>Interactive Smart Ball</h3>
           <p>Auto-rolling light-up pet toy</p>
-          <span class="price-tag">$14.99</span>
+          <span class="price-tag">$24.99</span>
           <span class="badge badge-green" style="display:inline-block;margin-top:8px;font-size:11px;">✅ Available Now</span>
         </a>
         <a href="../petpaw-water-bottle-product-page/index.html" class="cat-card">
@@ -620,7 +624,7 @@
           </tr>
           <tr>
             <td>Annual cost</td>
-            <td>$14.99 (one time)</td>
+            <td>$24.99 (one time)</td>
             <td>$60+ (every year)</td>
             <td>$200+ (purchase + electricity)</td>
           </tr>
@@ -885,8 +889,8 @@
   <div class="sticky-bar" id="stickyBar">
     <div class="inner">
       <div class="mobile-price">
-        <span class="curr" id="mobilePrice">$24.99</span>
-        <span class="comp" id="mobileCompare">$59.98</span>
+        <span class="curr" id="mobilePrice">$39.99</span>
+        <span class="comp" id="mobileCompare">$49.98</span>
       </div>
       <button class="btn-primary" onclick="handleAddToCart()">🛒 Buy Now</button>
     </div>
@@ -899,8 +903,8 @@
       <div class="big-emoji">🐱</div>
       <h2>Wait! 🛑 Don't Miss Your 50% OFF</h2>
       <p>Join 50,000+ pet owners who already bought FurSweep™. Don't let pet hair take over your home. Grab this limited deal.</p>
-      <div class="offer-price">$14.99</div>
-      <div class="offer-label">instead of $29.99 — 50% OFF</div>
+      <div class="offer-price">$24.99</div>
+      <div class="offer-label">instead of $29.99 — Save $5.00</div>
       <button class="btn-primary" onclick="handleAddToCart()">
         🛒 Yes, I Want My FurSweep™
       </button>
@@ -950,6 +954,9 @@
     function handleAddToCart() {
       const vid = CONFIG.variantIds[String(currentQty)];
       if (vid) {
+        if (CONFIG.pixels.facebook) {
+          fbq('track', 'AddToCart', { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: CONFIG.prices[String(currentQty)], currency: CONFIG.currency });
+        }
         window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1';
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
@@ -959,6 +966,9 @@
     function handleBuyNow() {
       const vid = CONFIG.variantIds[String(currentQty)];
       if (vid) {
+        if (CONFIG.pixels.facebook) {
+          fbq('track', 'Purchase', { value: CONFIG.prices[String(currentQty)], currency: CONFIG.currency });
+        }
         window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1&checkout=1';
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;

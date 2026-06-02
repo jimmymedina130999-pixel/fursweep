@@ -901,7 +901,7 @@
       const vid = CONFIG.variantIds[String(currentBundle.qty)];
       if (vid) {
         fbq('track', 'AddToCart', { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: currentBundle.price, currency: 'USD' });
-        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=' + currentBundle.qty;
+        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1';
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
       }
