@@ -44,8 +44,8 @@
       comparePrices: { '1': 29.99, '2': 49.98, '3': 69.97 },
       currency: 'USD',
       pixels: {
-        facebook: '{{FACEBOOK_PIXEL_ID}}',
-        tiktok: '{{TIKTOK_PIXEL_ID}}'
+        facebook: '',
+        tiktok: 'D8F3RQRC77U8UFHBRTAG'
       },
       products: {
         fursweep: { handle: 'fursweep-quitapelos-mascotas', price: 24.99 },
@@ -913,6 +913,16 @@
   </div>
 
   <script>
+    if (CONFIG.pixels.tiktok && window.ttq) {
+      ttq.track('ViewContent', {
+        content_name: 'FurSweep™',
+        content_category: 'Pet Supplies',
+        content_type: 'product',
+        value: CONFIG.prices['2'],
+        currency: CONFIG.currency
+      });
+    }
+
     let currentQty = 2;
 
     function setImage(btn, src) {
@@ -951,13 +961,23 @@
       if (!isOpen) item.classList.add('open');
     }
 
+    function fireTracking(action, data) {
+      if (CONFIG.pixels.facebook) {
+        fbq('track', action, data);
+      }
+      if (CONFIG.pixels.tiktok && window.ttq) {
+        ttq.track(action, data);
+      }
+    }
+
     function handleAddToCart() {
       const vid = CONFIG.variantIds[String(currentQty)];
       if (vid) {
-        if (CONFIG.pixels.facebook) {
-          fbq('track', 'AddToCart', { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: CONFIG.prices[String(currentQty)], currency: CONFIG.currency });
-        }
-        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1';
+        const data = { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: CONFIG.prices[String(currentQty)], currency: CONFIG.currency };
+        fireTracking('AddToCart', data);
+        setTimeout(function() {
+          window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1';
+        }, 300);
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
       }
@@ -966,10 +986,11 @@
     function handleBuyNow() {
       const vid = CONFIG.variantIds[String(currentQty)];
       if (vid) {
-        if (CONFIG.pixels.facebook) {
-          fbq('track', 'Purchase', { value: CONFIG.prices[String(currentQty)], currency: CONFIG.currency });
-        }
-        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1&checkout=1';
+        const data = { value: CONFIG.prices[String(currentQty)], currency: CONFIG.currency };
+        fireTracking('Purchase', data);
+        setTimeout(function() {
+          window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1&checkout=1';
+        }, 300);
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
       }

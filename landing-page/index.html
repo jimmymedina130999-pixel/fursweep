@@ -17,7 +17,7 @@
         '3': '53856672907632'    // 3 Unidades — SKU: FUR-003
       },
       facebookPixelId: '', // Tu ID de Facebook Pixel (opcional)
-      tiktokPixelId: ''    // Tu ID de TikTok Pixel (opcional)
+      tiktokPixelId: 'D8F3RQRC77U8UFHBRTAG'
     };
   </script>
 
@@ -44,8 +44,15 @@
       if(CONFIG.tiktokPixelId) {
         ttq.load(CONFIG.tiktokPixelId);
         ttq.page();
+        ttq.track('ViewContent', {
+          content_name: 'FurSweep™',
+          content_category: 'Pet Supplies',
+          content_type: 'product',
+          value: 24.99,
+          currency: 'USD'
+        });
       }
-    }(window, document, 'ttq');
+    }
   </script>
 
   <style>
@@ -897,11 +904,23 @@
       if(!isOpen) item.classList.add('open');
     }
 
+    function fireTracking(action, data) {
+      if(CONFIG.facebookPixelId && window.fbq) {
+        fbq('track', action, data);
+      }
+      if(CONFIG.tiktokPixelId && window.ttq) {
+        ttq.track(action, data);
+      }
+    }
+
     function handleAddToCart() {
       const vid = CONFIG.variantIds[String(currentBundle.qty)];
       if (vid) {
-        fbq('track', 'AddToCart', { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: currentBundle.price, currency: 'USD' });
-        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1';
+        const data = { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: currentBundle.price, currency: 'USD' };
+        fireTracking('AddToCart', data);
+        setTimeout(function() {
+          window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1';
+        }, 300);
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
       }
@@ -910,8 +929,11 @@
     function handleBuyNow() {
       const vid = CONFIG.variantIds[String(currentBundle.qty)];
       if (vid) {
-        fbq('track', 'Purchase', { value: currentBundle.price, currency: 'USD' });
-        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1' + '&checkout=1';
+        const data = { value: currentBundle.price, currency: 'USD' };
+        fireTracking('Purchase', data);
+        setTimeout(function() {
+          window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1' + '&checkout=1';
+        }, 300);
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
       }
