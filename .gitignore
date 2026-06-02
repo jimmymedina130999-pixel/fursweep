@@ -2,3 +2,10 @@
 node_modules/
 .env
 *.log
+
+# Archivos con secretos sanitizados — no subir versiones sin sanitizar
+shopify/debug-login.js
+shopify/install-cj-app.js
+
+# Debug screenshots
+shopify/*.png
