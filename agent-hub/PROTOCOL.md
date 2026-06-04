@@ -1,6 +1,6 @@
 # PROTOCOL — Sistema Multiagente FurSweep
 
-> **Última actualización:** 2026-06-02
+> **Última actualización:** 2026-06-04
 
 ---
 
@@ -79,7 +79,69 @@ Cada agente especializado tiene un archivo en `agent-hub/queues/`:
 4. Toda decisión estratégica se registra en `CONTROL_CENTER.md` sección Decisiones.
 5. Si una tarea ya fue resuelta, descartada o refutada — no volver a investigarla.
 
-## 6. Protocolo de sincronización
+## 6. Session Lifecycle
+
+### Session Start
+
+Todo agente al iniciar debe:
+
+1. `git pull origin main`
+2. Leer `CONTROL_CENTER.md`
+3. Leer `BLOCKERS.md`
+4. Leer `TASKS.md`
+5. Leer su dominio asignado (`domains/`)
+6. Leer su queue asignada (`queues/`)
+7. Confirmar estado sincronizado antes de trabajar
+
+**Regla:** Ningún agente puede asumir contexto previo sin leer agent-hub.
+
+### Session End
+
+Todo agente al finalizar debe:
+
+1. Actualizar documentación relevante (dominios, queues, agents)
+2. Actualizar blockers si corresponde (`BLOCKERS.md`)
+3. Actualizar tareas si corresponde (`TASKS.md`)
+4. Actualizar queues si corresponde (`queues/*.md`)
+5. `git add`
+6. `git commit`
+7. `git push`
+
+**Regla:** Ningún hallazgo importante puede quedar únicamente en workspace local.
+
+### Plan Change Protocol
+
+Toda decisión que cambie:
+
+* hipótesis activa
+* producto objetivo
+* estrategia
+* prioridad
+* bloqueador principal
+
+debe actualizar:
+
+* `CONTROL_CENTER.md`
+* `BLOCKERS.md`
+* `TASKS.md`
+
+antes de continuar trabajo nuevo.
+
+### Source of Truth
+
+La fuente de verdad del proyecto es:
+
+```
+agent-hub/
+```
+
+No memoria del agente.
+No contexto de sesión.
+No mensajes antiguos.
+
+Si existe conflicto entre memoria y agent-hub, prevalece agent-hub.
+
+## 7. Protocolo de sincronización
 
 Todo agente, antes de trabajar:
 1. Leer `CONTROL_CENTER.md` — estado global
@@ -88,7 +150,7 @@ Todo agente, antes de trabajar:
 4. Leer su archivo de dominio — contexto técnico
 5. Si descubre que el repo está más avanzado que su contexto → actualizar contexto, no ejecutar trabajo viejo.
 
-## 7. Modo Watcher Automático
+## 8. Modo Watcher Automático
 
 ### Comando disponible
 
@@ -154,7 +216,7 @@ fi
 3. Implementar watcher SOLO cuando haya agentes ociosos esperando que aparezca trabajo nuevo (y aún así, con pre-check bash + intervalo de 15-30 min, no 5 min).
 4. Si se implementa: crear `opencode agent create fursweep-fulfillment` con reglas de permisos restrictivas, no usar `--dangerously-skip-permissions` genérico.
 
-## 8. Retorno de Jimy
+## 9. Retorno de Jimy
 
 Cuando vuelva el Orquestador Jimy:
 1. Leer `CONTROL_CENTER.md`, `TASKS.md`, `BLOCKERS.md`, `PROTOCOL.md`
