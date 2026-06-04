@@ -9,7 +9,7 @@
 
 | ID | Tarea | Estado | Queue |
 |---|---|---|---|
-| F-002 | Completar ciclo: pagar $9.61 en CJ → verificar processing → tracking → Shopify fulfillment update | 🟡 READY | `queues/fulfillment.md` |
+| F-002 | Completar ciclo: pagar $9.61 en CJ → verificar processing → tracking → Shopify fulfillment update | 🔴 NEEDS_HUMAN | `queues/fulfillment.md` |
 
 **Dependencias:** Fondos en CJ Wallet o método de pago (PayPal/Card/Klarna). Keyshiro/Jimy ejecuta pago.
 
@@ -30,9 +30,9 @@
 
 | ID | Tarea | Estado | Queue |
 |---|---|---|---|
-| R-004 | Recalcular márgenes con costos reales de #1007 ($2.61 producto + $7.00 shipping) y evaluar viabilidad del modelo | 🟡 READY | `queues/rentabilidad.md` |
+| R-004 | Recalcular márgenes con costos reales de #1007 ($2.61 producto + $7.00 shipping) y evaluar viabilidad del modelo | ✅ DONE | `queues/rentabilidad.md` |
 
-**Datos nuevos disponibles:** FUR-001: Product Cost $2.61, Shipping $7.00, Total $9.61. Margen bruto estimado: $14.99 - $9.61 - $0.73 (Shopify fees) = **$4.65 (31%)**.
+**R-004 completado — conclusión final:** Margen bruto real 1U: $4.65 (31%). Margen neto post-hidden costs: ~$1.65. Viabilidad: ✅ sin ads (7 uds/mes cubren Shopify), ❌ con ads a $14.99 (CPA máx $4.65). Recomendación: subir 1U a $19.99 → margen $9.50, CPA máx $9.50, viable para ads. Shipping es factor crítico: $7.00 real vs $4.00 estimado.
 
 **Pendiente:** Costos CJ para otros 10 productos (requiere B-02).
 
@@ -56,10 +56,9 @@
 | # | Tarea | Dependencia | Prioridad |
 |---|---|---|---|
 | 1 | Pagar $9.61 en CJ → verificar tracking → Shopify fulfillment update | CJ-01 | CRÍTICA |
-| 2 | Recalcular márgenes con datos reales de #1007 | Ninguna | ALTA |
-| 3 | Obtener CJ tokens de Jimy (B-02) | Jimy | ALTA |
-| 4 | Obtener Pixel IDs (B-04, B-05) | Keyshiro | MEDIA |
-| 5 | Resolver Netlify 503 (B-08) | Jimy | ALTA |
+| 2 | Obtener CJ tokens de Jimy (B-02) | Jimy | ALTA |
+| 3 | Obtener Pixel IDs (B-04, B-05) | Keyshiro | MEDIA |
+| 4 | Resolver Netlify 503 (B-08) | Jimy | ALTA |
 
 ## Completadas (histórico)
 
@@ -72,6 +71,7 @@
 | FE-004 a FE-008 | 2026-06-04 |
 | H-A1 REFUTADA | 2026-06-03 |
 | H-A2 REFUTADA | 2026-06-04 |
+| **R-004 COMPLETADO (márgenes reales + pricing $19.99)** | **2026-06-04** |
 | **Shopify → CJ VALIDADO (Order #1007)** | **2026-06-04** |
 | **FO-01 CERRADO** | **2026-06-04** |
 | Costo real FUR-001 conocido | 2026-06-04 |

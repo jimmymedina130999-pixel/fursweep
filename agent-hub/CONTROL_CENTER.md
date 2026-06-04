@@ -38,9 +38,9 @@
 
 | Queue | Agente | Estado | Tarea activa |
 |---|---|---|---|
-| `queues/fulfillment.md` | Fulfillment | 🟡 READY | F-002: Pagar $9.61 en CJ → verificar tracking → confirmar ciclo completo |
+| `queues/fulfillment.md` | Fulfillment | 🔴 NEEDS_HUMAN | F-002: Pagar $9.61 en CJ → requiere humano en CJ Dashboard |
 | `queues/frontend-comercial.md` | Frontend | 🟢 IDLE | FE-002 COMPLETED. Sin tareas activas (pendiente Pixel IDs + imágenes) |
-| `queues/rentabilidad.md` | Rentabilidad | 🟡 READY | R-004: Recalcular márgenes con costos reales de #1007 |
+| `queues/rentabilidad.md` | Rentabilidad | 🟢 COMPLETED | R-004 DONE — márgenes recalculados, pricing recomendado ($19.99) |
 | `queues/tracking.md` | Tracking | 🟢 IDLE | T-001 COMPLETED. Sin tareas activas (pendiente Pixel IDs reales) |
 
 ## 3. Objetivo Principal (Actualizado)
@@ -89,6 +89,7 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 | **2026-06-04** | **H-A2 REFUTADA** — fulfillment_service no fue necesario para el flujo | Orden #1007 |
 | **2026-06-04** | **FO-01 CERRADO** — no es blocker operativo | Orden #1007 |
 | **2026-06-04** | **Costo real FUR-001 conocido**: $2.61 producto + $7.00 shipping = $9.61 | Orden #1007 CJ |
+| **2026-06-04** | **R-004 COMPLETADO** — márgenes reales recalculados, $19.99 pricing recomendado | domains/rentability.md §27 |
 | **2026-06-04** | **SKU mapping automático confirmado**: FUR-001 → CJTE269567401AZ (Pet Hair Remover Mitt) | Orden #1007 CJ |
 
 ## 6. Orquestación
@@ -97,11 +98,11 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 Estado:          POST-VALIDACIÓN — Shopify→CJ funciona. Siguiente: pago CJ + tracking.
 Sistema:         Auto-run por cola de tareas
 Agentes:         4 (Fulfillment, Frontend, Rentabilidad, Tracking)
-Tarea activa:    F-002: Pagar $9.61 en CJ → verificar tracking → confirmar ciclo completo
- Hipótesis refutadas: 7 (Admin API x4, checkout storefront, checkout_id, priorización stock local)
-                    + H-A2 (fulfillment_service) refutada por validación empírica
-Agentes con trabajo: Fulfillment (F-002), Rentabilidad (R-004 con datos reales)
-Agentes sin trabajo: Frontend (bloqueado por Pixel IDs + imágenes), Tracking (bloqueado por Pixel IDs)
+Tarea activa:    F-002: Pagar $9.61 en CJ → requiere humano en CJ Dashboard
+ Hipótesis refutadas: 8 (7 previas + H-A2 fulfillment_service)
+Agentes con trabajo: Fulfillment (F-002 NEEDS_HUMAN)
+Agentes completados: Rentabilidad (R-004 DONE — márgenes reales + pricing $19.99)
+Agentes sin trabajo: Frontend, Tracking (bloqueados por Pixel IDs + imágenes)
 ```
 
 ## 7. Archivos del Sistema
