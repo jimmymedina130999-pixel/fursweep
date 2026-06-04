@@ -134,11 +134,32 @@ Mantener 2U ($24.99) y 3U ($34.99) como incentivo de valor.
 
 ---
 
-**Pendiente (post-tokens Jimy):**
-- Obtener sellPrice CJ real vía API
-- Verificar si sellPrice incluye shipping
-- Recalcular márgenes con datos reales
-- Ejecutar modelo financiero con costo real
+## 11. Tareas completadas (R-003 — H-A1 risk assessment)
+
+| # | Tarea | Estado |
+|---|-------|--------|
+| R-003 | Evaluar impacto comercial de inventario 0 en default durante prueba H-A1 | ✅ DONE — Riesgo mínimo, ✅ proceder |
+
+## 12. Tareas completadas (R-004 — Márgenes reales post-#1007)
+
+| # | Tarea | Estado |
+|---|-------|--------|
+| 1 | Margen real 1U calculado: $4.65 (31.0%) — prod $2.61, ship $7.00, total CJ $9.61 | ✅ |
+| 2 | Viabilidad evaluada: viable sin ads ($4.65/ud), inviable con ads a $14.99 | ✅ |
+| 3 | Unidades para cubrir Shopify: 7 uds 1U/mes | ✅ |
+| 4 | Precio necesario para margen 50%: ~$21.05 | ✅ |
+| 5 | Recomendación: subir 1U a $19.99 (margen $9.50, CPA máx $9.50) | ✅ |
+| 6 | Dependencia B-02 documentada para 2U/3U/otros productos | ✅ |
+| 7 | Shipping identificado como factor crítico (duplica margen si baja a $4.00) | ✅ |
+
+**Hallazgo crítico:** Shipping $7.00 es el cuello de botella. Producto es barato ($2.61) pero envío caro (+75% vs estimación inicial). Modelo viable sin ads pero requiere subir precio 1U para ads.
+
+---
+
+**Pendiente (post-tokens Jimy — B-02):**
+- Obtener costos reales de 2U, 3U, otros productos vía API CJ
+- Recalcular márgenes de toda la línea
+- Ejecutar modelo financiero con datos completos
 
 ---
 

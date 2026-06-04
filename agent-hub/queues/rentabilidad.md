@@ -65,8 +65,8 @@ Cuándo pedir intervención humana:
 
 ## RESULT
 
-Estado: PENDING (pendiente de ejecutar R-004)
-Resumen: Datos reales disponibles desde #1007. Costo FUR-001: $2.61 producto + $7.00 shipping. Margen bruto ~$4.65 (31%). Pendiente recalcular con hidden costs y evaluar viabilidad.
+Estado: DONE
+Resumen: R-004 completada. Costo real FUR-001: prod $2.61 + ship $7.00 = $9.61 total. Margen bruto real 1U: $4.65 (31%). Margen neto post-hidden costs: ~$1.65. Viabilidad: ✅ sin ads (7 uds/mes cubren Shopify), ❌ con ads a $14.99 (CPA máx $4.65). Recomendación: subir 1U a $19.99 → margen $9.50, CPA máx $9.50, viable para ads. Shipping es factor crítico ($7.00 vs $4.00 estimado). Bundles 2U/3U requieren B-02.
 
 ---
 
@@ -77,4 +77,4 @@ Resumen: Datos reales disponibles desde #1007. Costo FUR-001: $2.61 producto + $
 | R-001 | Completar escenarios de margen (dejar pendiente solo costo CJ) | ✅ DONE |
 | R-002 | Análisis complementarios de rentabilidad (4 análisis) | ✅ DONE |
 | R-003 | Evaluar impacto comercial de inventario 0 en default | ✅ DONE |
-| **R-004** | **Recalcular márgenes con costos reales de #1007** | **🟡 READY** |
+| **R-004** | **Recalcular márgenes con costos reales de #1007** | **✅ DONE** |

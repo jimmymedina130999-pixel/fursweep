@@ -790,7 +790,130 @@ Una vez obtenido X.XX, ingresar como CJ_U en el modelo financiero y recalcular t
 
 ---
 
-## 27. Historial de cambios
+## 27. MÁRGENES REALES (post-#1007) — Datos confirmados
+
+### Costo real FUR-001 desde orden #1007 en CJ
+
+| Componente | Valor | Fuente |
+|-----------|-------|--------|
+| Product Cost (CJTE2695674) | **$2.61** | Orden #1007 CJ |
+| Shipping Cost (LuWei Ordinary US) | **$7.00** | Orden #1007 CJ |
+| **Total CJ por unidad** | **$9.61** | — |
+| Precio venta | $14.99 | Live store |
+| Shopify fee (2.9% + $0.30) | $0.73 | Fijo |
+| **Margen bruto real** | **$4.65 (31.0%)** | — |
+
+### Margen bruto real por bundle
+
+| Bundle | Precio | Prod CJ | Ship CJ | Total CJ | Fees | **Margen** | **%** | **CPA máx** |
+|--------|--------|---------|---------|----------|------|-----------|-------|-------------|
+| **1U** | $14.99 | $2.61 | $7.00 | $9.61 | $0.73 | **$4.65** | **31.0%** | **$4.65** |
+| **2U** | $24.99 | $4.70* | $9.10* | $13.80 | $1.02 | **$10.17** | **40.7%** | **$10.17** |
+| **3U** | $34.99 | $6.53* | $12.25* | $18.78 | $1.31 | **$14.90** | **42.6%** | **$14.90** |
+
+*\*Estimado con factor de bundle (1.8× prod, 1.3× ship para 2U; 2.5× prod, 1.75× ship para 3U). Costo real de 2U/3U requiere tokens CJ (B-02).*
+
+### Comparativa: estimado vs real
+
+| Concepto | Estimado (Esc B $5/U) | Real #1007 | Diferencia |
+|----------|---------------------|------------|------------|
+| Producto 1U | $5.00 | **$2.61** | -47.8% ✅ Mejor |
+| Shipping 1U | $4.00 | **$7.00** | +75.0% ❌ Peor |
+| **Total CJ 1U** | **$9.00** | **$9.61** | **+6.8%** |
+| Margen 1U | $5.26 | **$4.65** | -11.6% |
+| CPA máx 1U | $5.26 | **$4.65** | -11.6% |
+
+**Conclusión:** El costo real ($9.61) es similar al estimado ($9.00). El producto es más barato de lo esperado (-47.8%) pero el shipping es mucho más caro (+75%). El margen neto es ligeramente menor (-11.6%).
+
+### Margen neto real (1U, con hidden costs de R-002)
+
+| Concepto | Valor |
+|----------|-------|
+| Margen bruto real | $4.65 |
+| Hidden costs (returns 8%, chargebacks 0.8%, CS) | -$3.00 (estimado medio) |
+| **Margen neto real** | **~$1.65** |
+| **CPA máx real (neto)** | **~$1.65** |
+
+### Viabilidad del modelo con datos reales
+
+#### Respuestas a preguntas clave
+
+**1. ¿$4.65 de margen bruto es viable con target CPA <$10?**
+- CPA máx $4.65 es **MUY BAJO** para campañas de ads. Target CPA <$10 es alcanzable pero el margen real solo permite $4.65. Se necesita CPA <$3 para operar con margen neto positivo (~$1.65).
+- **Veredicto: 🟡 Marginal.** Sin subir precio o bajar shipping, ads no son viables para 1U.
+
+**2. ¿Unidades necesarias para cubrir Shopify Basic ($29/mes)?**
+- 1U: $29 / $4.65 = **7 unidades/mes** (0.23/día)
+- 2U: $29 / $10.17 = **3 unidades/mes**
+- 3U: $29 / $14.90 = **2 unidades/mes**
+
+**3. ¿El margen neto (~$1.65) justifica la operación?**
+- CLAVE: -$3.00 de hidden costs es estimado de R-002 con datos generales de ecommerce. El margen neto real de $1.65 por unidad es **extremadamente bajo** para ads.
+- Sin ads (venta orgánica), el margen bruto de $4.65 es aceptable.
+- **Veredicto: Viable sin ads. Inviable con ads a $14.99.**
+
+**4. ¿Qué precio debería tener 1U para margen saludable (>50%)?**
+- Target margen 50% → Margen deseado = Precio * 0.50
+- Margen = Precio - $9.61 - (Precio * 0.029 + $0.30) = Precio * 0.50
+- Precio * (1 - 0.029 - 0.50) = $9.61 + $0.30
+- Precio * 0.471 = $9.91
+- **Precio necesario para 50% de margen: ~$21.05**
+
+| Precio | Margen bruto | Margen % | CPA máx |
+|--------|-------------|----------|---------|
+| $14.99 (actual) | $4.65 | 31.0% | $4.65 |
+| **$19.99** (recomendado) | **$9.65** | **48.3%** | **$9.65** |
+| $21.05 (target 50%) | $10.52 | 50.0% | $10.52 |
+| $24.99 (2U price) | $14.00 | 56.0% | $14.00 |
+
+**5. ¿Impacto de shipping alternativo?**
+- LuWei Ordinary US: $7.00 (actual)
+- CJPacket Ordinary: ~$7.62 (+8.9% más caro)
+- Si shipping baja a $4.00 (estimado inicial): margen sube a **$7.65 (51.0%)**
+- **El shipping es el factor más crítico.** Reducir shipping de $7.00 a $4.00 duplica el margen.
+
+### Modelo financiero actualizado (con datos reales)
+
+```
+CJ_U_real = $2.61   ← CONFIRMADO de #1007
+ENVIO_USA_real = $7.00 ← CONFIRMADO de #1007 (LuWei Ordinary US)
+Total_1U = $2.61 + $7.00 = $9.61
+Margen_1U = $14.99 - $9.61 - $0.73 = $4.65 (31.0%)
+CPA_max_1U = $4.65
+ROAS_BE_1U = $14.99 / $4.65 = 3.22×
+
+Con subida a $19.99:
+Margen_1U_$19.99 = $19.99 - $9.61 - $0.88 = $9.50 (47.5%)
+CPA_max_1U_$19.99 = $9.50
+ROAS_BE_1U_$19.99 = $19.99 / $9.50 = 2.10×
+```
+
+### Dependencia de costo CJ para otros productos
+
+| Producto | SKU | Costo real | Estado |
+|----------|-----|-----------|--------|
+| FurSweep 1U | FUR-001 | $9.61 (prod $2.61 + ship $7.00) | ✅ CONFIRMADO |
+| FurSweep 2U | FUR-002 | DESCONOCIDO | 🔴 B-02 (tokens CJ) |
+| FurSweep 3U | FUR-003 | DESCONOCIDO | 🔴 B-02 (tokens CJ) |
+| Grooming Gloves | CJYD2332008 | DESCONOCIDO | 🔴 B-02 |
+| Otros 7 productos | varios | DESCONOCIDO | 🔴 B-02 |
+
+**Para recalcular bundles y toda la línea:** se necesita B-02 resuelto (tokens CJ de Jimy).
+
+### Conclusión final
+
+| Escenario | Veredicto |
+|-----------|-----------|
+| **1U a $14.99 sin ads** (venta orgánica) | ✅ **Viable** — margen $4.65, cubre Shopify con 7 uds/mes |
+| **1U a $14.99 con ads** | ❌ **Inviable** — CPA máx $4.65, margen neto ~$1.65 |
+| **1U a $19.99 (recomendado) sin ads** | ✅ **Saludable** — margen $9.50, CPA máx $9.50 |
+| **1U a $19.99 con ads** | 🟡 **Marginal-viable** — CPA máx $9.50 permite campañas |
+| **2U/3U sin ads** | ✅ **Viable** — margen estimado >$10/unidad |
+| **Modelo global** | **✅ Viable para venta orgánica. Requiere subir precio 1U para ads.** |
+
+---
+
+## 28. Historial de cambios
 
 | Fecha | Cambio | Autor |
 |-------|--------|-------|
