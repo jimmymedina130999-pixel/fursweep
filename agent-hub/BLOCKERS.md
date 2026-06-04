@@ -11,7 +11,7 @@
 
 | # | Bloqueador | Dominio | Dueño | Impide | Próxima acción |
 |---|---|---|---|---|---|
-| FO-01 | **FulfillmentOrders no generadas** — 7 hipótesis refutadas. Inventario consolidado en CJ Dropshipping (local=0). Próxima hipótesis: H-A2 (variant fulfillment_service). Jimy hará cambio manual en Admin UI (CJMY1772383). | Fulfillment | Jimy | Validar flujo completo Shopify→CJ | Jimy entra a Admin UI → cambia fulfillment_service de CJMY1772383 a "CJ Dropshipping" → Keyshiro crea orden #1009 + verifica FOs |
+| FO-01 | **FulfillmentOrders no generadas** — 7 hipótesis refutadas. H-A2 activa: 1ra prueba CJMY1772383, 2da FUR-001 (generalización). Jimy hará cambio manual en Admin UI. | Fulfillment | Jimy | Validar flujo completo Shopify→CJ | §9: CJMY1772383 → CJ → orden #1009 → verificar FOs. Si confirma, repetir con FUR-001 (#1010) |
 | B-01 | **Staff access Keyshiro no otorgado** — Keyshiro no puede operar Shopify Admin. Jimy hará el cambio manual directamente. | Shopify | Jimy | Jimy no requiere staff access — él es owner. Keyshiro sí necesita si quisiera operar Admin. | Jimy ejecuta cambio directamente en su sesión Admin |
 | B-02 | **Tokens CJ no compartidos** — CJ_API_KEY, CJ_ACCESS_TOKEN, CJ_REFRESH_TOKEN en máquina de Jimy | Fulfillment | Jimy | Verificar costos CJ, stock real, SKU mapping | Jimy comparte desde CJ Settings → API |
 | B-03 | **Costos CJ desconocidos** — sin sellPrice real no se puede validar margen | Rentabilidad | Keyshiro (post-B02) | Decidir si el negocio es rentable | Ejecutar curl getProductList con CJ Access Token |
@@ -40,12 +40,13 @@
 | H-A4 | Limitación de plan o config interna de Shopify | fulfillment.md §6b (expediente; escalar a soporte Shopify) | — |
 
 **Qué hacer cuando Jimy esté disponible (sesión actual):**
-1. Abrir fulfillment.md §9 (adaptado para CJMY1772383 en vez de FUR-001)
+1. Abrir fulfillment.md §9
 2. Jimy entra a Shopify Admin → Products → buscar "Pet Lick Mat" o "CJMY1772383"
-3. Inspeccionar dropdown "Fulfillment service" en el variant
-4. Si "CJ Dropshipping" aparece como opción: cambiar de "Manual" a "CJ Dropshipping" y guardar
+3. Inspeccionar dropdown "Fulfillment service" del variant
+4. Si "CJ Dropshipping" aparece: cambiar de "Manual" a "CJ Dropshipping" y guardar
 5. Keyshiro: crear orden #1009 (Cart API + checkout) + verificar FOs
-6. Reportar resultado
+6. Si #1009 confirma H-A2 → repetir con FUR-001 (orden #1010) para generalizar
+7. Reportar resultado
 
 **Si H-A2 se confirma:** FO-01 desbloqueado. Pasar a validar flujo completo CJ (SKU mapping, fulfillment real, tracking).
 

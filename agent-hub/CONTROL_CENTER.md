@@ -23,7 +23,7 @@
 | **FulfillmentOrders** | 🔴 No se generan — 7 hipótesis refutadas. H-A2 lista para validar (fulfillment.md §9). | Órdenes #1001-#1008 |
 | Bogus Gateway | ❌ No disponible en Shopify Admin moderno | — |
 | 7 hipótesis fulfillment | 🟢 REFUTADAS (incluye checkout storefront, checkout_id, priorización stock local) | Fase 1D + #1007 + #1008 |
-| H-A2 procedure | 🟡 LISTO — Jimy aprobó cambio manual en Admin UI. Variante elegida: CJMY1772383 (no FUR-001). Pendiente ejecución. | fulfillment.md §9 |
+| H-A2 procedure | 🟡 LISTO — Primera prueba: CJMY1772383. Segunda prueba: FUR-001 (generalización). Pendiente ejecución por Jimy. | fulfillment.md §9 |
 | Frontend variant IDs/precios | ✅ Corregidos | FRONTEND_GO_LIVE_FIXES.md |
 | FE-001 (Frontend mejoras conversión) | ✅ COMPLETADO | frontend.md |
 | FE-002 (Frontend mejoras código) | ✅ COMPLETADO | frontend.md |
@@ -110,7 +110,7 @@
 Estado:          ORQUESTACIÓN TEMPORAL ACTIVA — H-A2 LISTO PARA VALIDAR (Jimy hará Admin UI manual)
 Sistema:         Auto-run por cola de tareas
 Agentes:         4 (Fulfillment, Frontend, Rentabilidad, Tracking)
-Tareas activas:  H-A2: cambiar fulfillment_service de CJMY1772383 vía Admin UI → orden #1009 → verificar FOs
+Tareas activas:  H-A2: cambiar fulfillment_service de CJMY1772383 vía Admin UI → orden #1009 → verificar FOs. Si confirma, repetir con FUR-001 (#1010).
 Tareas completadas: FE-001, FE-002, R-001, R-002, T-001, H-A1 test, procedimiento H-A2, inventario consolidado a CJ, agent-hub sync, openCart/closeCart bugfix, dynamic products implementado, visual improvements, deploy restructuring
 Hipótesis refutadas: 7 (Admin API x4, checkout storefront, checkout_id, priorización stock local)
 Hipótesis activa:     H-A2 — variant fulfillment_service debe ser CJ (no manual). Prueba en CJMY1772383.

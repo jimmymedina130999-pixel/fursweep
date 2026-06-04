@@ -322,8 +322,8 @@ Shopify descontó inventario de la ubicación local (159 Main Street, 99→98). 
 ### Próximas hipótesis
 
 | # | Hipótesis | Evidencia | Validador | Dependencia |
-|---|---|---|---|---|
-| **H-A2** | `fulfillment_service` de FUR-001 debe ser CJ (no `manual`) — **prueba mínima solo FUR-001** | §9 completo | Admin UI (Jimy) | B-01 |
+|---|---|---|---|---|---|
+| **H-A2** | `fulfillment_service` debe ser CJ (no `manual`) — **1ra prueba: CJMY1772383, 2da: FUR-001** | §9 completo | Admin UI (Jimy) | — |
 | H-A3 | CJ App necesita producto configurado internamente | §6b | CJ tokens (Jimy) | B-02 |
 | H-A4 | Limitación de plan o config interna de Shopify | §6b | Escalar a soporte Shopify | — |
 
@@ -332,8 +332,9 @@ Shopify descontó inventario de la ubicación local (159 Main Street, 99→98). 
 ## 9. H-A2 Validation Procedure — Prueba mínima
 
 > **Propósito:** Validar si la causa de FO-01 es que el variant tiene `fulfillment_service: "manual"` en lugar del fulfillment service de CJ.
-> **Alcance original:** SOLO FUR-001 (1 Unidad). NO modificar FUR-002 ni FUR-003.
-> **Alcance real (2026-06-04):** Jimy decidió probar en **CJMY1772383** (Pet Lick Mat, variant 53858627846512) en vez de FUR-001. El procedimiento es idéntico: cambiar fulfillment_service del variant seleccionado vía Admin UI.
+> **Primera prueba (inmediata):** **CJMY1772383** (Pet Lick Mat, variant 53858627846512) — decisión operativa de Jimy.
+> **Segunda prueba (generalización):** **FUR-001** (FurSweep 1U, variant 53856513786224) — solo si CJMY1772383 confirma H-A2.
+> **Riesgo documentado:** CJMY1772383 es SKU nativo CJ (formato CJMY...). FUR-001 es SKU custom de Shopify. Ver §9.14.
 > **Reversibilidad:** ✅ Total — el cambio se revierte seleccionando "Manual" en el mismo dropdown.
 > **Tiempo estimado:** 5 minutos con Jimy.
 > **Permiso requerido:** Staff access (B-01) o sesión compartida con Jimy en Shopify Admin.
@@ -382,7 +383,26 @@ No hay mutación GraphQL para cambiar fulfillment_service de un variant. No es p
 
 ---
 
-### 9.2 Estado actual del variant (vía API)
+### 9.2 Estado actual del variant objetivo (vía API)
+
+#### Primera prueba: CJMY1772383 (Pet Lick Mat)
+
+```json
+{
+  "variant": {
+    "id": 53858627846512,
+    "product_id": 15127359832432,
+    "title": "Default Title",
+    "sku": "CJMY1772383",
+    "fulfillment_service": "manual",
+    "inventory_management": "shopify",
+    "inventory_quantity": 150,
+    "price": "12.99"
+  }
+}
+```
+
+#### Segunda prueba (generalización): FUR-001 (FurSweep 1U)
 
 ```json
 {
@@ -393,23 +413,21 @@ No hay mutación GraphQL para cambiar fulfillment_service de un variant. No es p
     "sku": "FUR-001",
     "fulfillment_service": "manual",
     "inventory_management": "shopify",
-    "inventory_policy": "continue",
-    "inventory_quantity": 198
+    "inventory_quantity": 198,
+    "price": "14.99"
   }
 }
 ```
 
-`fulfillment_service: "manual"` = Shopify maneja fulfillment directamente, sin delegar a CJ. El handle del CJ fulfillment service es `"cj-dropshipping"`.
-
-Solo se modificará **FUR-001** (1 Unidad). FUR-002 y FUR-003 permanecen intactos.
+Ambos variants tienen `fulfillment_service: "manual"`. Ambos tienen inventario en CJ Dropshipping (150 y 198 uds respectivamente) y stock local = 0.
 
 ---
 
 ### 9.3 Evidencias acumuladas que sustentan H-A2
 
 1. **7 hipótesis refutadas** — todas las variables controlables vía API están correctas
-2. **FUR-001 tiene `fulfillment_service: manual`** — el variant NO está vinculado a CJ fulfillment service
-3. **Shopify fue a inventario negativo (-1)** en default en lugar de usar CJ stock — el producto no rutea a CJ
+2. **Todos los variants tienen `fulfillment_service: manual`** — tanto CJMY1772383 como FUR-001 y los otros 9 productos NO están vinculados a CJ fulfillment service
+3. **Shopify fue a inventario negativo (-1)** en default en lugar de usar CJ stock — ningún producto rutea a CJ
 4. **API no puede cambiarlo** — REST lo ignora, GraphQL no tiene el campo. El setting es UI-only.
 5. **Grooming Gloves (#1002)** también tiene `fulfillment_service: manual` y tampoco generó FOs
 
@@ -417,11 +435,19 @@ Solo se modificará **FUR-001** (1 Unidad). FUR-002 y FUR-003 permanecen intacto
 
 ### 9.4 Hipótesis activa
 
-**H-A2:** El variant FurSweep **FUR-001** necesita tener su `fulfillment_service` cambiado de `"manual"` a `"cj-dropshipping"` para que Shopify genere FulfillmentOrders.
+**H-A2:** Un variant necesita tener `fulfillment_service` asignado al fulfillment service de CJ Dropshipping (no `"manual"`) para que Shopify genere FulfillmentOrders.
 
-**Predicción:** Cambiando SOLO FUR-001 en Admin UI, la próxima orden (#1009, solo FUR-001) generará un FulfillmentOrder asignado a la CJ location.
+**Primera prueba — CJMY1772383** (decisión operativa de Jimy):
+1. Cambiar fulfillment_service de CJMY1772383 a "CJ Dropshipping" vía Admin UI
+2. Crear orden #1009 (Pet Lick Mat)
+3. Verificar FOs
 
-**Contra-evidencia esperada si es falso:** Aún con FUR-001 en CJ, la orden #1009 da 0 FOs → H-A2 refutada.
+**Segunda prueba — FUR-001** (solo si la primera confirma H-A2):
+1. Cambiar fulfillment_service de FUR-001 a "CJ Dropshipping"
+2. Crear orden #1010 (FurSweep 1U)
+3. Verificar FOs
+
+**Contra-evidencia esperada si es falso:** Aún cambiando fulfillment_service, 0 FOs → H-A2 refutada independientemente del producto usado.
 
 ---
 
@@ -429,9 +455,9 @@ Solo se modificará **FUR-001** (1 Unidad). FUR-002 y FUR-003 permanecen intacto
 
 | Elemento | Detalle |
 |---|---|
-| ¿Qué permiso falta? | Staff access (B-01) o que Jimy comparta pantalla / ejecute los pasos |
-| ¿Quién debe otorgarlo? | **Jimy Bolaños** — único staff owner de la tienda |
-| Alternativa sin staff access | ❌ No existe — API no puede hacer el cambio |
+| ¿Qué permiso falta? | Ninguno — Jimy es owner de la tienda y puede operar Admin UI directamente |
+| ¿Quién lo ejecuta? | **Jimy Bolaños** — único staff owner de la tienda |
+| ¿Keyshiro necesita staff access? | ❌ No — Jimy hace el cambio, Keyshiro solo prepara comandos API |
 | Tiempo necesario | 5 minutos |
 
 ---
@@ -609,6 +635,41 @@ curl -s -X POST "https://yf2yyf-bz.myshopify.com/admin/api/2024-01/orders/ORDER_
 | ✅ **CONFIRMADA** + FOs | FO-01 desbloqueado. Cambio se queda. Validar flujo CJ completo. |
 | ❌ **REFUTADA** (CJ no es opción) | H-A2 no testeable vía Admin. Ir a H-A3 (CJ tokens). |
 | ❌ **REFUTADA** (cambiado pero 0 FOs) | Revertir a "Manual". Ir a H-A3. |
+
+---
+
+### 9.14 Generalización a FUR-001 y riesgos documentados
+
+#### Regla: No declarar FO-01 resuelto hasta probar FUR-001
+
+Si CJMY1772383 **confirma** H-A2 (≥ 1 FO generado en #1009):
+- ✅ El mecanismo `fulfillment_service` existe y funciona
+- ❌ **NO declarar FO-01 resuelto todavía**
+- ⏳ Ejecutar segunda prueba con FUR-001 (orden #1010) para validar generalización
+
+Si CJMY1772383 **refuta** H-A2 (0 FOs en #1009):
+- ❌ H-A2 no es la causa para CJMY1772383
+- ❌ **Tampoco descarta que FUR-001 pueda comportarse distinto**
+- ⏳ Decidir: ¿probar FUR-001 igualmente (por ser SKU diferente) o ir directamente a H-A3?
+
+#### Riesgos documentados del cambio de alcance
+
+| Riesgo | Escenario | Impacto |
+|---|---|---|
+| **Falso positivo** | CJMY1772383 genera FO porque CJ ya reconoce el SKU (formato CJMY...), no por fulfillment_service. FUR-001 (SKU custom) podría no funcionar. | FO-01 declarado resuelto prematuramente |
+| **Falso negativo** | CJMY1772383 falla (0 FOs) por razón ajena a fulfillment_service. FUR-001 con SKU diferente podría funcionar pero no se prueba. | H-A2 se descarta incorrectamente |
+| **Generalización incompleta** | CJMY1772383 funciona, FUR-001 funciona, pero FUR-002/FUR-003 no. | Solo FurSweep 1U desbloqueado |
+| **SKU format dependency** | CJ App filtra productos por formato de SKU (CJ-native vs custom). fulfillment_service puede ser necesario pero no suficiente para SKUs custom. | FO-01 resuelto parcialmente |
+
+#### Plan de doble verificación
+
+```
+CJMY1772383 → fulfillment_service = CJ → ¿FOs?
+  ├── ✅ SÍ → Cambiar también FUR-001 → orden #1010 → ¿FOs?
+  │           ├── ✅ SÍ → FO-01 RESUELTO (ambos productos)
+  │           └── ❌ NO → FO-01 parcial: CJ-native funciona, custom no. Ir a H-A3.
+  └── ❌ NO → Revertir CJMY1772383 a Manual. H-A2 refutada. Ir a H-A3.
+```
 
 ---
 
