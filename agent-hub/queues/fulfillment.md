@@ -1,55 +1,66 @@
 # Queue — Fulfillment
 
 > **Agente:** Fulfillment
-> **Responsabilidad:** Shopify ↔ CJ, FulfillmentOrders, auto-import, tracking, inventory sync
-> **Última actualización:** 2026-06-04
+> **Responsabilidad:** Shopify ↔ CJ, fulfillment cycle, tracking, inventory sync
+> **Última actualización:** 2026-06-04 (POST-VALIDACIÓN)
 
 ---
 
 ## ACTIVE_TASK
 
-ID: F-001 (ready)
-Estado: READY (Jimy aprobó cambio Admin UI)
+ID: F-002
+Estado: READY (pago pendiente)
 Prioridad: CRÍTICA
 
 Objetivo:
-Desbloquear FulfillmentOrders. 7 hipótesis refutadas. Jimy cambiará fulfillment_service de CJMY1772383 vía Admin UI. Keyshiro creará orden #1009 y verificará FOs.
+Completar el último tramo del ciclo: pagar $9.61 en CJ → verificar processing → tracking → Shopify fulfillment update.
 
-Hipótesis restantes (requieren UI):
-- H-A2: variant fulfillment_service necesita ser CJ (no manual)
-- H-A3: CJ App necesita configurar producto internamente
-- H-A4: Config de FulfillmentOrders v2 incompleta en el producto
+Contexto:
+- Orden #1007 completó exitosamente: checkout → payment capture → CJ auto-import → product mapping → shipping (LuWei Ordinary US, $7.00) → orders picking → orden interna CJ
+- CJ Order Number: CJ26060454715313361401
+- Product Cost: $2.61
+- Shipping Cost: $7.00
+- Total Payable: $9.61
+- CJ Wallet: $0.00
+- Métodos de pago disponibles: CJ Wallet, PayPal, Card, Klarna
 
 Archivos a leer:
 - agent-hub/CONTROL_CENTER.md
 - agent-hub/BLOCKERS.md
 - agent-hub/domains/fulfillment.md
-- agent-hub/domains/shopify.md
 
 Archivos permitidos para modificar:
 - agent-hub/queues/fulfillment.md (solo RESULT)
 
+Criterio de éxito:
+- Pago realizado en CJ
+- CJ procesa la orden (pasa de "Pending Payment" a "Processing")
+- CJ genera número de tracking
+- Shopify recibe actualización de fulfillment_status = "fulfilled"
+- Cliente recibe email de tracking (si configurado)
+
 Cuándo pedir intervención humana:
-- Keyshiro/Jimy otorga staff access para continuar diagnóstico
-- Keyshiro decide escalar a soporte Shopify
+- Si CJ requiere fondos en Wallet y no hay método de pago alternativo
+- Si el pago se rechaza por algún motivo
+- Si pasadas 24h no hay tracking
 
 ---
 
 ## RESULT
 
-Estado: READY (Jimy hará cambio Admin UI)
-Resumen: H-A2 lista para ejecutar. Jimy decidió probar en CJMY1772383 (en vez de FUR-001). Cambiará fulfillment_service vía Admin UI. Luego Keyshiro crea orden #1009 y verifica FOs. Inventario consolidado en CJ Dropshipping (local=0, 11 productos). 7 hipótesis refutadas.
-Archivos modificados: agent-hub/CONTROL_CENTER.md, agent-hub/BLOCKERS.md, agent-hub/domains/fulfillment.md, agent-hub/domains/shopify.md, agent-hub/queues/fulfillment.md
-Blockers: FO-01 (7 hipótesis refutadas, H-A2 en ejecución)
-Siguiente acción: Jimy entra a Admin UI → cambia fulfillment_service de CJMY1772383 → Keyshiro crea orden #1009 + verifica FOs
+Estado: PENDING (orden #1007 lista para pago en CJ)
+Resumen: Hito alcanzado: Shopify → CJ validado. F-001 y sus sub-tareas (H-A1, H-A2, staff access) quedan obsoletas. F-002 creada para cerrar el ciclo de pago y tracking.
+Blockers: CJ-01 ($9.61 pendiente en CJ)
+Siguiente acción: Keyshiro/Jimy ingresa a CJ Dashboard → Orders → Orders Picking → orden CJ26060454715313361401 → Submit → Pay $9.61
 
 ---
 
 ## Task Queue
 
 | ID | Tarea | Estado |
-|---|---|---|---|
-| F-001 | Validar H-A2: cambiar fulfillment_service de CJMY1772383 vía Admin UI → orden #1009 → verificar FOs | 🟡 READY (Jimy hará Admin UI) |
-| F-001a | Prueba H-A1: inventario default→CJ → verificar FOs | ❌ REFUTADA (0 FOs, default fue a -1) |
-| F-001b | Diagnóstico requiere staff access o escalar a soporte Shopify | 🔴 BLOQUEADO → 🟡 RESUELTO (Jimy hará Admin UI directo) |
-| F-001c | Inventario consolidado 159 Main St → CJ Dropshipping | ✅ COMPLETADO (2026-06-04) |
+|---|---|---|
+| F-002 | Pagar $9.61 en CJ → verificar processing → tracking → Shopify fulfillment update | 🟡 READY |
+| ~~F-001~~ | ~~Validar H-A2: fulfillment_service~~ | ❌ OBSOLETA (H-A2 refutada, flujo funciona sin cambio) |
+| ~~F-001a~~ | ~~Prueba H-A1: inventario→CJ~~ | ❌ OBSOLETA (refutada, archivada en BLOCKERS.md) |
+| ~~F-001b~~ | ~~Staff access~~ | ❌ OBSOLETA (Jimy operó CJ UI directamente) |
+| ~~F-001c~~ | ~~Inventario consolidado~~ | ✅ COMPLETADO (2026-06-04) |
