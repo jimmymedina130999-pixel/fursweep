@@ -2,18 +2,18 @@
 
 > **Agente:** Fulfillment
 > **Responsabilidad:** Shopify ↔ CJ, FulfillmentOrders, auto-import, tracking, inventory sync
-> **Última actualización:** 2026-06-03
+> **Última actualización:** 2026-06-04
 
 ---
 
 ## ACTIVE_TASK
 
-ID: F-001 (stalled)
-Estado: STALLED (7 hipótesis refutadas)
+ID: F-001 (ready)
+Estado: READY (Jimy aprobó cambio Admin UI)
 Prioridad: CRÍTICA
 
 Objetivo:
-Desbloquear FulfillmentOrders. 7 hipótesis refutadas vía API. Próximos pasos requieren staff access o escalar a soporte Shopify.
+Desbloquear FulfillmentOrders. 7 hipótesis refutadas. Jimy cambiará fulfillment_service de CJMY1772383 vía Admin UI. Keyshiro creará orden #1009 y verificará FOs.
 
 Hipótesis restantes (requieren UI):
 - H-A2: variant fulfillment_service necesita ser CJ (no manual)
@@ -37,18 +37,19 @@ Cuándo pedir intervención humana:
 
 ## RESULT
 
-Estado: STALLED (7 hipótesis refutadas, sin más test vía API)
-Resumen: Prueba H-A1 completada y REFUTADA. Inventario default=0, CJ=198. Orden #1008 → default fue a -1 (negativo), CJ sin cambios. 0 FulfillmentOrders. Shopify prefiere inventario negativo antes que usar CJ. 7 hipótesis refutadas. Sin más pruebas posibles desde API sin staff access.
-Archivos modificados: agent-hub/queues/fulfillment.md, agent-hub/domains/fulfillment.md, agent-hub/CONTROL_CENTER.md, agent-hub/BLOCKERS.md
-Blockers: FO-01 (7 hipótesis refutadas), B-01 (staff access necesario para continuar)
-Siguiente acción recomendada: Keyshiro/Jimy otorga staff access → verificar fulfillment_service del variante y configuración CJ App en Admin UI, o escalar a soporte Shopify
+Estado: READY (Jimy hará cambio Admin UI)
+Resumen: H-A2 lista para ejecutar. Jimy decidió probar en CJMY1772383 (en vez de FUR-001). Cambiará fulfillment_service vía Admin UI. Luego Keyshiro crea orden #1009 y verifica FOs. Inventario consolidado en CJ Dropshipping (local=0, 11 productos). 7 hipótesis refutadas.
+Archivos modificados: agent-hub/CONTROL_CENTER.md, agent-hub/BLOCKERS.md, agent-hub/domains/fulfillment.md, agent-hub/domains/shopify.md, agent-hub/queues/fulfillment.md
+Blockers: FO-01 (7 hipótesis refutadas, H-A2 en ejecución)
+Siguiente acción: Jimy entra a Admin UI → cambia fulfillment_service de CJMY1772383 → Keyshiro crea orden #1009 + verifica FOs
 
 ---
 
 ## Task Queue
 
 | ID | Tarea | Estado |
-|---|---|---|
-| F-001 | Validar checkout real → FulfillmentOrders | 🔴 STALLED (7 hipótesis refutadas, sin más test vía API) |
+|---|---|---|---|
+| F-001 | Validar H-A2: cambiar fulfillment_service de CJMY1772383 vía Admin UI → orden #1009 → verificar FOs | 🟡 READY (Jimy hará Admin UI) |
 | F-001a | Prueba H-A1: inventario default→CJ → verificar FOs | ❌ REFUTADA (0 FOs, default fue a -1) |
-| F-001b | Diagnóstico requiere staff access o escalar a soporte Shopify | 🔴 BLOQUEADO (B-01: staff access) |
+| F-001b | Diagnóstico requiere staff access o escalar a soporte Shopify | 🔴 BLOQUEADO → 🟡 RESUELTO (Jimy hará Admin UI directo) |
+| F-001c | Inventario consolidado 159 Main St → CJ Dropshipping | ✅ COMPLETADO (2026-06-04) |

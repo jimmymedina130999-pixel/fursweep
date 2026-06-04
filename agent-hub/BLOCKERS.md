@@ -1,7 +1,7 @@
 # BLOCKERS — Agente Núcleo (Consolidado)
 
 > **Instrucción:** Solo incluir bloqueadores actuales y resueltos. Sin teoría, sin hipótesis no verificables.
-> **Última actualización:** 2026-06-03
+> **Última actualización:** 2026-06-04
 
 ---
 
@@ -11,8 +11,8 @@
 
 | # | Bloqueador | Dominio | Dueño | Impide | Próxima acción |
 |---|---|---|---|---|---|
-| FO-01 | **FulfillmentOrders no generadas** — 7 hipótesis refutadas. Próxima hipótesis: H-A2 (variant fulfillment_service). Procedimiento documentado en fulfillment.md §9. Requiere staff access. | Fulfillment | Keyshiro/Jimy | Validar flujo completo Shopify→CJ | Sesión de 5 min con Jimy: seguir fulfillment.md §9 (inspeccionar Admin UI → decidir cambio controlado → orden #1009 → verificar FOs) |
-| B-01 | **Staff access Keyshiro no otorgado** — Keyshiro no puede operar Shopify Admin | Shopify | Jimy | Validación de H-A2 (fulfillment_service del variant) | Jimy agrega: Admin → Settings → Users → Add staff, o sesión compartida de 5 min para seguir fulfillment.md §9 |
+| FO-01 | **FulfillmentOrders no generadas** — 7 hipótesis refutadas. Inventario consolidado en CJ Dropshipping (local=0). Próxima hipótesis: H-A2 (variant fulfillment_service). Jimy hará cambio manual en Admin UI (CJMY1772383). | Fulfillment | Jimy | Validar flujo completo Shopify→CJ | Jimy entra a Admin UI → cambia fulfillment_service de CJMY1772383 a "CJ Dropshipping" → Keyshiro crea orden #1009 + verifica FOs |
+| B-01 | **Staff access Keyshiro no otorgado** — Keyshiro no puede operar Shopify Admin. Jimy hará el cambio manual directamente. | Shopify | Jimy | Jimy no requiere staff access — él es owner. Keyshiro sí necesita si quisiera operar Admin. | Jimy ejecuta cambio directamente en su sesión Admin |
 | B-02 | **Tokens CJ no compartidos** — CJ_API_KEY, CJ_ACCESS_TOKEN, CJ_REFRESH_TOKEN en máquina de Jimy | Fulfillment | Jimy | Verificar costos CJ, stock real, SKU mapping | Jimy comparte desde CJ Settings → API |
 | B-03 | **Costos CJ desconocidos** — sin sellPrice real no se puede validar margen | Rentabilidad | Keyshiro (post-B02) | Decidir si el negocio es rentable | Ejecutar curl getProductList con CJ Access Token |
 
@@ -23,7 +23,8 @@
 | B-04 | **TikTok Pixel ID no configurado** — placeholder `TU_TIKTOK_PIXEL_ID` en site/index.html:29 | Frontend | Keyshiro | Tracking de ads TikTok | Obtener ID de ads.tiktok.com → reemplazar en HTML |
 | B-05 | **Facebook Pixel ID no configurado** — placeholder vacío en landing-page/index.html:19 | Frontend | Keyshiro | Tracking de ads Facebook/IG | Obtener ID de business.facebook.com → reemplazar en HTML |
 | B-06 | **Imágenes placeholder (placehold.co)** en ambas landing pages | Frontend | Jimy + Keyshiro | Mala primera impresión, baja conversión | Jimy pushea 36 fotos reales → Keyshiro actualiza HTML |
-| B-07 | **Sin dominio personalizado** | Frontend | Keyshiro | URL profesional | Configurar GitHub Pages + dominio |
+| B-07 | **Sin dominio personalizado** | Frontend | Keyshiro |
+| B-08 | **Netlify usage_exceeded (503)** — free tier excedido. flything-store.netlify.app caído. No se puede deployar ni crear nuevos sites. | Infra | Jimy | URL profesional | Configurar GitHub Pages + dominio |
 ---
 
 
@@ -38,15 +39,17 @@
 | H-A3 | CJ App necesita producto configurado internamente | fulfillment.md §6b (expediente; sin procedimiento porque requiere B-02) | CJ tokens (B-02) |
 | H-A4 | Limitación de plan o config interna de Shopify | fulfillment.md §6b (expediente; escalar a soporte Shopify) | — |
 
-**Qué hacer cuando Jimy esté disponible:**
-1. Abrir fulfillment.md §9
-2. Seguir Fase 1 (inspección de Admin UI): 3 minutos
-3. Decidir si hacer Fase 2/3 (cambio controlado + orden de prueba)
-4. Reportar resultado en CONTROL_CENTER.md y BLOCKERS.md
+**Qué hacer cuando Jimy esté disponible (sesión actual):**
+1. Abrir fulfillment.md §9 (adaptado para CJMY1772383 en vez de FUR-001)
+2. Jimy entra a Shopify Admin → Products → buscar "Pet Lick Mat" o "CJMY1772383"
+3. Inspeccionar dropdown "Fulfillment service" en el variant
+4. Si "CJ Dropshipping" aparece como opción: cambiar de "Manual" a "CJ Dropshipping" y guardar
+5. Keyshiro: crear orden #1009 (Cart API + checkout) + verificar FOs
+6. Reportar resultado
 
 **Si H-A2 se confirma:** FO-01 desbloqueado. Pasar a validar flujo completo CJ (SKU mapping, fulfillment real, tracking).
 
-**Si H-A2 se refuta:** Pasar a H-A3 (requiere tokens CJ de Jimy, B-02).
+**Si H-A2 se refuta:** Revertir cambio en Admin UI. Pasar a H-A3 (requiere tokens CJ de Jimy, B-02).
 
 ## Dependencia entre Bloqueadores
 
@@ -100,9 +103,14 @@
 | R7 | Dos landing pages sin canónica definida | Frontend | ✅ 2026-06-03 | FE-001 decidió site/index.html como canónica |
 | R8 | Product handle incorrecto (`fursweep-pro`) | Frontend | ✅ 2026-06-03 | Corregido a `fursweep-quitapelos-mascotas` en ambas landing pages + OG tags |
 | R9 | Bogus Gateway no disponible en Shopify Admin moderno | Fulfillment | ✅ 2026-06-03 | Se usó Shopify Payments test mode como alternativa |
-| R10 | Storefront API token no disponible en Dev Dashboard | Fulfillment | ✅ 2026-06-03 | Tokenless access suficiente para cartCreate + checkout URL |
+| R10 | Storefront API token no disponible en Dev Dashboard | Fulfillment | ✅ 2026-06-04 | Token `REDACTED` obtenido de Dev Dashboard y funcional: crea carritos + redirect checkout shop.app |
 | R11 | H-R5: "FulfillmentOrders solo en checkout storefront" refutada | Fulfillment | ✅ 2026-06-03 | Orden #1007 checkout real → 0 FOs |
 | R12 | H-R6: "checkout_id presente fuerza FOs" refutada | Fulfillment | ✅ 2026-06-03 | Orden #1007 con checkout_id → 0 FOs |
+| R13 | **openCart/closeCart undefined (ReferenceError)** — deploy/site/index.html tenía listeners pero funciones ausentes → script abortado → fetchProducts() nunca se ejecutó → 0 productos visibles | Frontend | ✅ 2026-06-04 | Funciones `openCart()`/`closeCart()` añadidas. Script ahora ejecuta fetchProducts() sin errores. |
+| R14 | **3 product handles incorrectos** — fursweep-pro, petpaw-lick-mat, petpaw-water-bottle retornaban 404 en Shopify | Frontend | ✅ 2026-06-04 | Handles corregidos a fursweep-quitapelos-mascotas, petpaw-pet-lick-mat, petpaw-3-in-1-pet-water-bottle. Verificación API exitosa. |
+| R15 | **Static product grid sin datos dinámicos** — productos hardcodeados no reflejaban inventario/precios reales | Frontend | ✅ 2026-06-04 | Implementado fetch(products.json?published_status=active) con skeleton loader, 10 productos dinámicos desde Shopify. |
+| R13 | **agent-hub no sincronizado** — documentos de Núcleo no disponibles localmente | Orquestación | ✅ 2026-06-04 | git pull origin/main (40173d5) — 15 archivos, 3537 líneas |
+| R14 | **Inventario disperso** — stock en 159 Main St sin consolidar en CJ | Fulfillment | ✅ 2026-06-04 | 11 productos movidos a CJ Dropshipping (116264010096). Local=0. |
 
 ## Bloqueadores Descartados (Refutados — anteriores)
 

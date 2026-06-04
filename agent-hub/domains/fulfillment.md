@@ -1,7 +1,7 @@
 # fulfillment.md — Fulfillment Agent Domain
 
 > **Propósito:** Estado actual de la integración Shopify → CJ Dropshipping
-> **Última actualización:** 2026-06-03
+> **Última actualización:** 2026-06-04
 
 ---
 
@@ -56,11 +56,13 @@ SKU Sharing:    true
 | CJ Dropshipping | 116264010096 | true |
 | cjdropshipping | 116263911792 | true |
 
-### Inventory at CJ locations (2026-06-03)
+### Inventory at CJ locations (2026-06-04)
 | Location | Items | Status |
 |---|---|---|
-| CJ Dropshipping (116264010096) | FurSweep 1U: 100, Grooming Gloves: 100 | ✅ Poblado |
-| cjdropshipping (116263911792) | 0 | ❌ Vacío |
+| CJ Dropshipping (116264010096) | 11 productos (~748 uds consolidados) | ✅ Poblado |
+| cjdropshipping (116263911792) | 0 | ❌ Vacío (no utilizado) |
+
+**Nota:** 2026-06-04: Todo el inventario de 159 Main Street (116261650800) fue movido permanentemente a CJ Dropshipping (116264010096). La ubicación local quedó en 0 para todos los productos. Este movimiento es permanente, no una prueba. El ajuste CJ requirió 1s de delay entre requests para evitar rate limiting silencioso.
 
 ---
 
@@ -68,27 +70,25 @@ SKU Sharing:    true
 
 Todos los productos tienen `fulfillment_service: manual`. Esto es NORMAL en FulfillmentOrders v2 — el ruteo depende de inventory en location, no del campo legacy.
 
-### Productos con inventory mgmt = shopify (crean FulfillmentOrders al ordenar)
+### Todos los productos — inventario actual (2026-06-04)
 
-| Producto | SKU | Inventory | Inv Item ID |
-|---|---|---|---|
-| Grooming Gloves | CJYD2332008 | 150 | 55044519068016 |
-| 3-in-1 Water Bottle | CJGY1743101 | 50 | — |
-| Cat Self-Grooming Brush | CJMY2064238 | 50 | — |
-| Interactive Smart Ball | CJYD2546099 | 50 | — |
-| Paw Cleaner Cup | CJGY1765347 | 50 | — |
-| Hair Remover Roller | CJGY1035039 | 50 | — |
-| Pet Lick Mat | CJMY1772383 | 50 | — |
-| Self-Cleaning Brush | CJYD1983521 | 50 | — |
-| Flything Pet Grooming Brush | FT-BRUSH-001 | 0 | — |
+Todo el inventario está consolidado en CJ Dropshipping (116264010096). La ubicación 159 Main St (116261650800) está en 0.
 
-### FurSweep (producto objetivo de la prueba)
-
-| Variant | SKU | Price | Inv Mgmt | Inv Item ID | Stock local (116261650800) | Stock CJ (116264010096) |
-|---|---|---|---|---|---|---|
-| 1U (53856513786224) | FUR-001 | $14.99 | shopify | 55042374795632 | 98 | 100 |
-| 2U (53856513818992) | FUR-002 | $24.99 | shopify | — | 100 | 0 |
-| 3U (53856513851760) | FUR-003 | $34.99 | shopify | — | 100 | 0 |
+| Producto | Variant ID | SKU | Price | Inv Mgmt | Inv Item ID | Stock CJ | Stock Local |
+|---|---|---|---|---|---|---|---|
+| FurSweep 1U | 53856513786224 | FUR-001 | $14.99 | shopify | 55042374795632 | 198 | 0 |
+| FurSweep 2U | 53856513818992 | FUR-002 | $24.99 | shopify | 55042374828400 | 200 | 0 |
+| FurSweep 3U | 53856513851760 | FUR-003 | $34.99 | shopify | 55042374861168 | 200 | 0 |
+| Grooming Gloves | — | CJYD2332008 | $9.99 | shopify | 55044519068016 | 150 | 0 |
+| Self-Cleaning Brush | — | CJYD1983521 | — | shopify | 55044519199088 | 150 | 0 |
+| Hair Remover Roller | — | CJGY1035039 | — | shopify | 55044519264624 | 150 | 0 |
+| Cat Corner Brush | — | CJMY2064238 | — | shopify | 55044528046448 | 150 | 0 |
+| Pet Lick Mat | 53858627846512 | CJMY1772383 | $12.99 | shopify | 55044528079216 | 150 | 0 |
+| Interactive Smart Ball | — | CJYD2546099 | — | shopify | 55044528111984 | 150 | 0 |
+| Pet Water Bottle | — | CJGY1743101 | — | shopify | 55044528144752 | 150 | 0 |
+| Paw Cleaner Cup | — | CJGY1765347 | — | shopify | 55044528177520 | 150 | 0 |
+| Flything Pet Grooming Brush | — | FT-BRUSH-001 | — | shopify | 55048954380656 | 0 | 0 |
+| Test product | — | — | — | none | 55049691431280 | — | None |
 
 ---
 
@@ -317,6 +317,8 @@ Shopify descontó inventario de la ubicación local (159 Main Street, 99→98). 
 
 **Conclusión: H-A1 REFUTADA.** Shopify prefiere ir a inventario negativo en la ubicación default antes que usar stock de CJ para generar FulfillmentOrders. No es un problema de disponibilidad de inventario en la ubicación correcta.
 
+**Nota post-H-A1 (2026-06-04):** El inventario se movió permanentemente a CJ Dropshipping (local=0). Ya no hay stock en 159 Main St para ningún producto. Cualquier orden futura forzará a Shopify a usar CJ location si el flujo FOV2 funciona.
+
 ### Próximas hipótesis
 
 | # | Hipótesis | Evidencia | Validador | Dependencia |
@@ -327,10 +329,11 @@ Shopify descontó inventario de la ubicación local (159 Main Street, 99→98). 
 
 ---
 
-## 9. H-A2 Validation Procedure — Prueba mínima (solo FUR-001)
+## 9. H-A2 Validation Procedure — Prueba mínima
 
-> **Propósito:** Validar si la causa de FO-01 es que el variant FUR-001 tiene `fulfillment_service: "manual"` en lugar del fulfillment service de CJ.
-> **Alcance:** SOLO la variante FUR-001 (1 Unidad). NO modificar FUR-002 ni FUR-003.
+> **Propósito:** Validar si la causa de FO-01 es que el variant tiene `fulfillment_service: "manual"` en lugar del fulfillment service de CJ.
+> **Alcance original:** SOLO FUR-001 (1 Unidad). NO modificar FUR-002 ni FUR-003.
+> **Alcance real (2026-06-04):** Jimy decidió probar en **CJMY1772383** (Pet Lick Mat, variant 53858627846512) en vez de FUR-001. El procedimiento es idéntico: cambiar fulfillment_service del variant seleccionado vía Admin UI.
 > **Reversibilidad:** ✅ Total — el cambio se revierte seleccionando "Manual" en el mismo dropdown.
 > **Tiempo estimado:** 5 minutos con Jimy.
 > **Permiso requerido:** Staff access (B-01) o sesión compartida con Jimy en Shopify Admin.
@@ -371,9 +374,11 @@ No hay mutación GraphQL para cambiar fulfillment_service de un variant. No es p
 |---|---|---|
 | REST PUT `/variants/{id}.json` `fulfillment_service: "cj-dropshipping"` | ✅ 200 OK | ❌ Ignorado silenciosamente — campo sigue `"manual"` |
 | GraphQL `ProductVariant.fulfillmentService` | ❌ No existe en schema | ❌ No hay campo que modificar |
-| Admin UI | ✅ La única vía validada | Requiere staff access |
+| Admin UI | ✅ La única vía validada | Requiere Jimy (owner) en sesión |
 
-**La única forma de cambiar `fulfillment_service` es mediante Shopify Admin UI.** Staff access (B-01) es obligatorio.
+**La única forma de cambiar `fulfillment_service` es mediante Shopify Admin UI.** Jimy (owner) puede hacerlo directamente sin staff access.
+
+**Nota (2026-06-04):** La prueba se ejecutará sobre CJMY1772383 (variant 53858627846512), no sobre FUR-001, por decisión de Jimy. El procedimiento es el mismo: entrar a Products → buscar el producto → localizar el variant → cambiar dropdown.
 
 ---
 
@@ -433,13 +438,15 @@ Solo se modificará **FUR-001** (1 Unidad). FUR-002 y FUR-003 permanecen intacto
 
 ### 9.6 Ruta exacta en Shopify Admin (variante específica, no producto general)
 
+> **2026-06-04:** La ruta aplica a CJMY1772383 (Pet Lick Mat, variant 53858627846512) por decisión de Jimy. Reemplazar "FurSweep" por "Pet Lick Mat" o buscar por SKU "CJMY1772383".
+
 ```
 Shopify Admin: https://admin.shopify.com/store/yf2yyf-bz
 Login: Jimy Bolaños
 
 Menú izquierdo → Products
 
-Buscar: "FurSweep" → Click en "FurSweep™ - Pet Hair Remover Reusable 50% OFF"
+Buscar: "CJMY1772383" o "Pet Lick Mat" → Click en el producto
 
 Dentro del producto → Buscar la tabla/sección "Variants"
 
@@ -449,9 +456,7 @@ Dentro del producto → Buscar la tabla/sección "Variants"
      │  ┌────────┬────────────┬──────────┬──────────────────────┐   │
      │  │ Option │ Price      │ Stock    │ Fulfillment service  │   │
      │  ├────────┼────────────┼──────────┼──────────────────────┤   │
-     │  │ ● 1U   │ $14.99     │ 198      │ Manual ▼         ← │   │  ← MODIFICAR SOLO ESTA FILA
-     │  │ ● 2U   │ $24.99     │ 100      │ Manual ▼            │   │  ← NO TOCAR
-     │  │ ● 3U   │ $34.99     │ 100      │ Manual ▼            │   │  ← NO TOCAR
+     │  │ ● Default │ $12.99  │ 150      │ Manual ▼         ← │   │  ← MODIFICAR ESTA FILA
      │  └────────┴────────────┴──────────┴──────────────────────┘   │
      │                                                              │
      │  [Save] (después del cambio)                                 │
@@ -462,10 +467,10 @@ Dentro del producto → Buscar la tabla/sección "Variants"
 
 ```
      ┌─────────────────────────────────────────────────────┐
-     │  ▼ 1 Unidad (expandido)                             │
+     │  ▼ Default Title (expandido)                        │
      │                                                     │
-     │  SKU:    [FUR-001              ]                    │
-     │  Price:  [14.99               ]                    │
+     │  SKU:    [CJMY1772383          ]                    │
+     │  Price:  [12.99               ]                    │
      │  Fulfillment service:  [Manual ▼]   ← ACÁ          │
      │  Inventory policy:     [Continue ▼]                 │
      │  ...                                                │
@@ -477,29 +482,28 @@ Dentro del producto → Buscar la tabla/sección "Variants"
 ### 9.7 Evidencia visual a buscar
 
 | # | Qué ver | Dónde | Captura |
-|---|---|---|---|
-| 1 | Dropdown "Fulfillment service" de FUR-001 | Fila "1 Unidad" en Variants | 📸 Antes del cambio |
-| 2 | Opciones al desplegar el dropdown | Click en el dropdown de FUR-001 | 📸 Debe mostrar "Manual" y opciones |
+|---|---|---|---|---|
+| 1 | Dropdown "Fulfillment service" de CJMY1772383 | Fila "Default Title" en Variants | 📸 Antes del cambio |
+| 2 | Opciones al desplegar el dropdown | Click en el dropdown de CJMY1772383 | 📸 Debe mostrar "Manual" y opciones |
 | 3 | ¿Aparece "CJ Dropshipping" como opción? | Dentro del dropdown desplegado | 📸 Confirmar si existe |
-| 4 | Estado actual de FUR-002 y FUR-003 | Filas 2U y 3U | 📸 Solo para confirmar que NO se modifican |
-| 5 | Post-cambio: FUR-001 con CJ seleccionado | Dropdown de FUR-001 | 📸 Después del cambio (si se autoriza) |
+| 4 | Post-cambio: CJMY1772383 con CJ seleccionado | Dropdown de CJMY1772383 | 📸 Después del cambio |
 
-**IMPORTANTE:** Si el dropdown de FUR-001 ya muestra "CJ Dropshipping" → H-A2 queda **REFUTADA** automáticamente antes de tocar nada.
+**IMPORTANTE:** Si el dropdown de CJMY1772383 ya muestra "CJ Dropshipping" → H-A2 queda **REFUTADA** automáticamente antes de tocar nada.
 
 ---
 
 ### 9.8 Qué cambio NO debemos hacer
 
 | Acción | Status | Razón |
-|---|---|---|
-| ✅ INSPECCIONAR | Dropdown "Fulfillment service" de **FUR-001** | Es observación, no cambio |
-| ❌ NO CAMBIAR | FUR-002 ni FUR-003 | La prueba es mínima: solo FUR-001 |
+|---|---|---|---|
+| ✅ INSPECCIONAR | Dropdown "Fulfillment service" de **CJMY1772383** | Es observación, no cambio |
+| ❌ NO CAMBIAR | Otros productos o variantes | La prueba es mínima: solo el variant seleccionado |
 | ❌ NO MODIFICAR | Precios, inventario, SKU, tracking | No relevantes para H-A2 |
 | ❌ NO ELIMINAR | Settings existentes | Podría romper algo |
 | ❌ NO CREAR | Nuevos productos, variantes | No es necesario |
-| ❌ NO CAMBIAR | "CJ Dropshipping" sin autorización expresa | Solo si Keyshiro/Jimy confirman |
+| ❌ NO CAMBIAR | "CJ Dropshipping" sin autorización expresa | Solo si Jimy confirma |
 
-**Regla de oro:** 1) Documentar estado visual actual. 2) Decidir. 3) Cambiar solo FUR-001. 4) Probar. 5) Reportar.
+**Regla de oro:** 1) Documentar estado visual actual. 2) Decidir. 3) Cambiar solo el variant. 4) Probar. 5) Reportar.
 
 ---
 
@@ -510,17 +514,17 @@ Dentro del producto → Buscar la tabla/sección "Variants"
 | # | Acción | Responsable | Evidencia |
 |---|---|---|---|
 | 1 | Jimy inicia sesión en Shopify Admin | Jimy | — |
-| 2 | Navegar: Products → FurSweep | Jimy | 📸 URL visible |
-| 3 | Localizar tabla "Variants", fila "1 Unidad" (FUR-001) | Jimy | 📸 Tabla completa visible |
-| 4 | Identificar dropdown "Fulfillment service" de FUR-001 | Keyshiro guía | 📸 Dropdown cerrado |
-| 5 | Desplegar dropdown de FUR-001 y fotografiar opciones | Jimy | 📸 Dropdown abierto |
+| 2 | Navegar: Products → buscar "CJMY1772383" o "Pet Lick Mat" | Jimy | 📸 URL visible |
+| 3 | Localizar tabla "Variants", fila "Default Title" (SKU CJMY1772383) | Jimy | 📸 Tabla completa visible |
+| 4 | Identificar dropdown "Fulfillment service" del variant | Keyshiro guía | 📸 Dropdown cerrado |
+| 5 | Desplegar dropdown y fotografiar opciones | Jimy | 📸 Dropdown abierto |
 | 6 | Verificar si "CJ Dropshipping" aparece como opción | Ambos | Determina si H-A2 es testeable |
 
 #### Fase 2: Decisión (1 min)
 
 | # | Escenario | Decisión |
 |---|---|---|
-| 7a | Dropdown = "Manual" Y "CJ Dropshipping" existe → **H-A2 testeable** | ¿Autorizan el cambio? → Sí → Fase 3 / No → STOP |
+| 7a | Dropdown = "Manual" Y "CJ Dropshipping" existe → **H-A2 testeable** | ¿Autoriza Jimy el cambio? → Sí → Fase 3 / No → STOP |
 | 7b | Dropdown ya = "CJ Dropshipping" → **H-A2 REFUTADA** | Ir a H-A3 |
 | 7c | "CJ Dropshipping" NO existe en dropdown → **H-A2 no testeable** | Ir a H-A3 (CJ App no vinculada a nivel de Shopify) |
 
@@ -528,20 +532,19 @@ Dentro del producto → Buscar la tabla/sección "Variants"
 
 | # | Acción | Responsable |
 |---|---|---|
-| 8 | Cambiar dropdown FUR-001 de "Manual" a "CJ Dropshipping" | Jimy |
-| 9 | 📸 Pantallazo: FUR-001 ahora muestra "CJ Dropshipping" | Jimy |
-| 10 | 📸 Pantallazo: FUR-002 y FUR-003 siguen en "Manual" (sin cambios) | Jimy |
-| 11 | Click "Save" en la parte superior | Jimy |
-| 12 | Crear orden #1009: cartCreate → checkout → pagar con test mode | Keyshiro (API + navegador) |
-| 13 | Esperar 30 segundos, verificar FOs | Keyshiro (API) |
-| 14 | Reportar resultado | Keyshiro |
+| 8 | Cambiar dropdown de "Manual" a "CJ Dropshipping" | Jimy |
+| 9 | 📸 Pantallazo: variant ahora muestra "CJ Dropshipping" | Jimy |
+| 10 | Click "Save" en la parte superior | Jimy |
+| 11 | Crear orden #1009: cartCreate → checkout → pagar con test mode | Keyshiro (API + navegador) |
+| 12 | Esperar 30 segundos, verificar FOs | Keyshiro (API) |
+| 13 | Reportar resultado | Keyshiro |
 
 #### Fase 4: Rollback (1 min, si se necesita revertir)
 
 | # | Escenario | Acción |
 |---|---|---|
-| 15a | H-A2 CONFIRMADA (FOs generados) | ✅ **Dejar el cambio.** El objetivo era desbloquear FOs. |
-| 15b | H-A2 REFUTADA (0 FOs) | ❌ **Revertir:** dropdown FUR-001 → "Manual" → Save. Orden #1009 cancelada. |
+| 14a | H-A2 CONFIRMADA (FOs generados) | ✅ **Dejar el cambio.** El objetivo era desbloquear FOs. |
+| 14b | H-A2 REFUTADA (0 FOs) | ❌ **Revertir:** dropdown → "Manual" → Save. Orden #1009 cancelada. |
 
 ---
 
@@ -551,10 +554,10 @@ Dentro del producto → Buscar la tabla/sección "Variants"
 
 | Condición | Evidencia |
 |---|---|
-| Dropdown FUR-001 estaba en "Manual" o "None" (antes del cambio) | 📸 Visual |
+| Dropdown del variant estaba en "Manual" o "None" (antes del cambio) | 📸 Visual |
 | "CJ Dropshipping" SÍ aparecía como opción | 📸 Visual |
 | Se cambió a "CJ Dropshipping" y se guardó | 📸 Visual post-cambio |
-| Orden #1009 (solo FUR-001) → **≥ 1 FulfillmentOrder** asignado a CJ location | ✅ API: `fulfillmentOrders.edges.length > 0` |
+| Orden #1009 → **≥ 1 FulfillmentOrder** asignado a CJ location | ✅ API: `fulfillmentOrders.edges.length > 0` |
 
 **Si se confirma → FO-01 desbloqueado.** Proceder a validar: CJ App reclama FO → SKU mapping → fulfillment real → tracking → email al cliente.
 
@@ -562,7 +565,7 @@ Dentro del producto → Buscar la tabla/sección "Variants"
 
 | Condición | Evidencia |
 |---|---|
-| Dropdown FUR-001 ya mostraba "CJ Dropshipping" | 📸 Visual — no era necesario cambiar nada |
+| Dropdown del variant ya mostraba "CJ Dropshipping" | 📸 Visual — no era necesario cambiar nada |
 | "CJ Dropshipping" NO aparece como opción en dropdown | 📸 Visual del dropdown abierto |
 | Se cambió a "CJ Dropshipping", se guardó, pero #1009 sigue con 0 FOs | ❌ API: `fulfillmentOrders.edges = []` |
 
@@ -605,9 +608,79 @@ curl -s -X POST "https://yf2yyf-bz.myshopify.com/admin/api/2024-01/orders/ORDER_
 |---|---|
 | ✅ **CONFIRMADA** + FOs | FO-01 desbloqueado. Cambio se queda. Validar flujo CJ completo. |
 | ❌ **REFUTADA** (CJ no es opción) | H-A2 no testeable vía Admin. Ir a H-A3 (CJ tokens). |
-| ❌ **REFUTADA** (cambiado pero 0 FOs) | Revertir FUR-001 a "Manual". Ir a H-A3. |
+| ❌ **REFUTADA** (cambiado pero 0 FOs) | Revertir a "Manual". Ir a H-A3. |
 
-## 10. Historial de cambios
+---
+
+## 10. Hallazgos del 2026-06-04
+
+### 10.1 Inventario consolidado en CJ Dropshipping
+
+| Antes | Después |
+|---|---|
+| Stock disperso: 159 Main St (98/100/100/50 c/u) + CJ (100/100/100) | CJ Dropshipping consolidado: 11 productos, local=0 |
+| FUR-001 en CJ: 100 | FUR-001 en CJ: 198 |
+| Grooming Gloves en CJ: 100 | Cada PetPaw en CJ: 150 |
+
+### 10.2 Comportamiento de CJ adjust API
+
+- La API `POST /admin/api/2026-01/inventory_levels/adjust.json` funciona correctamente para CJ Dropshipping location
+- **Requiere ~1s de delay** entre requests — ráfagas causan rate limiting silencioso (HTTP 200 pero sin efecto)
+- Requests individuales con 1s de delay funcionan consistentemente
+
+### 10.3 Segundo CJ fulfillment service detectado
+
+| Service | ID | Location ID | Handle |
+|---|---|---|---|
+| CJ Dropshipping | 70343623024 | 116264010096 | cj-dropshipping |
+| cjdropshipping | 70343590256 | 116263911792 | cjdropshipping (nuevo) |
+
+El segundo service (`cjdropshipping`, 70343590256, location 116263911792) no se está utilizando. Solo CJ Dropshipping (70343623024) tiene inventario asignado.
+
+### 10.4 H-A2 scope: CJMY1772383 elegido por Jimy
+
+- Variant seleccionado: CJMY1772383 (Pet Lick Mat, $12.99, variant 53858627846512)
+- Razón: decisión del usuario, no documentada en §9 original (que solo cubría FUR-001)
+- Procedimiento: idéntico al de FUR-001 — cambiar fulfillment_service vía Admin UI, orden #1009, verificar FOs
+
+### 10.5 CJ API — Base URL correcta
+
+| Item | Detalle |
+|---|---|
+| URL correcta | `https://developers.cjdropshipping.com/api2.0/v1/` |
+| URL incorrecta | `https://api.cjdropshipping.com/api2.0/v1/` (retorna "Not Found" — usada previamente en agente-hub) |
+
+### 10.6 CJ account — Estado real
+
+| Propiedad | Valor |
+|---|---|
+| Account name | "CJ Temporary user name" |
+| Account type | GENERAL |
+| isSandbox | false |
+| Products in My Products | ✅ confirmado (`addToMyProduct` returns "The product has been added to My Products") |
+| myProduct/query | ❌ Devuelve 0 (posible limitación de cuenta temporal) |
+
+### 10.7 CJ callbacks
+
+| Callback | Estado | URL |
+|---|---|---|
+| product | CANCEL | — |
+| stock | CANCEL | — |
+| logistic | CANCEL | — |
+| order | ENABLED | `https://webhook.site/test` (solo prueba) |
+
+### 10.8 CJ fulfillment service en Shopify
+
+Confirmado vía API:
+- Service ID: 70343623024
+- Location ID: 116264010096
+- `fulfillment_orders_opt_in: True`
+- `inventory_management: True`
+- `tracking_opt_in: True`
+- `permits_sku_sharing: True`
+- **Ningún variant lo usa** — todos tienen `fulfillment_service: manual`
+
+## 11. Historial de cambios
 
 | Fecha | Cambio | Autor |
 |---|---|---|
@@ -619,3 +692,4 @@ curl -s -X POST "https://yf2yyf-bz.myshopify.com/admin/api/2024-01/orders/ORDER_
 | 2026-06-03 | **H-A1 REFUTADA** — Prueba ejecutada. Default=0, CJ=198. #1008: default fue a -1, CJ sin cambios. 0 FOs. 7 hipótesis refutadas. Sin más test vía API. | Núcleo |
 | 2026-06-04 | **Procedimiento H-A2 agregado** — Expediente ejecutivo de H-A2/H-A3/H-A4, ruta exacta en Admin UI para inspeccionar fulfillment_service del variant, criterios de confirmación/refutación. Pendiente de validación por Jimy (staff access). | Núcleo |
 | 2026-06-04 | **§9 refinado: prueba mínima solo FUR-001** — Documentado: API REST ignora fulfillment_service (200 OK sin efecto), GraphQL no tiene el campo, única vía es Admin UI. Prueba limitada a variante 1U, no tocar 2U/3U. Reversible. | Núcleo |
+| 2026-06-04 | **§10.5-10.8: CJ API findings** — Base URL correcta, account state (CJ Temporary user name, isSandbox: false, productos en My Products, callbacks), fulfillment service confirmado | Developer Jimy |

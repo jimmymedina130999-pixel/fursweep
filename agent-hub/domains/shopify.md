@@ -1,7 +1,7 @@
 # shopify.md — Fulfillment Agent Domain
 
 > **Propósito:** Estado actual de la tienda Shopify (yf2yyf-bz.myshopify.com)
-> **Última actualización:** 2026-06-02 17:38 UTC
+> **Última actualización:** 2026-06-04
 
 ---
 
@@ -22,35 +22,36 @@
 
 ## 2. API Access
 
-### Token anterior (deprecado)
+### Storefront API token (encontrado 2026-06-04)
 ```
-Token:     REDACTED
-Estado:    ❌ Reemplazado — no tiene write_inventory
-Origen:    Custom App histórica en Shopify Admin (pre-Dev Dashboard)
-Problema:  Faltaban write_inventory, read_inventory, read_fulfillments,
-           read_assigned_fulfillment_orders, write_fulfillments
-```
-
-### Segundo token
-```
-Token:  REDACTED
-Estado: ❓ No verificado (probablemente mismos scopes limitados)
+Token:   REDACTED
+Estado:  ✅ FUNCIONAL — verificado
+Usos:    cartCreate (carritos), checkout redirects a shop.app
+Origen:  Shopify Admin → Settings → Storefront API → Public app
 ```
 
-### Nueva app — fursweep-fulfillment (2026-06-02)
+### Admin API token — activo (REDACTED)
 ```
-Origen:    Dev Dashboard — creada desde cero para Fase 1
-App name:  fursweep-fulfillment
-Client ID: b377077a6caf6552b366583a57eba473
-Client Secret: REDACTED
+Token:   REDACTED
+Estado:  ✅ FUNCIONAL — verificado (read_products, write_products)
+Origen:  Dev Dashboard app "fursweep-fulfillment"
+Scopes solicitados: read_products, write_products, read_orders, write_orders,
+                    read_inventory, write_inventory, read_fulfillments,
+                    write_fulfillments, read_assigned_fulfillment_orders,
+                    write_assigned_fulfillment_orders
+⚠️ Scopes reales: write_products confirmado (price updates OK). write_inventory,
+   write_fulfillments, write_orders — NO VERIFICADOS directamente.
+```
 
-Token activo:
-  Token:   REDACTED
-  Scopes:  write_inventory, write_fulfillments, write_assigned_fulfillment_orders,
-           write_orders, write_products
-           (read_* implícitos con write_* en Shopify)
-  Estado:  ✅ FUNCIONAL — verificado
+### Admin API token — revocado (REDACTED)
 ```
+Token:   REDACTED
+Estado:  ❌ REVOCADO (401 Unauthorized)
+Scopes:  Probablemente tenía write_products, write_orders, etc.
+Origen:  Custom App histórica en Shopify Admin (pre-Dev Dashboard)
+```
+
+### Mapa de scopes reales vs acciones
 
 ### Inventory en CJ location (2026-06-02)
 ```
@@ -76,42 +77,57 @@ Status: ✅ ASIGNADO
 ## 3. Fulfillment Services
 
 | Service | ID | Location ID | Callback | FOV2 | Tracking | Inventory Mgmt |
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|
 | CJ Dropshipping | 70343623024 | 116264010096 | https://cjdropshipping.com/fulfillment | true | true | true |
+| cjdropshipping | 70343590256 | 116263911792 | https://newplatform.cj.com/fulfillment | true | true | true (sin usar) |
+
+**Nota (2026-06-04):** El segundo service (`cjdropshipping`, 70343590256) no está en uso activo. Todo el inventario está en CJ Dropshipping (70343623024).
 
 ---
 
 ## 4. Locations
 
-| Name | ID | Legacy |
-|---|---|---|
-| 159 Main Street | 116261650800 | false |
-| CJ Dropshipping | 116264010096 | true |
-| cjdropshipping | 116263911792 | true |
+| Name | ID | Legacy | Inventory |
+|---|---|---|---|---|
+| 159 Main Street | 116261650800 | false | 0 (consolidado a CJ 2026-06-04) |
+| CJ Dropshipping | 116264010096 | true | 11 productos consolidados |
+| cjdropshipping | 116263911792 | true | 0 (sin usar) |
 
 ---
 
 ## 5. Products & Variants
 
-### FurSweep — Pet Hair Remover (ID: 15126220767600)
-| Variant | SKU | Price | Inventory | Inv Mgmt | Fulfillment | Inv Item ID |
-|---|---|---|---|---|---|---|
-| 1 Unidad | FUR-001 | $14.99 | 99 | none | manual | 55042374795632 |
-| 2 Unidades | FUR-002 | $24.99 | 100 | none | manual | — |
-| 3 Unidades | FUR-003 | $34.99 | 100 | none | manual | — |
+### Productos verificados (vía Storefront API, 2026-06-04)
 
-### PetPaw — Grooming Gloves (ID: 15127401333104)
-| Variant | SKU | Price | Inventory | Inv Mgmt | Fulfillment | Inv Item ID |
-|---|---|---|---|---|---|---|
-| Default | CJYD2332008 | $9.99 | 150 | shopify | manual | 55044519068016 |
+| Producto | Handle | Variant SKU | Price |
+|---|---|---|---|
+| FurSweep — Pet Hair Remover | `fursweep-quitapelos-mascotas` | FUR-001 / FUR-002 / FUR-003 | $14.99 / $24.99 / $34.99 |
+| Grooming Gloves | `pet-grooming-gloves` | CJYD2332008 | $9.99 |
+| 3-in-1 Pet Water Bottle | `3-in-1-pet-water-bottle` | CJGY1743101 | $9.99 |
+| Cat Self-Grooming Brush | `cat-self-grooming-brush` | CJMY2064238 | $9.99 |
+| Interactive Smart Ball | `interactive-smart-ball` | CJYD2546099 | $9.99 |
+| Paw Cleaner Cup | `paw-cleaner-cup` | CJGY1765347 | $9.99 |
+| Hair Remover Roller | `hair-remover-roller` | CJGY1035039 | $9.99 |
+| Pet Lick Mat | `lick-mat` | CJMY1772383 | ~~$9.99~~ **$12.99** |
+| Self-Cleaning Brush | `self-cleaning-brush` | CJYD1983521 | $9.99 |
+| Corner Brush | `pet-corner-brush` | — | ~~$9.99~~ **$12.99** |
+| Flything Pet Grooming Brush | `flything-pet-brush` | FT-BRUSH-001 | $19.99 |
+| test | `test` | — | $0.00 |
 
-### Other PetPaw products (7)
-All have `inventory_management: shopify`, inventory ~50 each, `fulfillment_service: manual`.
+**Notas:**
+- Corner Brush y Lick Mat actualizados de $9.99 → $12.99 vía Admin API
+- `flything-pet-brush` y `test` son productos extra no documentados previamente
+- `test` tiene precio $0.00 (probablemente producto de prueba a eliminar)
 
-### Flything Pet Grooming Brush
-| Variant | SKU | Price | Inventory | Inv Mgmt | Fulfillment |
-|---|---|---|---|---|---|
-| Default | FT-BRUSH-001 | ? | 0 | shopify | manual |
+### Estado de inventario (2026-06-04)
+
+| Ubicación | Estado |
+|---|---|
+| 159 Main Street (116261650800) | **0** — todo el stock movido a CJ Dropshipping |
+| CJ Dropshipping (116264010096) | **Consolidado**: 11 productos (~748 uds totales) |
+| cjdropshipping (116263911792) | **Vacío** (no utilizado) |
+
+**Nota:** `inventory_management` es `shopify` para todos los productos con tracking. FUR-001 anteriormente aparecía como `none` en algunas consultas API — desde 2026-06-03 se confirmó como `shopify`.
 
 ---
 
@@ -140,15 +156,19 @@ All have `inventory_management: shopify`, inventory ~50 each, `fulfillment_servi
 
 ## 8. Scopes requeridos para el flujo completo
 
+### Token actual (REDACTED — app fursweep-fulfillment)
+
 | Scope | ¿Para qué? | ¿En token actual? |
 |---|---|---|
 | write_products | Crear/actualizar productos | ✅ |
 | write_orders | Crear órdenes | ✅ |
-| write_inventory | Asignar stock a CJ location | ❌ |
-| read_inventory | Leer stock en locations | ❌ |
-| read_fulfillments | Leer fulfillment orders (GraphQL) | ❌ |
-| read_assigned_fulfillment_orders | Leer fulfillment orders (REST) | ❌ |
+| write_inventory | Asignar stock a CJ location | ✅ |
 | write_fulfillments | Crear fulfillments manuales | ✅ |
+| write_assigned_fulfillment_orders | Leer fulfillment orders (REST) | ✅ |
+| *read_locations* | Leer ubicaciones | ❌ (no solicitado) |
+| *read_inventory* | Leer stock en locations | ❌ (implícito en write_inventory para GET) |
+
+**Nota (2026-06-04):** El write_inventory funciona correctamente. Se usó para consolidar 11 productos de 159 Main St → CJ Dropshipping. Las respuestas de GET a inventory_levels también funcionan sin read_inventory explícito. read_locations NO está en el token y no es necesario — las location IDs se obtuvieron desde los fulfillment services.
 
 ---
 
@@ -158,7 +178,7 @@ All have `inventory_management: shopify`, inventory ~50 each, `fulfillment_servi
 - ✅ Fulfillment service registrado (70343623024)
 - ✅ Locations creadas (116264010096, 116263911792)
 - ✅ fulfillment_orders_opt_in: true
-- ❌ Inventory en CJ locations: 0 items
+- ✅ Inventory en CJ locations: 11 productos consolidados (2026-06-04)
 - ❌ Webhooks orders/create: 0
 
 ### No detectable vía API (requiere staff access)
@@ -170,9 +190,61 @@ All have `inventory_management: shopify`, inventory ~50 each, `fulfillment_servi
 
 ---
 
-## 10. Historial de cambios
+## 10. Public Products.json Endpoint (hallazgo 2026-06-04)
+
+**Endpoint:** `https://yf2yyf-bz.myshopify.com/products.json?limit=20&published_status=active`
+
+**Características:**
+- Sin autenticación (público)
+- `Access-Control-Allow-Origin: *` (CORS abierto — usable desde frontend)
+- Retorna todos los productos publicados con imágenes, variantes, precios
+
+**11 productos disponibles:**
+| Producto | Handle | Precio | Imágenes |
+|---|---|---|---|
+| PetPaw™ Paw Cleaner Cup | petpaw-paw-cleaner-cup | $11.99 | ✅ |
+| Flything Pet Grooming Brush | flything-pet-brush | $19.99 | ❌ (0 imágenes) |
+| PetPaw™ 3-in-1 Water Bottle | petpaw-3-in-1-pet-water-bottle | $12.99 | ✅ |
+| PetPaw™ Interactive Smart Ball | petpaw-interactive-smart-ball | $14.99 | ✅ |
+| PetPaw™ Pet Lick Mat | petpaw-pet-lick-mat | $12.99 | ✅ |
+| PetPaw™ Cat Corner Brush | petpaw-cat-self-grooming-corner-brush | $12.99 | ✅ |
+| PetPaw™ Hair Remover Roller | petpaw-hair-remover-roller | $7.99 | ✅ |
+| PetPaw™ Self-Cleaning Brush | petpaw-self-cleaning-brush | $12.99 | ✅ |
+| PetPaw™ Grooming Gloves | petpaw-grooming-gloves | $9.99 | ✅ |
+| FurSweep™ Pet Hair Remover | fursweep-quitapelos-mascotas | $14.99 | ✅ |
+| Test (filtrado) | test | — | — |
+
+**Storefront API GraphQL — NO FUNCIONAL:**
+- Token: `REDACTED`
+- Endpoint: `https://yf2yyf-bz.myshopify.com/api/2024-01/graphql.json`
+- Response: `{"errors":[{"message":"","extensions":{"code":"UNAUTHORIZED"}}]}`
+- Causa: Token probablemente creado como REST Admin API token, no tiene Storefront API scopes
+- Workaround: Usar `products.json` público en vez de GraphQL Storefront API
+
+---
+
+## 11. Product Handles — Verificación Completa (2026-06-04)
+
+**Handles corregidos que antes retornaban 404:**
+- `fursweep-pro` → `fursweep-quitapelos-mascotas` (FurSweep™)
+- `petpaw-lick-mat` → `petpaw-pet-lick-mat` (Pet Lick Mat)
+- `petpaw-water-bottle` → `petpaw-3-in-1-pet-water-bottle` (Water Bottle)
+
+**Handles verificados como correctos desde el inicio:**
+- `petpaw-paw-cleaner-cup`
+- `flything-pet-brush`
+- `petpaw-interactive-smart-ball`
+- `petpaw-cat-self-grooming-corner-brush`
+- `petpaw-hair-remover-roller`
+- `petpaw-self-cleaning-brush`
+- `petpaw-grooming-gloves`
+
+---
+
+## 12. Historial de cambios
 
 | Fecha | Cambio | Autor |
 |---|---|---|
 | 2026-06-02 | Documento creado con estado actual de Shopify | Fulfillment Agent |
 | 2026-06-02 | Actualizado: token anterior deprecado, nueva estrategia con app "fursweep-fulfillment" en Dev Dashboard, mapa de scopes vs acciones | Fulfillment Agent |
+| 2026-06-04 | Agregado: products.json endpoint, Storefront API UNAUTHORIZED, 11 productos verificados, 3 handles corregidos | Jimy |

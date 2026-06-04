@@ -3,7 +3,7 @@
 > **Agente:** Frontend Comercial
 > **Responsabilidad:** landing pages, conversión, UX, copy, precios, variantes, mobile, velocidad, trust signals
 > **Objetivo:** Maximizar conversión de visitantes a compradores
-> **Última actualización:** 2026-06-03
+> **Última actualización:** 2026-06-04
 
 ---
 
@@ -47,6 +47,7 @@
 | — | Video solo alert() | `landing-page/index.html` | Redirige a producto Shopify | 2026-06-02 |
 | — | FAQ "60% off" engañoso | `site/index.html` | Corregido a 50% | 2026-06-02 |
 | — | Exit popup guilt-trip | `site/index.html` | "Tal vez después" | 2026-06-02 |
+| — | **Add-to-cart checkout flow roto** | `site/index.html` | Carrito JS local nunca sincronizado con Shopify → redirect a `/checkout` vacío. Fix: `data-vid` attributes + CONFIG.products mapping → URL directa `/cart/VID1,VID2,...` | 2026-06-04 |
 
 ---
 
@@ -272,6 +273,86 @@ Top bar → Header → FOMO → Urgency → Hero → VIDEO (de landing-page) →
 
 ---
 
+## Critical Bug: openCart/closeCart undefined (RESUELTO 2026-06-04)
+
+**Contexto:** El deploy/site/index.html (nueva versión con diseño rediseñado) tenía event listeners que referenciaban `openCart` y `closeCart`, pero estas funciones NUNCA fueron definidas.
+
+**Síntoma:** ReferenceError al hacer click en el botón del carrito → el event listener falla. Pero peor: como el script es monolítico, el error ocurría en tiempo de registro (línea 469):
+```js
+document.getElementById('cartBtn').addEventListener('click', openCart);
+```
+Esto detenía TODO el script antes de llegar a `fetchProducts()` al final del archivo.
+
+**Impacto:** 0 productos visibles en `#products`. El fetch a Shopify nunca se ejecutaba.
+
+**Fix:**
+```js
+var cartSidebar = document.getElementById('cartSidebar');
+var cartOverlay = document.getElementById('cartOverlay');
+function openCart() { cartOverlay.classList.add('show'); cartSidebar.classList.add('open'); }
+function closeCart() { cartOverlay.classList.remove('show'); cartSidebar.classList.remove('open'); }
+```
+
+**Lección:** Event listeners con funciones undefined no lanzan warning, lanzan ReferenceError que detiene todo el script. Siempre verificar que las funciones referenciadas existen antes del punto de registro.
+
+---
+
+## Dynamic Product Loading (NUEVO 2026-06-04)
+
+**Contexto:** Se reemplazó el grid de productos estático por carga dinámica desde Shopify vía `products.json`.
+
+**Endpoint:** `https://yf2yyf-bz.myshopify.com/products.json?limit=20&published_status=active`
+- Sin autenticación requerida
+- `Access-Control-Allow-Origin: *` (CORS abierto)
+- Retorna 11 productos (10 reales + 1 "Test")
+- Se filtra handle !== 'test'
+
+**Implementación:**
+```js
+function fetchProducts() {
+    var grid = document.getElementById('productGrid');
+    if (!grid) return;
+    fetch(STORE_DOMAIN + '/products.json?limit=20&published_status=active')
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(data => {
+            var products = (data.products || []).filter(p => p.handle !== 'test');
+            // render product cards...
+            grid.innerHTML = html;
+        })
+        .catch(err => {
+            grid.innerHTML = '<error message with Retry button>';
+        });
+}
+```
+
+**Características:**
+- Skeleton loader (shimmer animation) mientras carga
+- Error handler con botón Retry que llama `fetchProducts()` de nuevo
+- Delegated click handler para botones Add to Cart dinámicos
+- Productos enlazan directamente a Shopify (`/products/HANDLE`)
+- Precios dinámicos desde Shopify (incluye compare_at_price y descuento)
+- Se filtra producto "Test"
+
+**Storefront API token (no funcional):**
+- Token: `REDACTED`
+- Endpoint GraphQL: `UNAUTHORIZED`
+- Causa probable: token no tiene scopes de Storefront API habilitados en Shopify Admin
+- Workaround: usar `products.json` público
+
+---
+
+## Product Handles Corregidos (2026-06-04)
+
+| Handle anterior | Handle correcto | Producto |
+|---|---|---|
+| `fursweep-pro` | `fursweep-quitapelos-mascotas` | FurSweep™ Pet Hair Remover |
+| `petpaw-lick-mat` | `petpaw-pet-lick-mat` | PetPaw™ Pet Lick Mat |
+| `petpaw-water-bottle` | `petpaw-3-in-1-pet-water-bottle` | PetPaw™ 3-in-1 Water Bottle |
+
+**Nota:** "Flything Pet Grooming Brush" tiene 0 imágenes en Shopify (handle: `flything-pet-brush`). Necesita imágenes agregadas desde Admin.
+
+---
+
 ## Reglas de frontend
 
 1. **No tocar CJ** — no tiene relación con frontend
@@ -338,6 +419,9 @@ Top bar → Header → FOMO → Urgency → Hero → VIDEO (de landing-page) →
 | 5 | Live chat research + recomendación | `agent-hub/domains/frontend.md` | ✅ Completado |
 | 6 | Judge.me/Loox research + plan | `agent-hub/domains/frontend.md` | ✅ Completado |
 | 7 | Countdown + exit popup en landing-page | `landing-page/index.html` | ✅ Completado |
+| 8 | **Add-to-cart checkout flow reparado** — carrito JS local reemplazado por URL directa `/cart/VID,...` | `site/index.html` | ✅ Completado |
+| 9 | **9 addon product pages creadas** con handles correctos + add-to-cart Shopify directo | `site/pages/` | ✅ Completado |
+| 10 | **Corner Brush & Lick Mat prices**: $9.99 → $12.99 | Shopify API + HTMl | ✅ Completado |
 
 ---
 
