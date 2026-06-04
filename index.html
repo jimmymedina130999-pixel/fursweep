@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flything — Happy Pets, Clean Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/flything.css" />
+  <script>
+    var CONFIG = {
+      storeUrl: 'https://yf2yyf-bz.myshopify.com',
+      tiktokPixelId: 'D8F3RQRC77U8UFHBRTAG',
+      facebookPixelId: '',
+      products: {
+        fursweep: { name: 'FurSweep™', vid: '53856513786224', price: 14.99 },
+        groomingGloves: { name: 'Grooming Gloves', vid: '53858618835312', price: 9.99 },
+        selfCleaningBrush: { name: 'Self-Cleaning Brush', vid: '53858618966384', price: 12.99 },
+        hairRemoverRoller: { name: 'Hair Remover Roller', vid: '53858619031920', price: 7.99 },
+        cornerBrush: { name: 'Corner Grooming Brush', vid: '53858627813744', price: 12.99 },
+        lickMat: { name: 'Pet Lick Mat', vid: '53858627846512', price: 12.99 },
+        smartBall: { name: 'Interactive Smart Ball', vid: '53858627879280', price: 14.99 },
+        waterBottle: { name: 'Water Bottle 3-in-1', vid: '53858627912048', price: 12.99 },
+        pawCleaner: { name: 'Paw Cleaner Cup', vid: '53858627944816', price: 11.99 }
+      }
+    };
+  </script>
+
+  <!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    if(CONFIG.facebookPixelId) {
+      fbq('init', CONFIG.facebookPixelId);
+      fbq('track', 'PageView');
+    }
+  </script>
+
+  <!-- TikTok Pixel -->
+  <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a)};
+      if(CONFIG.tiktokPixelId) {
+        ttq.load(CONFIG.tiktokPixelId);
+        ttq.page();
+        ttq.track('ViewContent', {
+          content_name: 'Flything Store',
+          content_category: 'Pet Supplies',
+          content_type: 'product_group',
+          value: 14.99,
+          currency: 'USD'
+        });
+      }
+    }(window, document, 'ttq');
+  </script>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>🇺🇸 Free shipping on all orders • 50% OFF — Limited time</span>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="/" class="header-logo">
+      <span class="logo-icon">🐾</span>
+      <div>
+        <div class="logo-name">Fly<span>thing</span></div>
+        <div class="logo-tagline">Happy Pets, Clean Homes</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="#products">Products</a>
+      <a href="#how">How It Works</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-right">
+      <button class="cart-btn" id="cartBtn" aria-label="Shopping cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="cart-close" id="cartClose" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <span class="cart-empty-icon">🛒</span>
+      <p>Your cart is empty</p>
+      <a href="#products" class="cart-shop-link">Start Shopping →</a>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+    <button class="btn-primary btn-cart-checkout">Checkout →</button>
+  </div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <span class="logo-name">Fly<span>thing</span></span>
+    <button class="mobile-close" id="mobileClose">✕</button>
+  </div>
+  <div class="mobile-nav-body">
+    <a href="#products">Products</a>
+    <a href="#how">How It Works</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🐕 For Pet Parents Who Love Clean Homes</div>
+    <h1 class="hero-title">Your Home, <span>Fur-Free</span> Forever</h1>
+    <p class="hero-sub">Premium pet care products that remove hair instantly. No sticky rollers, no fur-covered furniture — just a clean home.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Shop Best Sellers</a>
+      <a href="#how" class="btn-link">How It Works →</a>
+    </div>
+    <div class="hero-stats">
+      <div><strong>50K+</strong><span>Happy Customers</span></div>
+      <div><strong>4.8★</strong><span>Average Rating</span></div>
+      <div><strong>24h</strong><span>Fast Shipping</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-image-frame">
+      <img src="images/products/fursweep/fursweep-1.jpg" alt="FurSweep product" class="hero-img" />
+      <div class="hero-float n1"><span>🧹</span> One Pass — All Gone</div>
+      <div class="hero-float n2"><span>♻️</span> Reusable — Years</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-strip">
+  <span>🚚 Free Worldwide Shipping</span>
+  <span class="dot"></span>
+  <span>🛡️ 30-Day Guarantee</span>
+  <span class="dot"></span>
+  <span>🔒 Secure Checkout</span>
+  <span class="dot"></span>
+  <span>📦 Ships in 24h</span>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section-products" id="products">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">🐾 Our Collection</span>
+      <h2 class="section-title">Everything Your Furry Friend Needs</h2>
+      <p class="section-desc">From grooming essentials to cleaning tools — designed for pet parents who demand the best.</p>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <a href="/furSweep-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge">🔥 Best Seller</span>
+            <img src="images/products/fursweep/fursweep-1.jpg" alt="FurSweep" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Hair Remover</span>
+          <a href="/furSweep-product-page/"><h3 class="product-name">FurSweep™</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">12,384</span></div>
+          <div class="product-price">
+            <span class="price-current">$14.99</span>
+            <span class="price-old">$29.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="FurSweep™" data-price="14.99" data-vid="53856513786224">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <a href="/petpaw-grooming-gloves-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge badge-green">🐕 Grooming</span>
+            <img src="images/products/grooming-gloves/gloves-1.jpg" alt="Grooming Gloves" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Grooming</span>
+          <a href="/petpaw-grooming-gloves-product-page/"><h3 class="product-name">Grooming Gloves</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">8,421</span></div>
+          <div class="product-price">
+            <span class="price-current">$9.99</span>
+            <span class="price-old">$19.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="Grooming Gloves" data-price="9.99" data-vid="53858618835312">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <a href="/petpaw-self-cleaning-brush-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge badge-purple">🔄 Self-Cleaning</span>
+            <img src="images/products/self-cleaning-brush/brush-1.jpg" alt="Self-Cleaning Brush" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Brush</span>
+          <a href="/petpaw-self-cleaning-brush-product-page/"><h3 class="product-name">Self-Cleaning Brush</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">6,843</span></div>
+          <div class="product-price">
+            <span class="price-current">$12.99</span>
+            <span class="price-old">$25.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="Self-Cleaning Brush" data-price="12.99" data-vid="53858618966384">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <a href="/petpaw-hair-remover-roller-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge badge-blue">🧹 Lint Remover</span>
+            <img src="images/products/hair-remover-roller/roller-1.jpg" alt="Hair Remover Roller" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Lint Roller</span>
+          <a href="/petpaw-hair-remover-roller-product-page/"><h3 class="product-name">Hair Remover Roller</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">9,127</span></div>
+          <div class="product-price">
+            <span class="price-current">$7.99</span>
+            <span class="price-old">$15.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="Hair Remover Roller" data-price="7.99" data-vid="53858619031920">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <a href="/petpaw-corner-brush-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge badge-peach">🐱 Cat Favorite</span>
+            <img src="images/products/corner-brush/cat-1.jpg" alt="Corner Brush" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Cat Brush</span>
+          <a href="/petpaw-corner-brush-product-page/"><h3 class="product-name">Corner Grooming Brush</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">5,234</span></div>
+          <div class="product-price">
+            <span class="price-current">$12.99</span>
+            <span class="price-old">$25.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="Corner Grooming Brush" data-price="12.99" data-vid="53858627813744">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <a href="/petpaw-lick-mat-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge badge-teal">🧘 Anxiety Relief</span>
+            <img src="images/products/lick-mat/lick-1.jpg" alt="Lick Mat" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Mat</span>
+          <a href="/petpaw-lick-mat-product-page/"><h3 class="product-name">Pet Lick Mat</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">4,876</span></div>
+          <div class="product-price">
+            <span class="price-current">$12.99</span>
+            <span class="price-old">$25.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="Pet Lick Mat" data-price="12.99" data-vid="53858627846512">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <a href="/petpaw-smart-ball-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge badge-orange">🎾 Interactive</span>
+            <img src="images/products/smart-ball/ball-1.jpg" alt="Smart Ball" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Toy</span>
+          <a href="/petpaw-smart-ball-product-page/"><h3 class="product-name">Interactive Smart Ball</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">3,291</span></div>
+          <div class="product-price">
+            <span class="price-current">$14.99</span>
+            <span class="price-old">$29.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="Interactive Smart Ball" data-price="14.99" data-vid="53858627879280">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <a href="/petpaw-water-bottle-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge badge-sky">💧 Travel</span>
+            <img src="images/products/water-bottle/water-1.jpg" alt="Water Bottle" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Bottle</span>
+          <a href="/petpaw-water-bottle-product-page/"><h3 class="product-name">Water Bottle 3-in-1</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">7,654</span></div>
+          <div class="product-price">
+            <span class="price-current">$12.99</span>
+            <span class="price-old">$25.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="Water Bottle 3-in-1" data-price="12.99" data-vid="53858627912048">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <a href="/petpaw-paw-cleaner-product-page/" class="product-link">
+          <div class="product-image">
+            <span class="product-badge badge-mint">🐾 Paw Care</span>
+            <img src="images/products/paw-cleaner/paw-1.jpg" alt="Paw Cleaner" loading="lazy" />
+            <div class="product-overlay"><span>View Product →</span></div>
+          </div>
+        </a>
+        <div class="product-body">
+          <span class="product-tag">Cleaner</span>
+          <a href="/petpaw-paw-cleaner-product-page/"><h3 class="product-name">Paw Cleaner Cup</h3></a>
+          <div class="product-rating">★★★★★ <span class="rating-count">6,102</span></div>
+          <div class="product-price">
+            <span class="price-current">$11.99</span>
+            <span class="price-old">$23.99</span>
+            <span class="price-tag">-50%</span>
+          </div>
+          <button class="btn-add" data-product="Paw Cleaner Cup" data-price="11.99" data-vid="53858627944816">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section-steps" id="how">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">✨ Simple Process</span>
+      <h2 class="section-title">Three Steps to a Fur-Free Home</h2>
+      <p class="section-desc">No complicated routines. No expensive gadgets. Just results.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-icon">🧹</div>
+        <h3>Sweep</h3>
+        <p>Glide across any surface — one pass removes embedded pet hair instantly. Sofas, clothes, beds, carpets.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-icon">💧</div>
+        <h3>Rinse</h3>
+        <p>Wash under warm water with soap. Hair releases immediately. 30 seconds and it's like new.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-icon">✨</div>
+        <h3>Enjoy</h3>
+        <p>A spotless home, a happy pet, and more time for what matters. Reusable for years.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section-why">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">💪 Why Flything</span>
+      <h2 class="section-title">Designed for Pet Parents Who Want the Best</h2>
+      <p class="section-desc">Thousands of pet owners have already made the switch. Here's why.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <h3>Instant Results</h3>
+        <p>In under 5 seconds you'll see the hair pile up. No more wasted passes with rollers that barely work.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💧</div>
+        <h3>Easy to Clean</h3>
+        <p>Rinse with water &amp; soap. 30 seconds and it's like new. No chemicals, no replacement parts.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💰</div>
+        <h3>Save Money</h3>
+        <p>One Flything replaces 12+ disposables per year. $50+ annual savings. Pays for itself in months.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🌱</div>
+        <h3>Eco-Friendly</h3>
+        <p>No more disposable rollers filling landfills. All our products are reusable for years.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🎒</div>
+        <h3>Portable Design</h3>
+        <p>Take Flything anywhere — bag, car, office. Always ready when you need a quick cleanup.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🛡️</div>
+        <h3>Risk-Free</h3>
+        <p>30-day money-back guarantee on every product. If you don't love it, we'll refund 100%.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="section-compare">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">📊 See the Difference</span>
+      <h2 class="section-title">Before vs. After Flything</h2>
+      <p class="section-desc">One tool changes everything.</p>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card bad">
+        <div class="compare-label">😫 Without Flything</div>
+        <img src="images/products/fursweep/fursweep-3.jpg" alt="Before" loading="lazy" />
+        <ul>
+          <li>🧻 Disposable rollers that waste money</li>
+          <li>⏱️ 20+ minutes cleaning every day</li>
+          <li>🗑️ Filling landfills with sticky sheets</li>
+          <li>😫 Fur everywhere — sofa, clothes, bed</li>
+        </ul>
+      </div>
+      <div class="compare-vs">VS</div>
+      <div class="compare-card good">
+        <div class="compare-label">✨ With Flything</div>
+        <img src="images/products/fursweep/fursweep-2.jpg" alt="After" loading="lazy" />
+        <ul>
+          <li>♻️ Reusable — lasts for years</li>
+          <li>⚡ One pass, 5 seconds — all gone</li>
+          <li>🌱 Zero waste, eco-friendly</li>
+          <li>✨ Spotless home, always guest-ready</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section-reviews" id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">⭐ Real Reviews</span>
+      <h2 class="section-title">What Pet Parents Are Saying</h2>
+      <p class="section-desc">Join 50,000+ happy customers who transformed their homes.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#FF6B35,#FF8F65);">MC</div>
+          <div><div class="review-name">Maria C.</div><div class="review-badge">✓ Verified</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p>"I had no idea my sofa was this dirty. One pass with FurSweep and I was shocked. Bought another for the car."</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#00B894,#00D9A7);">PL</div>
+          <div><div class="review-name">Pedro L.</div><div class="review-badge">✓ Verified</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Two Labrador retrievers and Flything changed our lives. Stopped buying disposable rollers. House is spotless."</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#6C5CE7,#A29BFE);">AG</div>
+          <div><div class="review-name">Ana G.</div><div class="review-badge">✓ Verified</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Arrived in 3 days, works better than expected. Use it on sofa, bed, clothes. Best pet purchase I've ever made."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="section-guarantee">
+  <div class="container">
+    <div class="guarantee-box">
+      <div class="guarantee-icon">🛡️</div>
+      <h2>100% Risk-Free. 30 Days. No Questions.</h2>
+      <p>If any Flything product doesn't exceed your expectations, we'll refund every penny. That's how confident we are.</p>
+      <a href="#products" class="btn-primary">Try Flything Risk-Free</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-faq" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-label">❓ FAQ</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-desc">Everything you need to know before buying.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>How long does shipping take?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Shipping is free worldwide. Orders are processed within 24 hours and arrive in 3–7 business days depending on your location.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What if I don't like my purchase?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>We offer a 30-day satisfaction guarantee. If you're not happy for any reason, contact us and we'll refund your money. No questions asked.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Are Flything products reusable?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Yes! All Flything products are designed to be reusable for years. Just rinse with water and soap, let dry, and they're good as new.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Do your products work for both dogs and cats?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>Absolutely. Our products are designed for all pets — dogs, cats, rabbits, and any furry friend. We test everything on both.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>What payment methods do you accept?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>We accept Visa, Mastercard, American Express, PayPal, Apple Pay, and Google Pay. All payments are securely processed.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-cta">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Ready for a Fur-Free Home?</h2>
+      <p>Join 50,000+ pet parents who reclaimed their home. Limited time: 50% OFF + free shipping.</p>
+      <a href="#products" class="btn-primary btn-large">Shop Now — 50% OFF</a>
+      <div class="cta-trust">
+        <span>🚚 Free Shipping</span>
+        <span>🛡️ 30-Day Guarantee</span>
+        <span>🔒 Secure Payment</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo"><span>🐾</span> Fly<span>thing</span></div>
+      <p>Premium pet care products for pet parents who love clean homes. Made with ❤️.</p>
+      <div class="footer-social">
+        <a href="#">📸</a>
+        <a href="#">🎵</a>
+        <a href="#">👍</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div>
+        <h4>Shop</h4>
+        <a href="#products">All Products</a>
+        <a href="/furSweep-product-page/">FurSweep™</a>
+        <a href="/petpaw-grooming-gloves-product-page/">Grooming Gloves</a>
+        <a href="/petpaw-smart-ball-product-page/">Smart Ball</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="#faq">FAQ</a>
+        <a href="#">Shipping Info</a>
+        <a href="#">Returns</a>
+        <a href="#">Contact</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 <strong>Flything</strong> — Happy Pets, Clean Homes. All rights reserved.</div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ===== TRACKING =====
+  function fireTracking(action, data) {
+    if(CONFIG.facebookPixelId && window.fbq) {
+      fbq('track', action, data);
+    }
+    if(CONFIG.tiktokPixelId && window.ttq) {
+      ttq.track(action, data);
+    }
+  }
+
+  // ===== CART STATE =====
+  var cart = [];
+  var cartOpen = false;
+
+  function updateCartUI() {
+    var count = cart.reduce(function(sum, item) { return sum + item.qty; }, 0);
+    document.getElementById('cartCount').textContent = count;
+    renderCartItems();
+  }
+
+  function renderCartItems() {
+    var container = document.getElementById('cartItems');
+    var footer = document.getElementById('cartFooter');
+    if (cart.length === 0) {
+      container.innerHTML = '<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p>Your cart is empty</p><a href="#products" class="cart-shop-link">Start Shopping →</a></div>';
+      footer.style.display = 'none';
+      return;
+    }
+    var html = '';
+    var total = 0;
+    cart.forEach(function(item, i) {
+      total += item.price * item.qty;
+      html += '<div class="cart-item"><div class="cart-item-info"><div class="cart-item-name">' + item.name + '</div><div class="cart-item-price">$' + item.price.toFixed(2) + '</div></div><div class="cart-item-qty"><button onclick="changeQty(' + i + ',-1)">−</button><span>' + item.qty + '</span><button onclick="changeQty(' + i + ',1)">+</button></div><button class="cart-item-remove" onclick="removeItem(' + i + ')">✕</button></div>';
+    });
+    container.innerHTML = html;
+    document.getElementById('cartTotal').textContent = '$' + total.toFixed(2);
+    footer.style.display = 'block';
+  }
+
+  function addToCart(name, price, vid, qty) {
+    qty = qty || 1;
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].name === name) { cart[i].qty += qty; updateCartUI(); showToast(name); return; }
+    }
+    cart.push({ name: name, price: price, vid: vid, qty: qty });
+    updateCartUI();
+    showToast(name);
+  }
+
+  function addToShopifyCart(variantId, qty) {
+    qty = qty || 1;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', CONFIG.storeUrl + '/cart/add.js', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        showToast('Added to cart');
+      }
+    };
+    xhr.send(JSON.stringify({ id: variantId, quantity: qty }));
+  }
+
+  function changeQty(index, delta) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) { cart.splice(index, 1); }
+    updateCartUI();
+  }
+
+  function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
+
+  function showToast(name) {
+    var t = document.getElementById('toast');
+    t.textContent = '✓ ' + name + ' added to cart';
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  // Cart sidebar
+  function openCart() {
+    cartOpen = true;
+    document.getElementById('cartSidebar').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCart() {
+    cartOpen = false;
+    document.getElementById('cartSidebar').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('cartBtn').addEventListener('click', openCart);
+  document.getElementById('cartClose').addEventListener('click', closeCart);
+  document.getElementById('cartOverlay').addEventListener('click', closeCart);
+
+  // Checkout with tracking
+  document.querySelector('.btn-cart-checkout') && document.querySelector('.btn-cart-checkout').addEventListener('click', function() {
+    var total = 0;
+    var items = [];
+    cart.forEach(function(item) { total += item.price * item.qty; });
+    fireTracking('Purchase', { value: total, currency: 'USD' });
+    // Build Shopify cart URL with all items
+    for (var i = 0; i < cart.length; i++) {
+      for (var j = 0; j < cart[i].qty; j++) {
+        items.push(cart[i].vid);
+      }
+    }
+    if (items.length > 0) {
+      window.location.href = CONFIG.storeUrl + '/cart/' + items.join(',');
+    } else {
+      window.location.href = CONFIG.storeUrl + '/checkout';
+    }
+  });
+
+  // Add to cart buttons
+  document.querySelectorAll('.btn-add').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var name = this.getAttribute('data-product');
+      var price = parseFloat(this.getAttribute('data-price'));
+      var vid = this.getAttribute('data-vid');
+      addToCart(name, price, vid);
+      fireTracking('AddToCart', { content_name: name, value: price, currency: 'USD' });
+      // button feedback
+      this.textContent = 'Added';
+      this.classList.add('added');
+      var self = this;
+      setTimeout(function() { self.textContent = 'Add to Cart'; self.classList.remove('added'); }, 1500);
+    });
+  });
+
+  // Mobile nav
+  document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('mobileNav').classList.add('show');
+  });
+  document.getElementById('mobileClose').addEventListener('click', function() {
+    document.getElementById('mobileNav').classList.remove('show');
+  });
+  document.querySelectorAll('.mobile-nav-body a').forEach(function(a) {
+    a.addEventListener('click', function() { document.getElementById('mobileNav').classList.remove('show'); });
+  });
+
+  // FAQ
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+    if (!open) item.classList.add('open');
+  }
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function() {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll animations
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.product-card, .step, .why-card, .review-card, .compare-card').forEach(function(el) {
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

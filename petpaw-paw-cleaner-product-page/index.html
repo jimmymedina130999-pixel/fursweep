@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flything™ Paw Cleaner Cup — Portable Paw Washer | Flything</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/flything.css" />
+  <style>
+    .gallery-main { aspect-ratio: 1/1; border-radius: var(--radius); overflow: hidden; background: var(--white); border: 1px solid var(--border); margin-bottom: 10px; max-width: 520px; position: relative; cursor: crosshair; }
+    .gallery-main img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s; }
+    .gallery-main .zoom-lens { position: absolute; inset: 0; background-repeat: no-repeat; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 5; }
+    .gallery-main:hover .zoom-lens { opacity: 1; }
+    .gallery-main:hover img { opacity: 0; }
+    .gallery-thumbs { display: flex; gap: 8px; max-width: 520px; }
+    .gallery-thumbs button { flex: 1; aspect-ratio: 1/1; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid transparent; background: var(--white); padding: 0; cursor: pointer; transition: all 0.2s; }
+    .gallery-thumbs button.active { border-color: var(--primary); }
+    .gallery-thumbs button img { width: 100%; height: 100%; object-fit: cover; }
+    .product-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; padding: 40px 0; max-width: 1120px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+    .product-layout .gallery { position: sticky; top: 100px; }
+    .product-info .badge { display: inline-block; background: var(--primary-subtle); color: var(--primary-dark); font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 50px; margin-bottom: 12px; }
+    .product-info h1 { font-size: 32px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 10px; }
+    .product-info .rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .product-info .rating-row .stars { color: var(--star); font-size: 15px; letter-spacing: 2px; }
+    .product-info .rating-row .count { font-size: 13px; color: var(--text2); }
+    .product-info .price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+    .product-info .price-row .current { font-size: 34px; font-weight: 900; color: var(--text); }
+    .product-info .price-row .compare { font-size: 17px; color: var(--text3); text-decoration: line-through; }
+    .product-info .price-row .discount { background: var(--danger); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 50px; }
+    .benefits { list-style: none; padding: 0; margin-bottom: 18px; }
+    .benefits li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text2); margin-bottom: 8px; line-height: 1.5; }
+    .benefits li::before { content: "✓"; color: var(--success); font-weight: 700; font-size: 16px; flex-shrink: 0; }
+    .color-options { display: flex; gap: 10px; margin-bottom: 18px; }
+    .color-btn { width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--border); cursor: pointer; transition: all 0.2s; }
+    .color-btn.active { border-color: var(--primary); box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--primary); }
+    .color-btn.black { background: #2D3436; }
+    .color-btn.gray { background: #9E9E9E; }
+    .color-btn.white { background: #F5F5F5; border-color: #D0D5DD; }
+    .bundle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+    .bundle-card { border: 2px solid var(--border); border-radius: 12px; padding: 18px 10px 14px; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); background: var(--white); position: relative; }
+    .bundle-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255,107,53,0.1); }
+    .bundle-card.active { border-color: var(--primary); background: linear-gradient(180deg, var(--primary-subtle), transparent 80%); box-shadow: 0 4px 16px rgba(255,107,53,0.15); }
+    .bundle-card .check { position: absolute; top: 6px; right: 6px; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: transparent; transition: all 0.25s; }
+    .bundle-card.active .check { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .bundle-card .popular { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg,var(--primary),#FF8F65); color:#fff; font-size:9px; font-weight:700; padding:3px 14px; border-radius:50px; text-transform:uppercase; letter-spacing:0.5px; white-space:nowrap; box-shadow:0 2px 10px rgba(255,107,53,0.35); z-index:2; }
+    .bundle-card .qty { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 3px; letter-spacing: 0.5px; }
+    .bundle-card.active .qty { color: var(--primary); }
+    .bundle-card .bundle-price { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; }
+    .bundle-card .bundle-compare { font-size: 12px; color: var(--text3); text-decoration: line-through; }
+    .bundle-card .bundle-unit { font-size: 11px; color: var(--text2); margin-top: 3px; }
+    .bundle-card .bundle-save { display: inline-block; background: var(--success-light); color: #00856A; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 50px; margin-top: 4px; }
+    .product-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    .product-actions .btn-primary, .product-actions .btn-secondary { width: 100%; }
+    .trust-row { display: flex; flex-wrap: wrap; gap: 14px; padding: 12px 16px; background: var(--bg); border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .trust-row span { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 4px; }
+    .video-wrapper { max-width: 800px; margin: 0 auto; border-radius: var(--radius); overflow: hidden; background: #111; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; }
+    .video-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+    .video-play { position: absolute; width: 72px; height: 72px; background: rgba(255,107,53,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.3s; pointer-events: none; }
+    .video-play::after { content: '▶'; color: #fff; font-size: 28px; margin-left: 3px; }
+    .video-wrapper:hover .video-play { transform: scale(1.1); }
+    .video-wrapper iframe, .video-wrapper video { width: 100%; height: 100%; border: none; }
+    .features-list { max-width: 700px; margin: 0 auto; display: grid; gap: 12px; }
+    .features-list li { display: flex; align-items: flex-start; gap: 12px; padding: 16px 20px; background: var(--white); border-radius: var(--radius-sm); border: 1px solid var(--border); font-size: 14px; color: var(--text2); line-height: 1.6; transition: all 0.2s; }
+    .features-list li:hover { border-color: var(--primary); }
+    .features-list li strong { color: var(--text); }
+    .features-list li::before { content: "✓"; color: var(--success); font-weight: 700; font-size: 18px; flex-shrink: 0; }
+    @media (max-width: 900px) { .product-layout { grid-template-columns: 1fr; gap: 24px; } .gallery { position: static; } .product-info h1 { font-size: 24px; } .product-info .price-row .current { font-size: 28px; } }
+  </style>
+  <script>
+    var CONFIG = { storeUrl: 'https://yf2yyf-bz.myshopify.com', productHandle: 'petpaw-paw-cleaner-cup', variantIds: { '1': '53872825696528', '2': '53872825729296', '3': '53872825762064' }, videoUrl: '' };
+  </script>
+  <script>
+    !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a)};ttq.load('D8F3RQRC77U8UFHBRTAG');ttq.page();}(window,document,'ttq');
+  </script>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="urgency-bar show" id="urgencyBar">⏰ Limited Time Offer — 50% OFF ends in <span id="timer">10:00</span> — Free Shipping 🚚</div>
+
+<div class="topbar">🔥 50% OFF + Free Shipping — Limited Time</div>
+
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="/" class="header-logo">
+      <span class="logo-icon">🐾</span>
+      <div>
+        <div class="logo-name">Fly<span>thing</span></div>
+        <div class="logo-tagline">Happy Pets, Clean Homes</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#products">Products</a>
+      <a href="#video">Video</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-right">
+      <button class="cart-btn" id="cartBtn" aria-label="Cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="cart-close" id="cartClose">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><span class="cart-empty-icon">🛒</span><p>Your cart is empty</p><a href="/#products" class="cart-shop-link">Start Shopping →</a></div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+    <button class="btn-primary btn-cart-checkout">Checkout →</button>
+  </div>
+</div>
+
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <span class="logo-name">Fly<span>thing</span></span>
+    <button class="mobile-close" id="mobileClose">✕</button>
+  </div>
+  <div class="mobile-nav-body">
+    <a href="/#products">Products</a>
+    <a href="#video">Video</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</div>
+
+<main>
+  <div class="product-layout">
+    <div class="gallery">
+      <div class="gallery-main" id="galleryMain">
+        <img id="mainImage" src="../images/products/paw-cleaner/paw-1.jpg" alt="Flything Paw Cleaner Cup" />
+        <div class="zoom-lens" id="zoomLens"></div>
+      </div>
+      <div class="gallery-thumbs">
+        <button class="active" onclick="switchImage(this,1)"><img src="../images/products/paw-cleaner/paw-1.jpg" alt="" /></button>
+        <button onclick="switchImage(this,2)"><img src="../images/products/paw-cleaner/paw-2.jpg" alt="" /></button>
+        <button onclick="switchImage(this,3)"><img src="../images/products/paw-cleaner/paw-3.jpg" alt="" /></button>
+        <button onclick="switchImage(this,4)"><img src="../images/products/paw-cleaner/paw-4.jpg" alt="" /></button>
+      </div>
+    </div>
+    <div class="product-info">
+      <span class="badge">🐾 Paw Care Essential</span>
+      <h1>Flything™ Paw Cleaner Cup — Portable Paw Washer</h1>
+      <div class="rating-row">
+        <span class="stars">★★★★★</span>
+        <span class="count">4.8 ★ (6,102 reviews)</span>
+      </div>
+      <div class="price-row">
+        <span class="current" id="priceDisplay">$19.99</span>
+        <span class="compare" id="compareDisplay">$47.98</span>
+        <span class="discount">-50%</span>
+      </div>
+      <ul class="benefits">
+        <li>Cleans paws in seconds — no mess</li>
+        <li>Soft silicone bristles — gentle on paws</li>
+        <li>Portable for walks and car rides</li>
+        <li>Perfect for rainy days and beach trips</li>
+      </ul>
+      <div class="color-options">
+        <button class="color-btn black active" onclick="selectVariant(this,'Black')" title="Black"></button>
+        <button class="color-btn gray" onclick="selectVariant(this,'Gray')" title="Gray"></button>
+        <button class="color-btn white" onclick="selectVariant(this,'White')" title="White"></button>
+      </div>
+      <div class="bundle-grid">
+        <div class="bundle-card" data-qty="1" onclick="selectBundle(this)">
+          <span class="check">✓</span>
+          <div class="qty">1 Pack</div>
+          <div class="bundle-price">$11.99</div>
+          <div class="bundle-compare">$23.99</div>
+          <div class="bundle-unit">11.99 / each</div>
+          <div class="bundle-save">Save 50%</div>
+        </div>
+        <div class="bundle-card active" data-qty="2" onclick="selectBundle(this)">
+          <span class="check">✓</span>
+          <span class="popular">Most Popular</span>
+          <div class="qty">2 Pack</div>
+          <div class="bundle-price">$19.99</div>
+          <div class="bundle-compare">$47.98</div>
+          <div class="bundle-unit">19.99 / each</div>
+          <div class="bundle-save">Save 58%</div>
+        </div>
+        <div class="bundle-card" data-qty="3" onclick="selectBundle(this)">
+          <span class="check">✓</span>
+          <div class="qty">3 Pack</div>
+          <div class="bundle-price">$27.99</div>
+          <div class="bundle-compare">$71.97</div>
+          <div class="bundle-unit">27.99 / each</div>
+          <div class="bundle-save">Save 61%</div>
+        </div>
+      </div>
+        <div class="bundle-card active" data-qty="2" onclick="selectBundle(this)">
+          <div class="popular">Most Popular</div>
+          <div class="qty">2 Pack</div>
+          <div class="bundle-price">$19.99</div>
+          <div class="bundle-compare">$47.98</div>
+          <div class="bundle-unit">$10.00 / each</div>
+        </div>
+        <div class="bundle-card" data-qty="3" onclick="selectBundle(this)">
+          <div class="qty">3 Pack</div>
+          <div class="bundle-price">$27.99</div>
+          <div class="bundle-compare">$71.97</div>
+          <div class="bundle-unit">$9.33 / each</div>
+        </div>
+      </div>
+      <div class="product-actions">
+        <button class="btn-primary" id="addToCartBtn">🛒 Add to Cart — $19.99</button>
+        <button class="btn-secondary" id="buyNowBtn">⚡ Buy Now</button>
+      </div>
+      <div class="trust-row">
+        <span>✅ Free Shipping</span>
+        <span>🔒 Secure Checkout</span>
+        <span>📦 30-Day Guarantee</span>
+        <span>⭐ 6,102+ Reviews</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video -->
+  <section id="video">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">🎥 See It in Action</span>
+        <h2 class="section-title">Watch Flything™ Paw Cleaner Cup Clean Paws Instantly</h2>
+        <p class="section-desc">See why thousands of pet parents swear by this paw washer.</p>
+      </div>
+      <div class="video-wrapper" onclick="playVideo()">
+        <img src="../images/products/paw-cleaner/paw-2.jpg" alt="Video demo" />
+        <div class="video-play"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section style="background:var(--bg);">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">📊 See the Difference</span>
+        <h2 class="section-title">Before Paw Cleaner vs After Paw Cleaner</h2>
+        <p class="section-desc">One cup changes everything.</p>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-card bad">
+          <div class="compare-label">😫 Without Paw Cleaner</div>
+          <img src="../images/products/paw-cleaner/paw-3.jpg" alt="Before" loading="lazy" />
+          <ul>
+            <li>🧻 Muddy paw prints all over your floors and furniture</li>
+            <li>⏱️ Bathing your pet every time they come inside</li>
+            <li>🗑️ Wet towels and mess everywhere</li>
+            <li>😫 Dirty floors and extra cleanup daily</li>
+          </ul>
+        </div>
+        <div class="compare-vs">VS</div>
+        <div class="compare-card good">
+          <div class="compare-label">✨ With Paw Cleaner</div>
+          <img src="../images/products/paw-cleaner/paw-4.jpg" alt="After" loading="lazy" />
+          <ul>
+            <li>⚡ Clean paws in seconds with no mess</li>
+            <li>💧 Just dip, twist, and dry</li>
+            <li>🏠 Your floors stay clean</li>
+            <li>✨ Paws are fresh and healthy</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">✨ Features</span>
+        <h2 class="section-title">Designed for Pet Parents</h2>
+        <p class="section-desc">Flything™ Paw Cleaner Cup is the portable paw washer that actually works.</p>
+      </div>
+      <ul class="features-list">
+        <li><strong>Cleans Paws in Seconds</strong> — fill with water, insert paw, twist gently. Dirt, mud, sand, and debris are gone instantly. No more wet towels everywhere</li>
+        <li><strong>Soft Silicone Bristles</strong> — gentle and flexible bristles effectively clean without hurting your pet's paws. Most pets enjoy the massage-like sensation</li>
+        <li><strong>Portable Design</strong> — compact enough for walks, car rides, and travel. Keep one by the door and one in the car</li>
+        <li><strong>One-Handed Operation</strong> — easy to use with one hand. Great for holding your pet's leash while cleaning paws after walks</li>
+        <li><strong>Universal Fit</strong> — works for dogs and cats of all sizes. The soft silicone interior conforms to any paw size</li>
+        <li><strong>Easy to Maintain</strong> — rinse the cup and bristles under running water after use. The silicone is non-stick and dries quickly</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section style="background:var(--bg);" id="reviews">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">⭐ Real Reviews</span>
+        <h2 class="section-title">What Pet Parents Are Saying</h2>
+        <p class="section-desc">Join 6,102+ happy customers.</p>
+      </div>
+      <div class="reviews-grid" style="max-width:900px;">
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#FF6B35,#FF8F65);">AM</div>
+            <div><div class="review-name">Anna M.</div><div class="review-badge">✓ Verified</div></div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <p>This paw cleaner is a lifesaver! My dog loves to dig in the garden and this cleans his paws in seconds. No more muddy footprints through the house.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#00B894,#00D9A7);">TK</div>
+            <div><div class="review-name">Tom K.</div><div class="review-badge">✓ Verified</div></div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <p>The silicone bristles are so soft and gentle. My dog actually enjoys getting his paws cleaned now. We use it every day after walks.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#2D3436,#636E72);">SR</div>
+            <div><div class="review-name">Sarah R.</div><div class="review-badge">✓ Verified</div></div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <p>Perfect for beach days! Keeps the sand and salt off my dog's paws. Compact enough to keep in the car. Highly recommend.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">❓ FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Everything you need to know about Flything™ Paw Cleaner Cup.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How do I use the Paw Cleaner Cup?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>Fill the cup with water (or a pet-safe cleaning solution). Insert your pet's paw and twist gently a few times. Remove the paw and wipe dry with a towel. That's it — clean paws in seconds!</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Does it hurt my pet's paws?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>No. The bristles are made from soft, flexible silicone that is gentle on your pet's paws. They effectively remove dirt without causing any discomfort. Most pets enjoy the gentle massage sensation.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Does it work on all types of dirt?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>Yes! It works great on mud, dirt, sand, grass, and debris. For heavily caked-on mud, you may need to repeat the process twice for best results.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>What is your return policy?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>We offer a 30-day money-back guarantee. If you're not completely satisfied, contact us for a full refund. No questions asked.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)"><span>How long does shipping take?</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>Shipping is free! Orders are processed within 24 hours and arrive within 3-7 business days depending on your location.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo"><span>🐾</span> Fly<span>thing</span></div>
+      <p>Premium pet care products for pet parents who love clean homes. Made with ❤️.</p>
+      <div class="payment-icons"><span title="Visa">💳</span><span title="Mastercard">💳</span><span title="PayPal">🅿️</span><span title="Apple Pay">🍎</span><span title="Google Pay">🇬</span></div>
+      <div class="footer-social"><a href="#">📸</a><a href="#">🎵</a><a href="#">👍</a></div>
+    </div>
+    <div class="footer-links">
+      <div><h4>Shop</h4><a href="/">Home</a><a href="/#products">All Products</a><a href="#">Paw Cleaner Cup</a></div>
+      <div><h4>Support</h4><a href="#faq">FAQ</a><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Contact</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 <strong>Flything</strong> — Happy Pets, Clean Homes</div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Sticky mobile bar -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="inner">
+    <div class="price-wrap">
+      <span class="curr" id="stickyPrice">$19.99</span>
+      <span class="comp">$47.98</span>
+    </div>
+    <button class="btn-primary" id="stickyAddBtn">🛒 Add to Cart</button>
+  </div>
+</div>
+
+<script>
+  // Cart state (shared with homepage cart)
+  var cart = JSON.parse(localStorage.getItem('flythingCart') || '[]');
+  function saveCart() { localStorage.setItem('flythingCart', JSON.stringify(cart)); updateCartUI(); }
+  function updateCartUI() {
+    var count = cart.reduce(function(s,i){return s+i.qty;},0);
+    document.getElementById('cartCount').textContent = count;
+    renderCartItems();
+  }
+  var SHIPPING_COST=4.99,FREE_SHIPPING_MIN=30;
+  function renderCartItems() {
+    var container = document.getElementById('cartItems');
+    var footer = document.getElementById('cartFooter');
+    if (cart.length===0) {
+      container.innerHTML = '<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p>Your cart is empty</p><a href="/#products" class="cart-shop-link">Start Shopping →</a></div>';
+      footer.style.display='none'; return;
+    }
+    var html='', total=0;
+    cart.forEach(function(item,i){
+      total+=item.price*item.qty;
+      html+='<div class="cart-item"><div class="cart-item-info"><div class="cart-item-name">'+item.name+'</div><div class="cart-item-price">$'+item.price.toFixed(2)+'</div></div><div class="cart-item-qty"><button onclick="changeQty('+i+',-1)">−</button><span>'+item.qty+'</span><button onclick="changeQty('+i+',1)">+</button></div><button class="cart-item-remove" onclick="removeItem('+i+')">✕</button></div>';
+    });
+    container.innerHTML = html;
+    var shipping=total>=FREE_SHIPPING_MIN?0:SHIPPING_COST;
+    document.getElementById('shippingText').textContent=total>=FREE_SHIPPING_MIN?'FREE':'$'+shipping.toFixed(2);
+    document.getElementById('cartTotal').textContent='$'+(total+shipping).toFixed(2);
+    footer.style.display='block';
+  }
+  function addToCart(name, price, qty) {
+    qty=qty||1;
+    for(var i=0;i<cart.length;i++){if(cart[i].name===name){cart[i].qty+=qty;saveCart();showToast(name);return;}}
+    cart.push({name:name,price:price,qty:qty}); saveCart(); showToast(name);
+  }
+  function changeQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart();}
+  function removeItem(i){cart.splice(i,1);saveCart();}
+  function showToast(name){
+    var t=document.getElementById('toast');
+    t.textContent='✓ '+name+' added to cart';
+    t.classList.add('show');
+    setTimeout(function(){t.classList.remove('show');},2000);
+  }
+
+  // Cart sidebar
+  document.getElementById('cartBtn').addEventListener('click',function(){
+    document.getElementById('cartSidebar').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('show');
+    document.body.style.overflow='hidden';
+  });
+  document.getElementById('cartClose').addEventListener('click',function(){
+    document.getElementById('cartSidebar').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('show');
+    document.body.style.overflow='';
+  });
+  document.getElementById('cartOverlay').addEventListener('click',function(){
+    document.getElementById('cartSidebar').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('show');
+    document.body.style.overflow='';
+  });
+
+  // Product page logic
+  var selectedQty=2, selectedColor='Black';
+  var bundlePrices={1:11.99,2:19.99,3:27.99}, bundleCompare={1:23.99,2:47.98,3:71.97}, bundleUnit={1:11.99,2:10.00,3:9.33};
+
+  function switchImage(btn,i){
+    document.querySelectorAll('.gallery-thumbs button').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    document.getElementById('mainImage').src='../../fursweep/site/images/products/paw-cleaner/paw-'+i+'.jpg';
+  }
+  function selectVariant(btn,c){
+    document.querySelectorAll('.color-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active'); selectedColor=c;
+  }
+  function selectBundle(el){
+    document.querySelectorAll('.bundle-card').forEach(function(b){b.classList.remove('active');});
+    el.classList.add('active');
+    selectedQty=parseInt(el.dataset.qty);
+    var p=bundlePrices[selectedQty], c=bundleCompare[selectedQty];
+    document.getElementById('priceDisplay').textContent='$'+p.toFixed(2);
+    document.getElementById('compareDisplay').textContent='$'+c.toFixed(2);
+    document.getElementById('stickyPrice').textContent='$'+p.toFixed(2);
+    document.querySelector('.product-actions .btn-primary').innerHTML='🛒 Add to Cart — $'+p.toFixed(2);
+  }
+
+  function handleAddToCart(){
+    var name='Flything™ Paw Cleaner Cup ('+selectedQty+' Pack, '+selectedColor+')';
+    var price=bundlePrices[selectedQty];
+    addToCart(name, price);
+    window.open(CONFIG.storeUrl + '/products/' + CONFIG.productHandle, '_blank');
+    var btn=document.getElementById('addToCartBtn');
+    btn.textContent='✓ Added!'; btn.style.background='var(--success)';
+    setTimeout(function(){btn.innerHTML='🛒 Add to Cart — $'+bundlePrices[selectedQty].toFixed(2);btn.style.background='';},1500);
+  }
+
+  document.getElementById('addToCartBtn').addEventListener('click',handleAddToCart);
+  document.getElementById('stickyAddBtn').addEventListener('click',handleAddToCart);
+  document.getElementById('buyNowBtn').addEventListener('click',function(){
+    addToCart('Flything™ Paw Cleaner Cup ('+selectedQty+' Pack, '+selectedColor+')', bundlePrices[selectedQty]);
+    window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
+  });
+
+  // FAQ
+  function toggleFaq(btn){
+    var item=btn.closest('.faq-item');
+    var open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
+    if(!open) item.classList.add('open');
+  }
+
+  // Mobile nav
+  document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('mobileNav').classList.add('show');});
+  document.getElementById('mobileClose').addEventListener('click',function(){document.getElementById('mobileNav').classList.remove('show');});
+  document.querySelectorAll('.mobile-nav-body a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('mobileNav').classList.remove('show');});});
+
+  // Header scroll
+  document.getElementById('header').addEventListener('scroll',function(){
+    this.classList.toggle('scrolled',window.scrollY>60);
+  });
+  window.addEventListener('scroll',function(){
+    document.getElementById('header').classList.toggle('scrolled',window.scrollY>60);
+  });
+
+  // Video
+  function playVideo(){
+    var url=CONFIG.videoUrl;
+    var wrapper=document.querySelector('.video-wrapper');
+    if(!wrapper) return;
+    if(!url){alert('🎬 Add your product demo video!\n\nSet CONFIG.videoUrl at the top of this page.');return;}
+    var embed=url;
+    if(url.includes('youtube.com/watch')) embed=url.replace('watch?v=','embed/');
+    else if(url.includes('youtu.be/')) embed=url.replace('youtu.be/','youtube.com/embed/');
+    if(embed.includes('youtube.com/embed')) wrapper.innerHTML='<iframe width="100%" height="100%" src="'+embed+'?autoplay=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+    else if(embed.endsWith('.mp4')) wrapper.innerHTML='<video width="100%" height="100%" controls autoplay playsinline><source src="'+embed+'" type="video/mp4"></video>';
+    else window.open(embed,'_blank');
+  }
+
+  // Init
+  updateCartUI();
+</script>
+</body>
+</html>

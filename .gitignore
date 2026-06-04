@@ -9,3 +9,6 @@ shopify/install-cj-app.js
 
 # Debug screenshots
 shopify/*.png
+
+# Local Netlify folder
+.netlify
