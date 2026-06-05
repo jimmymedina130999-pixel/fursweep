@@ -22,7 +22,6 @@
 | B-05 | **Facebook Pixel ID no configurado** — placeholder vacío en landing-page/index.html:19 | Tracking | Keyshiro | Tracking de ads Facebook/IG | Obtener ID de business.facebook.com → reemplazar en HTML |
 | B-06 | **Imágenes placeholder (placehold.co)** en ambas landing pages | Frontend | Keyshiro | Mala primera impresión, baja conversión | Pushear 36 fotos reales desde disco local → actualizar HTML |
 | B-07 | **Sin dominio personalizado** | Frontend | Keyshiro | URL profesional | Configurar dominio |
-| B-08 | **Netlify 503 usage_exceeded** — flything-store.netlify.app caído | Infra | Keyshiro | Site no accesible | Ingresar a Netlify → hacer upgrade o migrar hosting |
 
 ---
 
@@ -30,6 +29,7 @@
 
 | # | Bloqueador | Dominio | Resuelto | Solución |
 |---|---|---|---|---|
+| B-08 | **Netlify 503 usage_exceeded** — flything-store.netlify.app caído | Infra | ✅ 2026-06-04 | **MIGRADO.** Nuevo sitio en Netlify de Keyshiro (cuenta de pago). URL: https://heartfelt-jelly-f308a7.netlify.app |
 | FO-01 | **FulfillmentOrders no generadas** — 7 hipótesis refutadas. Se pensaba necesario para CJ. | Fulfillment | ✅ 2026-06-04 | **CERRADO.** Order #1007 validó que CJ procesa sin FOs visibles. No es blocker. |
 | H-A2 | **Variant fulfillment_service debe ser CJ** — hipótesis refutada por validación empírica | Fulfillment | ✅ 2026-06-04 | **REFUTADA.** #1007 completó flujo completo con fulfillment_service=manual. |
 | B-01 | Staff access Keyshiro | Shopify | ✅ 2026-06-04 | **CERRADO.** Keyshiro tiene acceso operativo completo. Propietario nominal de la cuenta no determina acceso operativo. |

@@ -58,7 +58,7 @@
 | 1 | Pagar $9.61 en CJ → verificar tracking → Shopify fulfillment update | Keyshiro | CRÍTICA |
 | 2 | Extraer CJ tokens desde CJ Dashboard → API Settings | Keyshiro | ALTA |
 | 3 | Obtener Pixel IDs (B-04, B-05) | Keyshiro | MEDIA |
-| 4 | Resolver Netlify 503 (B-08) | Keyshiro | ALTA |
+| 4 | ~~Resolver Netlify 503 (B-08)~~ | ✅ **RESUELTO** — migrado a https://heartfelt-jelly-f308a7.netlify.app |
 
 ## Completadas (histórico)
 

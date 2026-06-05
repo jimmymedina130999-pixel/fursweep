@@ -32,7 +32,8 @@
 | TikTok/FB Pixel | ❌ Placeholders | T-001 audit |
 | Staff access Keyshiro | 🟢 Keyshiro tiene acceso operativo completo. Propietario nominal no determina acceso. | Corrección modelo operativo 2026-06-04 |
 | Tokens CJ | 🟢 Keyshiro puede extraerlos directamente desde CJ Dashboard → Settings → API. No requiere que Jimy los comparta. | Corrección modelo operativo 2026-06-04 |
-| Netlify | 🔴 Site caído (503 usage_exceeded) — flything-store.netlify.app. Keyshiro puede resolverlo. | — |
+| Netlify | ✅ **Restaurado** — https://heartfelt-jelly-f308a7.netlify.app. Migrado del Netlify de Jimy (usage_exceeded) al Netlify de Keyshiro (cuenta de pago). | Migración 2026-06-04 |
+| Sitio anterior | 🔴 Pausado por usage limits — flything-store.netlify.app. No eliminado, recuperable por Jimy. | — |
 | **npm test** | ✅ **42/42 pass, 6 suites** — red mínima de seguridad técnica implementada | test/validation.mjs |
 | **Backup registry** | ✅ Creado — estructura documental para exportaciones Shopify/CJ/Netlify | operations/BACKUPS.md |
 | **Credential inventory** | ✅ Creado — inventario completo sin valores reales, 16 credenciales trackeadas | operations/CREDENTIALS.md |
@@ -64,7 +65,7 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 | B-05 | **Facebook Pixel ID placeholder** | Tracking | Keyshiro |
 | B-06 | **Imágenes placeholder** | Frontend | Keyshiro |
 | B-07 | **Sin dominio personalizado** | Frontend | Keyshiro |
-| B-08 | **Netlify 503 usage_exceeded** — site caído | Infra | Keyshiro |
+| B-08 | **Netlify 503 usage_exceeded** — **RESUELTO.** Migrado a Netlify de Keyshiro (cuenta de pago). URL: https://heartfelt-jelly-f308a7.netlify.app | Infra | Keyshiro |
 
 > **Corrección 2026-06-04:** B-02 (tokens CJ) y B-09 (staff access) eliminados de blockers activos. Keyshiro tiene acceso operativo directo a todas las plataformas. Propietario nominal de cuenta no determina acceso operativo. Ver D9/D10 en BLOCKERS.md.
 
@@ -100,6 +101,7 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 | **2026-06-04** | **Dependencia huérfana puppeteer eliminada** de package.json | package.json |
 | **2026-06-04** | **SKU mapping automático confirmado**: FUR-001 → CJTE269567401AZ (Pet Hair Remover Mitt) | Orden #1007 CJ |
 | **2026-06-04** | **Corrección modelo operativo**: Keyshiro tiene acceso operativo completo. Propietario nominal de cuenta no implica dependencia. B-02 y B-09 descartados. Jimy no constituye blocker automático. | Corrección modelo 2026-06-04 |
+| **2026-06-04** | **Netlify migrado** — de flything-store.netlify.app (pausado) a https://heartfelt-jelly-f308a7.netlify.app (cuenta de pago de Keyshiro). Incidente B-08 resuelto en 15 min. | netlify deploy --prod --dir=site |
 
 ## 6. Orquestación
 
