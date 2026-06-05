@@ -29,7 +29,7 @@
 
 | # | Bloqueador | Dominio | Resuelto | Solución |
 |---|---|---|---|---|
-| B-08 | **Netlify 503 usage_exceeded** — flything-store.netlify.app caído | Infra | ✅ 2026-06-04 | **MIGRADO.** Nuevo sitio en Netlify de Keyshiro (cuenta de pago). URL: https://heartfelt-jelly-f308a7.netlify.app |
+| B-08 | **Netlify 503 usage_exceeded** — flything-store.netlify.app caído | Infra | ✅ 2026-06-04 | **MIGRADO.** Nuevo sitio en Netlify de Keyshiro (cuenta de pago). URL: https://flything-shop.netlify.app |
 | FO-01 | **FulfillmentOrders no generadas** — 7 hipótesis refutadas. Se pensaba necesario para CJ. | Fulfillment | ✅ 2026-06-04 | **CERRADO.** Order #1007 validó que CJ procesa sin FOs visibles. No es blocker. |
 | H-A2 | **Variant fulfillment_service debe ser CJ** — hipótesis refutada por validación empírica | Fulfillment | ✅ 2026-06-04 | **REFUTADA.** #1007 completó flujo completo con fulfillment_service=manual. |
 | B-01 | Staff access Keyshiro | Shopify | ✅ 2026-06-04 | **CERRADO.** Keyshiro tiene acceso operativo completo. Propietario nominal de la cuenta no determina acceso operativo. |
