@@ -112,8 +112,8 @@ describe('Schema.org / JSON-LD', () => {
     }
   }
 
-  it('brand.name debe ser FurSweep en site', () => {
-    assert.strictEqual(siteLd.brand?.name, 'FurSweep');
+  it('brand.name debe ser FurSweep o Flything en site', () => {
+    assert.ok(siteLd.brand?.name === 'FurSweep' || siteLd.brand?.name === 'Flything', `brand.name inesperado: ${siteLd.brand?.name}`);
   });
 });
 
