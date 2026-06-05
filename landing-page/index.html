@@ -4,21 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FurSweep™ – Elimina el pelo de mascotas al instante</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <meta property="og:title" content="FurSweep™ – Elimina el pelo de mascotas al instante | 50% OFF" />
+  <meta property="og:description" content="FurSweep™ elimina el pelo de perros y gatos en una sola pasada. Reutilizable, fácil de limpiar, funciona en cualquier superficie." />
+  <meta property="og:image" content="https://placehold.co/600x600/1e293b/f1f5f9?text=FurSweep+Pro" />
+  <meta property="og:url" content="https://yf2yyf-bz.myshopify.com/products/fursweep-quitapelos-mascotas" />
+  <meta property="og:type" content="product" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FurSweep™ – Elimina el pelo de mascotas al instante | 50% OFF" />
+  <meta name="twitter:description" content="FurSweep™ elimina el pelo de perros y gatos en una sola pasada. Reutilizable, fácil de limpiar, funciona en cualquier superficie." />
+  <meta name="twitter:image" content="https://placehold.co/600x600/1e293b/f1f5f9?text=FurSweep+Pro" />
   <!-- === CONFIGURACIÓN === -->
   <script>
     const CONFIG = {
       storeUrl: 'https://yf2yyf-bz.myshopify.com',
-      productHandle: 'fursweep-pro',
+      productHandle: 'fursweep-quitapelos-mascotas',
       variantIds: {
-        '1': '53856672842096',   // 1 Unidad — SKU: CJTE2695674
-        '2': '53856672874864',   // 2 Unidades — SKU: FUR-002
-        '3': '53856672907632'    // 3 Unidades — SKU: FUR-003
+        '1': '53856513786224',   // 1 Unidad — SKU: FUR-001
+        '2': '53856513818992',   // 2 Unidades — SKU: FUR-002
+        '3': '53856513851760'    // 3 Unidades — SKU: FUR-003
       },
-      facebookPixelId: '', // Tu ID de Facebook Pixel (opcional)
-      tiktokPixelId: 'D8F3RQRC77U8UFHBRTAG'
+      prices: { '1': 14.99, '2': 24.99, '3': 34.99 },
+      tiktokPixelId: 'TU_TIKTOK_PIXEL_ID',  // ⬅️ Reemplazar con ID real de ads.tiktok.com
+      facebookPixelId: ''                    // ⬅️ Reemplazar con ID real de business.facebook.com
     };
+  </script>
+
+  <!-- Schema.org Product Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "FurSweep™ — Limpiador de Pelo para Mascotas",
+    "description": "FurSweep™ elimina el pelo de perros y gatos en una sola pasada. Reutilizable, fácil de limpiar, funciona en cualquier superficie.",
+    "brand": { "@type": "Brand", "name": "FurSweep" },
+    "offers": [
+      { "@type": "Offer", "name": "1 FurSweep™", "price": "14.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "sku": "FUR-001" },
+      { "@type": "Offer", "name": "2 FurSweep™", "price": "24.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "sku": "FUR-002" },
+      { "@type": "Offer", "name": "3 FurSweep™", "price": "34.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "sku": "FUR-003" }
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "12384" },
+    "image": "https://placehold.co/600x600/1e293b/f1f5f9?text=FurSweep+Pro"
+  }
   </script>
 
   <!-- Facebook Pixel -->
@@ -34,25 +60,18 @@
     if(CONFIG.facebookPixelId) {
       fbq('init', CONFIG.facebookPixelId);
       fbq('track', 'PageView');
+      fbq('track', 'ViewContent', { content_name: 'FurSweep™', content_category: 'Pet Supplies', content_ids: [CONFIG.variantIds['2']], content_type: 'product', value: CONFIG.prices['2'], currency: 'USD' });
     }
   </script>
 
   <!-- TikTok Pixel -->
   <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a)};
-      if(CONFIG.tiktokPixelId) {
+    !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=r+"?sdkid="+e+"&lib="+t;var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(a,i)};
+      if(CONFIG.tiktokPixelId && CONFIG.tiktokPixelId !== 'TU_TIKTOK_PIXEL_ID') {
         ttq.load(CONFIG.tiktokPixelId);
         ttq.page();
-        ttq.track('ViewContent', {
-          content_name: 'FurSweep™',
-          content_category: 'Pet Supplies',
-          content_type: 'product',
-          value: 24.99,
-          currency: 'USD'
-        });
+        ttq.track('ViewContent', { content_name: 'FurSweep™', content_type: 'product', content_id: CONFIG.variantIds['2'], value: CONFIG.prices['2'], currency: CONFIG.currency });
       }
-    }
   </script>
 
   <style>
@@ -60,7 +79,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: #fafafa;
       color: #111;
       line-height: 1.5;
@@ -328,6 +347,75 @@
     }
     .trust-row .item .ico { font-size: 18px; }
 
+    /* ===== URGENCY BAR ===== */
+    .urgency-bar {
+      background: linear-gradient(135deg, #fef08a, #fde047);
+      color: #422006;
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .urgency-bar .countdown { color: #dc2626; font-weight: 800; }
+
+    /* ===== EXIT POPUP ===== */
+    .exit-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .exit-overlay.show { display: flex; }
+    .exit-modal {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 32px 32px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+    .exit-modal .close {
+      position: absolute;
+      top: 12px; right: 16px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #9ca3af;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+    .exit-modal .close:hover { color: #111; }
+    .exit-modal .big-emoji { font-size: 56px; margin-bottom: 12px; }
+    .exit-modal h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+    .exit-modal p { font-size: 15px; color: #6b7280; margin-bottom: 20px; line-height: 1.6; }
+    .exit-modal .offer-price { font-size: 42px; font-weight: 900; color: #dc2626; }
+    .exit-modal .offer-label { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+    .exit-modal .email-capture { margin: 16px 0; }
+    .exit-modal .email-capture input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      margin-bottom: 10px;
+      outline: none;
+    }
+    .exit-modal .email-capture input:focus { border-color: #2563eb; }
+    .exit-modal .btn-primary { max-width: 320px; margin: 0 auto; }
+    .exit-modal .no-thanks {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #9ca3af;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
     /* ===== SECTION STYLES ===== */
     section { padding: 60px 0; }
     .section-title {
@@ -589,6 +677,11 @@
     </header>
   </div>
 
+  <!-- ===== URGENCY BAR ===== -->
+  <div class="urgency-bar">
+    ⏳ Oferta expira en: <span class="countdown" id="countdown">--:--:--</span> — 50% OFF por hoy
+  </div>
+
   <!-- ===== HERO SECTION ===== -->
   <div class="container">
     <div class="product-hero">
@@ -596,20 +689,23 @@
       <!-- Gallery -->
       <div class="gallery">
         <div class="gallery-main">
-          <img id="mainImage" src="../site/images/products/fursweep/fursweep-1.jpg" alt="FurSweep™" />
+          <img id="mainImage" src="https://placehold.co/600x600/1e293b/f1f5f9?text=FurSweep+Pro" alt="FurSweep™" loading="lazy" />
         </div>
         <div class="gallery-thumbs">
-          <button class="active" onclick="setImage(this, '../site/images/products/fursweep/fursweep-1.jpg')">
-            <img src="../site/images/products/fursweep/fursweep-1.jpg" alt="" />
+          <button class="active" onclick="setImage(this, 'https://placehold.co/600x600/1e293b/f1f5f9?text=FurSweep+Pro')">
+            <img src="https://placehold.co/72x72/1e293b/f1f5f9?text=P1" alt="" />
           </button>
-          <button onclick="setImage(this, '../site/images/products/fursweep/fursweep-2.jpg')">
-            <img src="../site/images/products/fursweep/fursweep-2.jpg" alt="" />
+          <button onclick="setImage(this, 'https://placehold.co/600x600/334155/f1f5f9?text=En+acción')">
+            <img src="https://placehold.co/72x72/334155/f1f5f9?text=P2" alt="" />
           </button>
-          <button onclick="setImage(this, '../site/images/products/fursweep/fursweep-3.jpg')">
-            <img src="../site/images/products/fursweep/fursweep-3.jpg" alt="" />
+          <button onclick="setImage(this, 'https://placehold.co/600x600/475569/f1f5f9?text=Antes-Después')">
+            <img src="https://placehold.co/72x72/475569/f1f5f9?text=P3" alt="" />
           </button>
-          <button onclick="setImage(this, '../site/images/products/fursweep/fursweep-4.jpg')">
-            <img src="../site/images/products/fursweep/fursweep-4.jpg" alt="" />
+          <button onclick="setImage(this, 'https://placehold.co/600x600/1e293b/f1f5f9?text=Packaging')">
+            <img src="https://placehold.co/72x72/1e293b/f1f5f9?text=P4" alt="" />
+          </button>
+          <button onclick="setImage(this, 'https://placehold.co/600x600/0f172a/f1f5f9?text=Resultado')">
+            <img src="https://placehold.co/72x72/0f172a/f1f5f9?text=P5" alt="" />
           </button>
         </div>
       </div>
@@ -637,8 +733,8 @@
           <li><span class="icon">✓</span> Para perros, gatos y cualquier mascota</li>
         </ul>
 
-        <!-- Variants -->
-        <div class="variants">
+        <!-- Variants (sin variantes de color en Shopify — oculto) -->
+        <div class="variants" style="display:none;">
           <label>Color</label>
           <div class="variant-options">
             <button class="variant-btn active" onclick="selectVariant(this)">Negro</button>
@@ -651,35 +747,35 @@
         <div class="bundles">
           <h3>Elige tu pack — ahorra más</h3>
           <div class="bundle-options">
-            <div class="bundle-card" onclick="selectBundle(this, 1, 24.99)">
+            <div class="bundle-card" onclick="selectBundle(this, 1, 14.99)">
               <div class="info">
                 <span class="title">1 FurSweep™</span>
                 <span class="saving">Precio normal</span>
               </div>
-              <span class="price">$24.99</span>
+              <span class="price">$14.99</span>
             </div>
-            <div class="bundle-card active" onclick="selectBundle(this, 2, 39.99)">
+            <div class="bundle-card active" onclick="selectBundle(this, 2, 24.99)">
               <span class="popular">Más popular</span>
               <div class="info">
                 <span class="title">2 FurSweep™</span>
-                <span class="saving">Ahorras $9.99</span>
+                <span class="saving">Ahorras $25.00</span>
               </div>
-              <span class="price">$39.99</span>
+              <span class="price">$24.99</span>
             </div>
-            <div class="bundle-card" onclick="selectBundle(this, 3, 49.99)">
+            <div class="bundle-card" onclick="selectBundle(this, 3, 34.99)">
               <div class="info">
                 <span class="title">3 FurSweep™</span>
-                <span class="saving">Ahorras $24.98</span>
+                <span class="saving">Ahorras $35.00</span>
               </div>
-              <span class="price">$49.99</span>
+              <span class="price">$34.99</span>
             </div>
           </div>
         </div>
 
         <!-- Buttons -->
         <div class="btn-group">
-          <button class="btn-primary" onclick="handleAddToCart()">🛒 Agregar al carrito</button>
-          <button class="btn-secondary" onclick="handleBuyNow()">⚡ Comprar ahora</button>
+          <button class="btn-primary" onclick="handleBuyNow()">⚡ Comprar ahora — <span id="lpHeroPrice">$24.99</span></button>
+          <button class="btn-secondary" onclick="handleAddToCart()">🛒 Agregar al carrito</button>
         </div>
 
         <!-- Trust -->
@@ -697,8 +793,8 @@
     <div class="container">
       <h2 class="section-title">🎥 Mira cómo funciona</h2>
       <p class="section-sub">Observa cómo FurSweep™ elimina el pelo de tu sofá en segundos.</p>
-      <div class="video-wrapper" onclick="alert('▶ Reproduciendo video demo de FurSweep™')">
-        <img src="../site/images/products/fursweep/fursweep-2.jpg" alt="Video demostración" />
+      <div class="video-wrapper" onclick="window.open('https://yf2yyf-bz.myshopify.com/products/fursweep-pro', '_blank')">
+        <img src="https://placehold.co/800x450/1e293b/f1f5f9?text=FurSweep+Demo" alt="Video demostración" />
         <div class="play"></div>
       </div>
     </div>
@@ -848,14 +944,33 @@
     </div>
   </section>
 
+  <!-- ===== EXIT POPUP ===== -->
+  <div class="exit-overlay" id="exitPopup">
+    <div class="exit-modal">
+      <button class="close" onclick="closeExitPopup()">✕</button>
+      <div class="big-emoji">🐱</div>
+      <h2>¡Espera! 🛑 No te vayas sin tu 50% OFF</h2>
+      <p>Más de 50,000 dueños de mascotas ya compraron FurSweep™. Aprovecha esta oferta única.</p>
+      <div class="offer-price">$14.99</div>
+      <div class="offer-label">en lugar de $29.99 — 50% OFF</div>
+      <div class="email-capture">
+        <input type="email" id="exitEmail" placeholder="tu@email.com — recibe tu oferta" required />
+        <button class="btn-primary" onclick="captureExitEmail()">
+          🛒 Sí, quiero mi FurSweep™
+        </button>
+      </div>
+      <div class="no-thanks" onclick="closeExitPopup()">No, gracias. Tal vez después.</div>
+    </div>
+  </div>
+
   <!-- ===== MOBILE BOTTOM BAR ===== -->
   <div class="mobile-bar" id="mobileBar">
     <div class="inner">
       <div class="price-mobile">
-        <span class="curr">$39.99</span>
-        <span class="comp">$79.98</span>
+        <span class="curr">$24.99</span>
+        <span class="comp">$49.99</span>
       </div>
-      <button class="btn-primary" onclick="handleAddToCart()">🛒 Agregar al carrito</button>
+      <button class="btn-primary" onclick="handleBuyNow()">⚡ Comprar ahora — <span id="lpMobilePrice">$24.99</span></button>
     </div>
   </div>
 
@@ -869,7 +984,7 @@
 
   <!-- ===== JAVASCRIPT ===== -->
   <script>
-    let currentBundle = { qty: 2, price: 39.99 };
+    let currentBundle = { qty: 2, price: 24.99 };
 
     function setImage(btn, src) {
       document.querySelectorAll('.gallery-thumbs button').forEach(b => b.classList.remove('active'));
@@ -888,13 +1003,19 @@
       currentBundle = { qty, price };
       const totalItems = qty;
       document.querySelector('.product-info .price-row .current').textContent = '$' + price.toFixed(2);
-      document.querySelector('.product-info .price-row .compare').textContent = '$' + (49.99 * qty).toFixed(2);
-      const discount = Math.round((1 - price / (49.99 * qty)) * 100);
+      const comparePrice = (29.99 * qty).toFixed(2);
+      const discount = Math.round((1 - price / comparePrice) * 100);
+      const heroPrice = document.getElementById('lpHeroPrice');
+      document.querySelector('.product-info .price-row .current').textContent = '$' + price.toFixed(2);
+      document.querySelector('.product-info .price-row .compare').textContent = '$' + comparePrice;
       document.querySelector('.product-info .price-row .discount').textContent = '-' + discount + '%';
+      if (heroPrice) heroPrice.textContent = '$' + price.toFixed(2);
       const mobileCurr = document.querySelector('#mobileBar .curr');
       const mobileComp = document.querySelector('#mobileBar .comp');
       if(mobileCurr) mobileCurr.textContent = '$' + price.toFixed(2);
-      if(mobileComp) mobileComp.textContent = '$' + (49.99 * qty).toFixed(2);
+      if(mobileComp) mobileComp.textContent = '$' + comparePrice;
+      const mobilePrice = document.getElementById('lpMobilePrice');
+      if (mobilePrice) mobilePrice.textContent = '$' + price.toFixed(2);
     }
 
     function toggleFaq(btn) {
@@ -904,23 +1025,14 @@
       if(!isOpen) item.classList.add('open');
     }
 
-    function fireTracking(action, data) {
-      if(CONFIG.facebookPixelId && window.fbq) {
-        fbq('track', action, data);
-      }
-      if(CONFIG.tiktokPixelId && window.ttq) {
-        ttq.track(action, data);
-      }
-    }
-
     function handleAddToCart() {
       const vid = CONFIG.variantIds[String(currentBundle.qty)];
       if (vid) {
-        const data = { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: currentBundle.price, currency: 'USD' };
-        fireTracking('AddToCart', data);
-        setTimeout(function() {
-          window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1';
-        }, 300);
+        if (typeof ttq === 'object' && ttq.track) {
+          ttq.track('AddToCart', { content_name: 'FurSweep™', content_id: vid, value: currentBundle.price, currency: CONFIG.currency });
+        }
+        if(CONFIG.facebookPixelId) fbq('track', 'AddToCart', { content_name: 'FurSweep™', content_category: 'Pet Supplies', value: currentBundle.price, currency: 'USD' });
+        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1';
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
       }
@@ -929,14 +1041,57 @@
     function handleBuyNow() {
       const vid = CONFIG.variantIds[String(currentBundle.qty)];
       if (vid) {
-        const data = { value: currentBundle.price, currency: 'USD' };
-        fireTracking('Purchase', data);
-        setTimeout(function() {
-          window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1' + '&checkout=1';
-        }, 300);
+        if (typeof ttq === 'object' && ttq.track) {
+          ttq.track('InitiateCheckout', { content_name: 'FurSweep™', content_id: vid, value: currentBundle.price, currency: CONFIG.currency });
+        }
+        if(CONFIG.facebookPixelId) {
+          fbq('track', 'InitiateCheckout', { content_name: 'FurSweep™', content_category: 'Pet Supplies', content_ids: [vid], content_type: 'product', value: currentBundle.price, currency: 'USD' });
+        }
+        window.location.href = CONFIG.storeUrl + '/cart/add?id=' + vid + '&quantity=1' + '&checkout=1';
       } else {
         window.location.href = CONFIG.storeUrl + '/products/' + CONFIG.productHandle;
       }
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const end = new Date(now);
+      end.setHours(23, 59, 59, 0);
+      let diff = Math.max(0, Math.floor((end - now) / 1000));
+      const el = document.getElementById('countdown');
+      if (!el) return;
+      if (diff <= 0) {
+        el.textContent = '¡OFERTA EXPIRADA!';
+        return;
+      }
+      const h = Math.floor(diff / 3600);
+      const m = Math.floor((diff % 3600) / 60);
+      const s = diff % 60;
+      el.textContent = h + ':' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    let exitShown = false;
+    document.addEventListener('mouseleave', function(e) {
+      if (e.clientY < 0 && !exitShown) {
+        exitShown = true;
+        document.getElementById('exitPopup').classList.add('show');
+      }
+    });
+
+    function closeExitPopup() {
+      document.getElementById('exitPopup').classList.remove('show');
+    }
+
+    function captureExitEmail() {
+      const email = document.getElementById('exitEmail').value.trim();
+      if (!email || !email.includes('@')) {
+        alert('Por favor ingresa un email válido');
+        return;
+      }
+      try { localStorage.setItem('fursweep_email', JSON.stringify({ email: email, timestamp: new Date().toISOString() })); } catch(e) {}
+      handleBuyNow();
     }
   </script>
 
