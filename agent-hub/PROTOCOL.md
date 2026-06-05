@@ -86,12 +86,13 @@ Cada agente especializado tiene un archivo en `agent-hub/queues/`:
 Todo agente al iniciar debe:
 
 1. `git pull origin main`
-2. Leer `CONTROL_CENTER.md`
-3. Leer `BLOCKERS.md`
-4. Leer `TASKS.md`
-5. Leer su dominio asignado (`domains/`)
-6. Leer su queue asignada (`queues/`)
-7. Confirmar estado sincronizado antes de trabajar
+2. `npm test` — verificar que la red de seguridad técnica pasa antes de cualquier cambio
+3. Leer `CONTROL_CENTER.md`
+4. Leer `BLOCKERS.md`
+5. Leer `TASKS.md`
+6. Leer su dominio asignado (`domains/`)
+7. Leer su queue asignada (`queues/`)
+8. Confirmar estado sincronizado antes de trabajar
 
 **Regla:** Ningún agente puede asumir contexto previo sin leer agent-hub.
 
@@ -99,13 +100,14 @@ Todo agente al iniciar debe:
 
 Todo agente al finalizar debe:
 
-1. Actualizar documentación relevante (dominios, queues, agents)
-2. Actualizar blockers si corresponde (`BLOCKERS.md`)
-3. Actualizar tareas si corresponde (`TASKS.md`)
-4. Actualizar queues si corresponde (`queues/*.md`)
-5. `git add`
-6. `git commit`
-7. `git push`
+1. `npm test` — verificar que no se introdujeron regresiones
+2. Actualizar documentación relevante (dominios, queues, agents)
+3. Actualizar blockers si corresponde (`BLOCKERS.md`)
+4. Actualizar tareas si corresponde (`TASKS.md`)
+5. Actualizar queues si corresponde (`queues/*.md`)
+6. `git add`
+7. `git commit`
+8. `git push`
 
 **Regla:** Ningún hallazgo importante puede quedar únicamente en workspace local.
 

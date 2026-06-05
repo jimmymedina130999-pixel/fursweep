@@ -33,6 +33,8 @@
 | Staff access Keyshiro | 🔴 PENDIENTE — Jimy operó #1007 directamente en CJ UI. Keyshiro aún no puede acceder. | — |
 | Tokens CJ | 🔴 En máquina de Jimy — no compartidos para API programática | — |
 | Netlify | 🔴 Site caído (503 usage_exceeded) — flything-store.netlify.app | — |
+| **npm test** | ✅ **42/42 pass, 6 suites** — red mínima de seguridad técnica implementada | test/validation.mjs |
+| **eBay feed-generator** | 🟡 **Stub NOT IMPLEMENTED** — deuda convertida a stub explícito | ebay/ebay-feed-generator.js |
 
 ## 2. Sistema de Colas
 
@@ -90,6 +92,9 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 | **2026-06-04** | **FO-01 CERRADO** — no es blocker operativo | Orden #1007 |
 | **2026-06-04** | **Costo real FUR-001 conocido**: $2.61 producto + $7.00 shipping = $9.61 | Orden #1007 CJ |
 | **2026-06-04** | **R-004 COMPLETADO** — márgenes reales recalculados, $19.99 pricing recomendado | domains/rentability.md §27 |
+| **2026-06-04** | **Red mínima de seguridad técnica implementada**: npm test (42/42), 6 suites | test/validation.mjs |
+| **2026-06-04** | **Deuda eBay cerrada**: ebay-feed-generator.js convertido a stub NOT IMPLEMENTED | ebay/ebay-feed-generator.js |
+| **2026-06-04** | **Dependencia huérfana puppeteer eliminada** de package.json | package.json |
 | **2026-06-04** | **SKU mapping automático confirmado**: FUR-001 → CJTE269567401AZ (Pet Hair Remover Mitt) | Orden #1007 CJ |
 
 ## 6. Orquestación
@@ -116,3 +121,4 @@ Agentes sin trabajo: Frontend, Tracking (bloqueados por Pixel IDs + imágenes)
 | `queues/*.md` | Tareas detalladas por agente |
 | `agents/*.md` | Perfiles de agentes |
 | `domains/*.md` | Conocimiento técnico por dominio |
+| `test/validation.mjs` | Red mínima de seguridad técnica (6 suites, 42 tests) |
