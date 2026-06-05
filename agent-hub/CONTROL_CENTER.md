@@ -1,7 +1,7 @@
 # CONTROL CENTER — Orquestador Temporal
 
 > **Función:** Orquestación temporal. Gestión de colas. Fuente de verdad global.
-> **Última actualización:** 2026-06-04 (POST-VALIDACIÓN)
+> **Última actualización:** 2026-06-05
 
 ---
 
@@ -16,8 +16,8 @@
 | CJ App token Storefront | ✅ Tokenless cartCreate funcional. No necesita Storefront API token. | API 2026-06-04 |
 | **Shopify → CJ validation** | **✅ COMPLETADO — orden #1007 cruzó exitosamente** checkout → payment capture → CJ auto-import → product mapping → shipping → orders picking → orden interna CJ | Verificación manual 2026-06-04 |
 | Costo real FUR-001 | ✅ CONOCIDO: Producto $2.61, Shipping $7.00, Total $9.61 | Orden #1007 en CJ |
-| Navegación y flujo frontend | ✅ Reparados (add-to-cart, handles, dynamic products, visual) | site/index.html |
-| Addon product pages | ✅ 9 páginas creadas con handles correctos | site/pages/ |
+| Navegación y flujo frontend | ✅ Flything multi-product store con carga dinámica, carrito, skeleton loaders | site/index.html |
+| Addon product pages | 🟡 No incluidas en el nuevo diseño — la tienda multi-producto reemplazó las páginas individuales | commit 5e4f723 |
 | Corner Brush & Lick Mat prices | ✅ $9.99 → $12.99 | API + site/ |
 | CJ API base URL | ✅ `developers.cjdropshipping.com` | API 2026-06-04 |
 | CJ account | 🟡 "CJ Temporary user name" (GENERAL, isSandbox: false). Productos en My Products. Callbacks order=webhook.site/test. | API 2026-06-04 |
@@ -34,7 +34,7 @@
 | Tokens CJ | 🟢 Keyshiro puede extraerlos directamente desde CJ Dashboard → Settings → API. No requiere que Jimy los comparta. | Corrección modelo operativo 2026-06-04 |
 | Netlify | ✅ **Restaurado** — https://flything-shop.netlify.app. Migrado del Netlify de Jimy (usage_exceeded) al Netlify de Keyshiro (cuenta de pago). | netlify deploy + rename 2026-06-04 |
 | Sitio anterior | 🔴 Pausado por usage limits — flything-store.netlify.app. No eliminado, recuperable por Jimy. | — |
-| **npm test** | ✅ **42/42 pass, 6 suites** — red mínima de seguridad técnica implementada | test/validation.mjs |
+| **npm test** | ✅ **45/45 pass, 6 suites** — red mínima de seguridad técnica implementada | test/validation.mjs |
 | **Backup registry** | ✅ Creado — estructura documental para exportaciones Shopify/CJ/Netlify | operations/BACKUPS.md |
 | **Credential inventory** | ✅ Creado — inventario completo sin valores reales, 16 credenciales trackeadas | operations/CREDENTIALS.md |
 | **Continuidad operativa** | ✅ Creado — procedimientos de recuperación para 5 sistemas, SPOFs identificados | operations/CONTINUIDAD.md |
@@ -102,6 +102,7 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 | **2026-06-04** | **SKU mapping automático confirmado**: FUR-001 → CJTE269567401AZ (Pet Hair Remover Mitt) | Orden #1007 CJ |
 | **2026-06-04** | **Corrección modelo operativo**: Keyshiro tiene acceso operativo completo. Propietario nominal de cuenta no implica dependencia. B-02 y B-09 descartados. Jimy no constituye blocker automático. | Corrección modelo 2026-06-04 |
 | **2026-06-04** | **Netlify migrado** — de flything-store.netlify.app (pausado) a https://flything-shop.netlify.app (cuenta de pago de Keyshiro). Incidente B-08 resuelto en 15 min. | netlify deploy --prod --dir=site |
+| **2026-06-05** | **site/index.html reemplazado** — Flything multi-product store con carga dinámica, carrito, skeleton loaders, 45/45 tests. Pendiente: Keyshiro redeploy a Netlify. | commit 5e4f723 |
 
 ## 6. Orquestación
 

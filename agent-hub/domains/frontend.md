@@ -3,7 +3,7 @@
 > **Agente:** Frontend Comercial
 > **Responsabilidad:** landing pages, conversión, UX, copy, precios, variantes, mobile, velocidad, trust signals
 > **Objetivo:** Maximizar conversión de visitantes a compradores
-> **Última actualización:** 2026-06-04
+> **Última actualización:** 2026-06-05
 
 ---
 
@@ -11,10 +11,12 @@
 
 | Archivo | Enfoque | Tracking | Estado |
 |---------|---------|----------|--------|
-| `site/index.html` | Conversión agresiva (countdown, FOMO, exit popup, comparativa, garantía) | TikTok Pixel (placeholder) | 🟡 Fixes aplicados, falta Pixel ID real |
+| `site/index.html` | **Flything multi-product store** — carga dinámica desde Shopify API, carrito sidebar, skeleton loaders, progress bar, urgency bar, scroll-to-top | Sin Pixel (placeholder removido) | 🟢 **NUEVO 2026-06-05** — reemplaza la anterior página de producto individual |
 | `landing-page/index.html` | Informativo / marca (video, descripción) | Facebook Pixel (placeholder) | 🟡 Fixes aplicados, falta Pixel ID real |
 
-**Recomendación:** `site/index.html` como principal (mayor densidad de conversión), `landing-page/index.html` para A/B test en FB/IG.
+**Nota 2026-06-05:** `site/index.html` fue reemplazado completamente por el Flything multi-product store. Ya no es la página del producto FurSweep, sino una tienda completa con todos los productos cargados dinámicamente desde `products.json`. Diseño responsivo, 45/45 tests pass. Pendiente: redeploy a Netlify (Keyshiro).
+
+**Recomendación:** `site/index.html` como principal, `landing-page/index.html` para A/B test en FB/IG.
 
 ---
 
