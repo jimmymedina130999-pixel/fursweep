@@ -30,17 +30,20 @@
 | Inventory en CJ | ✅ Consolidado — 11 productos (~748 uds). Local=0. | API 2026-06-04 |
 | Email marketing | 🟡 Plan documentado (sin configurar) | agent-hub/domains/frontend.md |
 | TikTok/FB Pixel | ❌ Placeholders | T-001 audit |
-| Staff access Keyshiro | 🔴 PENDIENTE — Jimy operó #1007 directamente en CJ UI. Keyshiro aún no puede acceder. | — |
-| Tokens CJ | 🔴 En máquina de Jimy — no compartidos para API programática | — |
-| Netlify | 🔴 Site caído (503 usage_exceeded) — flything-store.netlify.app | — |
+| Staff access Keyshiro | 🟢 Keyshiro tiene acceso operativo completo. Propietario nominal no determina acceso. | Corrección modelo operativo 2026-06-04 |
+| Tokens CJ | 🟢 Keyshiro puede extraerlos directamente desde CJ Dashboard → Settings → API. No requiere que Jimy los comparta. | Corrección modelo operativo 2026-06-04 |
+| Netlify | 🔴 Site caído (503 usage_exceeded) — flything-store.netlify.app. Keyshiro puede resolverlo. | — |
 | **npm test** | ✅ **42/42 pass, 6 suites** — red mínima de seguridad técnica implementada | test/validation.mjs |
+| **Backup registry** | ✅ Creado — estructura documental para exportaciones Shopify/CJ/Netlify | operations/BACKUPS.md |
+| **Credential inventory** | ✅ Creado — inventario completo sin valores reales, 16 credenciales trackeadas | operations/CREDENTIALS.md |
+| **Continuidad operativa** | ✅ Creado — procedimientos de recuperación para 5 sistemas, SPOFs identificados | operations/CONTINUIDAD.md |
 | **eBay feed-generator** | 🟡 **Stub NOT IMPLEMENTED** — deuda convertida a stub explícito | ebay/ebay-feed-generator.js |
 
 ## 2. Sistema de Colas
 
 | Queue | Agente | Estado | Tarea activa |
 |---|---|---|---|
-| `queues/fulfillment.md` | Fulfillment | 🔴 NEEDS_HUMAN | F-002: Pagar $9.61 en CJ → requiere humano en CJ Dashboard |
+| `queues/fulfillment.md` | Fulfillment | 🔴 NEEDS_HUMAN | F-002: Pagar $9.61 en CJ → Keyshiro ejecuta en CJ Dashboard |
 | `queues/frontend-comercial.md` | Frontend | 🟢 IDLE | FE-002 COMPLETED. Sin tareas activas (pendiente Pixel IDs + imágenes) |
 | `queues/rentabilidad.md` | Rentabilidad | 🟢 COMPLETED | R-004 DONE — márgenes recalculados, pricing recomendado ($19.99) |
 | `queues/tracking.md` | Tracking | 🟢 IDLE | T-001 COMPLETED. Sin tareas activas (pendiente Pixel IDs reales) |
@@ -55,15 +58,15 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 
 | # | Bloqueador | Dominio | Dueño |
 |---|---|---|---|
-| **CJ-01** | **Pago CJ pendiente ($9.61)** — orden #1007 lista en CJ, requiere pago para fulfillment real + tracking | Fulfillment | Keyshiro/Jimy |
-| B-02 | **Tokens CJ no compartidos** — para acceso programático API CJ | Fulfillment | Jimy |
-| B-03 | **Costo CJ para otros productos desconocido** — solo se conoce FUR-001 ($2.61+$7.00) | Rentabilidad | Keyshiro (post-B02) |
+| **CJ-01** | **Pago CJ pendiente ($9.61)** — orden #1007 lista en CJ, requiere pago para fulfillment real + tracking. Keyshiro puede pagar directamente. | Fulfillment | Keyshiro |
+| B-03 | **Costo CJ para otros productos desconocido** — solo se conoce FUR-001 ($2.61+$7.00). Keyshiro puede obtener tokens desde CJ Dashboard → API. | Rentabilidad | Keyshiro |
 | B-04 | **TikTok Pixel ID placeholder** | Tracking | Keyshiro |
 | B-05 | **Facebook Pixel ID placeholder** | Tracking | Keyshiro |
-| B-06 | **Imágenes placeholder** | Frontend | Jimy + Keyshiro |
+| B-06 | **Imágenes placeholder** | Frontend | Keyshiro |
 | B-07 | **Sin dominio personalizado** | Frontend | Keyshiro |
-| B-08 | **Netlify 503 usage_exceeded** — site caído | Infra | Jimy |
-| B-09 | **Staff access Keyshiro no otorgado** | Shopify | Jimy |
+| B-08 | **Netlify 503 usage_exceeded** — site caído | Infra | Keyshiro |
+
+> **Corrección 2026-06-04:** B-02 (tokens CJ) y B-09 (staff access) eliminados de blockers activos. Keyshiro tiene acceso operativo directo a todas las plataformas. Propietario nominal de cuenta no determina acceso operativo. Ver D9/D10 en BLOCKERS.md.
 
 ## 5. Decisiones Vigentes
 
@@ -96,6 +99,7 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 | **2026-06-04** | **Deuda eBay cerrada**: ebay-feed-generator.js convertido a stub NOT IMPLEMENTED | ebay/ebay-feed-generator.js |
 | **2026-06-04** | **Dependencia huérfana puppeteer eliminada** de package.json | package.json |
 | **2026-06-04** | **SKU mapping automático confirmado**: FUR-001 → CJTE269567401AZ (Pet Hair Remover Mitt) | Orden #1007 CJ |
+| **2026-06-04** | **Corrección modelo operativo**: Keyshiro tiene acceso operativo completo. Propietario nominal de cuenta no implica dependencia. B-02 y B-09 descartados. Jimy no constituye blocker automático. | Corrección modelo 2026-06-04 |
 
 ## 6. Orquestación
 
@@ -103,7 +107,7 @@ El eslabón faltante previamente (FulfillmentOrders) resultó no ser necesario. 
 Estado:          POST-VALIDACIÓN — Shopify→CJ funciona. Siguiente: pago CJ + tracking.
 Sistema:         Auto-run por cola de tareas
 Agentes:         4 (Fulfillment, Frontend, Rentabilidad, Tracking)
-Tarea activa:    F-002: Pagar $9.61 en CJ → requiere humano en CJ Dashboard
+Tarea activa:    F-002: Pagar $9.61 en CJ → Keyshiro ejecuta en CJ Dashboard
  Hipótesis refutadas: 8 (7 previas + H-A2 fulfillment_service)
 Agentes con trabajo: Fulfillment (F-002 NEEDS_HUMAN)
 Agentes completados: Rentabilidad (R-004 DONE — márgenes reales + pricing $19.99)
@@ -122,3 +126,6 @@ Agentes sin trabajo: Frontend, Tracking (bloqueados por Pixel IDs + imágenes)
 | `agents/*.md` | Perfiles de agentes |
 | `domains/*.md` | Conocimiento técnico por dominio |
 | `test/validation.mjs` | Red mínima de seguridad técnica (6 suites, 42 tests) |
+| `operations/BACKUPS.md` | Registro de respaldos de plataforma |
+| `operations/CREDENTIALS.md` | Inventario de credenciales (sin valores reales) |
+| `operations/CONTINUIDAD.md` | Procedimientos de recuperación y SPOFs |

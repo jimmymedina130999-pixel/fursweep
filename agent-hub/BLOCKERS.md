@@ -11,20 +11,18 @@
 
 | # | Bloqueador | Dominio | Dueño | Impide | Próxima acción |
 |---|---|---|---|---|---|
-| CJ-01 | **Pago CJ pendiente ($9.61)** — Orden #1007 lista en CJ. Producto $2.61 + Shipping $7.00 = $9.61. CJ Wallet $0.00. Requiere pago para fulfillment real. | Fulfillment | Keyshiro/Jimy | Confirmar tracking regresa a Shopify | Pagar $9.61 vía CJ Wallet/PayPal/Card/Klarna |
-| B-02 | **Tokens CJ no compartidos** — CJ_API_KEY, CJ_ACCESS_TOKEN, CJ_REFRESH_TOKEN en máquina de Jimy | Fulfillment | Jimy | Verificar costos CJ para otros productos, acceso programático API | Jimy comparte desde CJ Settings → API |
-| B-03 | **Costos CJ para otros productos desconocidos** — solo se conoce FUR-001 ($2.61+$7.00) | Rentabilidad | Keyshiro (post-B02) | Validar margen de toda la línea de productos | Ejecutar curl getProductList con CJ Access Token |
+| CJ-01 | **Pago CJ pendiente ($9.61)** — Orden #1007 lista en CJ. Producto $2.61 + Shipping $7.00 = $9.61. CJ Wallet $0.00. Requiere pago para fulfillment real. | Fulfillment | Keyshiro | Confirmar tracking regresa a Shopify | Pagar $9.61 vía CJ Wallet/PayPal/Card/Klarna |
+| B-03 | **Costos CJ para otros productos desconocidos** — solo se conoce FUR-001 ($2.61+$7.00). CJ access programático disponible desde CJ Dashboard → API Settings. | Rentabilidad | Keyshiro | Validar margen de toda la línea de productos | Extraer CJ tokens de CJ Dashboard → API → ejecutar curl getProductList |
 
 ### 🟡 ALTO — Sin esto no hay operación segura ni tracking
 
 | # | Bloqueador | Dominio | Dueño | Impide | Próxima acción |
-|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|
 | B-04 | **TikTok Pixel ID no configurado** — placeholder en site/index.html:29 | Tracking | Keyshiro | Tracking de ads TikTok | Obtener ID de ads.tiktok.com → reemplazar en HTML |
 | B-05 | **Facebook Pixel ID no configurado** — placeholder vacío en landing-page/index.html:19 | Tracking | Keyshiro | Tracking de ads Facebook/IG | Obtener ID de business.facebook.com → reemplazar en HTML |
-| B-06 | **Imágenes placeholder (placehold.co)** en ambas landing pages | Frontend | Jimy + Keyshiro | Mala primera impresión, baja conversión | Jimy pushea 36 fotos reales → Keyshiro actualiza HTML |
+| B-06 | **Imágenes placeholder (placehold.co)** en ambas landing pages | Frontend | Keyshiro | Mala primera impresión, baja conversión | Pushear 36 fotos reales desde disco local → actualizar HTML |
 | B-07 | **Sin dominio personalizado** | Frontend | Keyshiro | URL profesional | Configurar dominio |
-| B-08 | **Netlify 503 usage_exceeded** — flything-store.netlify.app caído | Infra | Jimy | Site no accesible | Migrar hosting o hacer upgrade |
-| B-09 | **Staff access Keyshiro no otorgado** — Keyshiro no puede operar Shopify Admin | Shopify | Jimy | Keyshiro no puede diagnosticar ni operar Admin | Jimy otorga staff access desde Settings → Users |
+| B-08 | **Netlify 503 usage_exceeded** — flything-store.netlify.app caído | Infra | Keyshiro | Site no accesible | Ingresar a Netlify → hacer upgrade o migrar hosting |
 
 ---
 
@@ -34,7 +32,7 @@
 |---|---|---|---|---|
 | FO-01 | **FulfillmentOrders no generadas** — 7 hipótesis refutadas. Se pensaba necesario para CJ. | Fulfillment | ✅ 2026-06-04 | **CERRADO.** Order #1007 validó que CJ procesa sin FOs visibles. No es blocker. |
 | H-A2 | **Variant fulfillment_service debe ser CJ** — hipótesis refutada por validación empírica | Fulfillment | ✅ 2026-06-04 | **REFUTADA.** #1007 completó flujo completo con fulfillment_service=manual. |
-| B-01 | Staff access Keyshiro | Shopify | ✅ 2026-06-04 | **RECLASIFICADO a B-09.** Jimy operó CJ UI directamente. Keyshiro aún lo necesita para Admin. |
+| B-01 | Staff access Keyshiro | Shopify | ✅ 2026-06-04 | **CERRADO.** Keyshiro tiene acceso operativo completo. Propietario nominal de la cuenta no determina acceso operativo. |
 | R1 | Token Shopify sin scopes | Shopify | ✅ 2026-06-02 | Nueva app Dev Dashboard |
 | R2-R6 | Varios bugs frontend | Frontend | ✅ 2026-06-02 | Corregidos |
 | R7 | Landing canónica indefinida | Frontend | ✅ 2026-06-03 | FE-001 decidió site/index.html |
@@ -62,3 +60,5 @@
 | D6 | "Falta package.json" | ❌ Falso. Proyecto funciona sin él. | ROOT_PACKAGE_PROPOSAL.md |
 | D7 | **"fulfillment_service debe ser CJ"** (H-A2) | ❌ **REFUTADA.** Flujo funciona con manual. | Orden #1007 |
 | D8 | **"FO-01 bloquea fulfillment"** | ❌ **CERRADO.** CJ procesa sin FOs. | Orden #1007 |
+| D9 | **B-09: "Keyshiro necesita staff access Shopify"** | ❌ **DESCARTADO.** Keyshiro tiene acceso operativo completo a Shopify. Propietario de cuenta no determina acceso. | Corrección modelo operativo 2026-06-04 |
+| D10 | **B-02: "Jimy debe compartir tokens CJ"** | ❌ **DESCARTADO.** Keyshiro puede extraer tokens directamente desde CJ Dashboard → Settings → API. No depende de Jimy. | Corrección modelo operativo 2026-06-04 |

@@ -78,6 +78,7 @@ Cada agente especializado tiene un archivo en `agent-hub/queues/`:
 3. No crear reportes sueltos — todo se integra en dominios, agents o queues.
 4. Toda decisión estratégica se registra en `CONTROL_CENTER.md` sección Decisiones.
 5. Si una tarea ya fue resuelta, descartada o refutada — no volver a investigarla.
+6. **No asumir dependencia operativa de Jimy.** Verificar acceso real de Keyshiro primero. Propietario nominal de una cuenta no implica dependencia operativa. Si Keyshiro puede ejecutar la acción directamente, no existe blocker por "falta de Jimy".
 
 ## 6. Session Lifecycle
 

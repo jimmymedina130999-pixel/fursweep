@@ -49,10 +49,10 @@ Cuándo pedir intervención humana:
 ## RESULT
 
 Estado: NEEDS_HUMAN (pago $9.61 pendiente en CJ Dashboard)
-Resumen: F-002 READY pero requiere humano. Order #1007: fulfillment_status=null, 0 fulfillments. CJ no ha recibido pago. Sin acceso a CJ Dashboard no puedo pagar. Se necesita Keyshiro/Jimy para completar el ciclo.
+Resumen: F-002 READY pero requiere humano en CJ Dashboard UI. Order #1007: fulfillment_status=null, 0 fulfillments. CJ no ha recibido pago. Keyshiro puede ejecutar el pago directamente desde CJ Dashboard.
 Archivos modificados: agent-hub/queues/fulfillment.md
 Blockers: CJ-01 ($9.61 pendiente en CJ)
-Siguiente acción: Keyshiro/Jimy ingresa a CJ Dashboard → Orders → Orders Picking → orden CJ26060454715313361401 → Submit → Pay $9.61
+Siguiente acción: Keyshiro ingresa a CJ Dashboard → Orders → Orders Picking → orden CJ26060454715313361401 → Submit → Pay $9.61
 
 ---
 

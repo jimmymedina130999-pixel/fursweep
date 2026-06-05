@@ -9,9 +9,9 @@
 
 | ID | Tarea | Estado | Queue |
 |---|---|---|---|
-| F-002 | Completar ciclo: pagar $9.61 en CJ → verificar processing → tracking → Shopify fulfillment update | 🔴 NEEDS_HUMAN | `queues/fulfillment.md` |
+| F-002 | Completar ciclo: pagar $9.61 en CJ (Keyshiro vía CJ Dashboard) → verificar processing → tracking → Shopify fulfillment update | 🔴 NEEDS_HUMAN | `queues/fulfillment.md` |
 
-**Dependencias:** Fondos en CJ Wallet o método de pago (PayPal/Card/Klarna). Keyshiro/Jimy ejecuta pago.
+**Dependencias:** Fondos en CJ Wallet o método de pago (PayPal/Card/Klarna). Keyshiro ejecuta pago directamente en CJ Dashboard.
 
 **Tareas obsoletas eliminadas:** F-001 (H-A2 refutada, fulfillment_service no necesario), F-001a (H-A1), F-001b (staff access), F-001c (inventario consolidado).
 
@@ -24,7 +24,7 @@
 | FE-003 | Verificar que prueba H-A1 no afecte storefront | 🟢 COMPLETADA | `queues/frontend-comercial.md` |
 | FE-004 a FE-008 | Varias mejoras frontend | 🟢 COMPLETADAS | — |
 
-**Estado actual:** Sin tareas activas. Bloqueado por B-04 (Pixel ID), B-05 (Pixel ID), B-06 (imágenes), B-08 (Netlify).
+**Estado actual:** Sin tareas activas. Pendiente: B-04 (Pixel ID), B-05 (Pixel ID), B-06 (imágenes), B-08 (Netlify).
 
 ## Rentabilidad
 
@@ -53,12 +53,12 @@
 
 ## Próximas tareas recomendadas (sin asignar aún)
 
-| # | Tarea | Dependencia | Prioridad |
-|---|---|---|---|
-| 1 | Pagar $9.61 en CJ → verificar tracking → Shopify fulfillment update | CJ-01 | CRÍTICA |
-| 2 | Obtener CJ tokens de Jimy (B-02) | Jimy | ALTA |
+| # | Tarea | Ejecuta | Prioridad |
+|---|---|---|---|---|
+| 1 | Pagar $9.61 en CJ → verificar tracking → Shopify fulfillment update | Keyshiro | CRÍTICA |
+| 2 | Extraer CJ tokens desde CJ Dashboard → API Settings | Keyshiro | ALTA |
 | 3 | Obtener Pixel IDs (B-04, B-05) | Keyshiro | MEDIA |
-| 4 | Resolver Netlify 503 (B-08) | Jimy | ALTA |
+| 4 | Resolver Netlify 503 (B-08) | Keyshiro | ALTA |
 
 ## Completadas (histórico)
 
