@@ -91,7 +91,7 @@
 |---|----------|---------|---------|----------|-----------|
 | B-07 | TikTok Pixel ID placeholder | `site/index.html:29` | Cero tracking | Pixel ID de ads.tiktok.com | 🔴 Crítico |
 | B-08 | Facebook Pixel ID vacío | `landing-page/index.html:19` | Cero tracking | Pixel ID de business.facebook.com | 🔴 Crítico |
-| B-11 | Imágenes placeholder | Ambos | Mala primera impresión | Jimy pushea 36 imágenes | 🟡 Alto |
+| B-11 | Imágenes placeholder | `site/index.html` (12 reemplazados 2026-06-05) | Mala primera impresión | ✅ **CODE COMPLETE** — commit `f498a1f`. Pendiente deploy. | 🟡 Alto |
 | B-10 | Product handle incorrecto (`fursweep-pro` → `fursweep-quitapelos-mascotas`) | Ambos | Fallback URLs + OG tags rotos | Cambiar CONFIG.productHandle en ambas pages | 🟡 Medio |
 | — | Sin landing canónica | — | Tráfico dividido, sin foco | Decisión Keyshiro + Jimy | 🟡 Alto |
 | — | Sin dominio personalizado | — | URL larga, poca confianza | Configurar DNS | 🟡 Alto |

@@ -20,7 +20,7 @@
 |---|---|---|---|---|---|---|
 | B-04 | **TikTok Pixel ID no configurado** — placeholder en site/index.html:29 | Tracking | Keyshiro | Tracking de ads TikTok | Obtener ID de ads.tiktok.com → reemplazar en HTML |
 | B-05 | **Facebook Pixel ID no configurado** — placeholder vacío en landing-page/index.html:19 | Tracking | Keyshiro | Tracking de ads Facebook/IG | Obtener ID de business.facebook.com → reemplazar en HTML |
-| B-06 | **Imágenes placeholder (placehold.co)** en ambas landing pages | Frontend | Keyshiro | Mala primera impresión, baja conversión | Pushear 36 fotos reales desde disco local → actualizar HTML |
+| B-06 | **Imágenes placeholder (placehold.co)** en `site/index.html` | Frontend | Keyshiro | Mala primera impresión, baja conversión | ✅ **CODE COMPLETE (2026-06-05)** — 12 placeholders reemplazados con imágenes reales de `images/products/fursweep/`. Commit `f498a1f`. **Pendiente:** deploy a Netlify (requiere Keyshiro's Netlify token). |
 | B-07 | **Sin dominio personalizado** | Frontend | Keyshiro | URL profesional | Configurar dominio |
 
 ---

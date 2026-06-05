@@ -24,7 +24,7 @@
 | FE-003 | Verificar que prueba H-A1 no afecte storefront | 🟢 COMPLETADA | `queues/frontend-comercial.md` |
 | FE-004 a FE-008 | Varias mejoras frontend | 🟢 COMPLETADAS | — |
 
-**Estado actual:** Sin tareas activas. Pendiente: B-04 (Pixel ID), B-05 (Pixel ID), B-06 (imágenes), B-08 (Netlify).
+**Estado actual:** Sin tareas activas. Pendiente: B-04 (Pixel ID), B-05 (Pixel ID), B-08 (Netlify). **B-06 (imágenes) code complete 2026-06-05** — placeholders reemplazados en `site/index.html`, commit `f498a1f`. Pendiente deploy (Keyshiro's Netlify token).
 
 ## Rentabilidad
 
