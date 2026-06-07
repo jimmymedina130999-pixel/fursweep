@@ -1027,7 +1027,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
         }
         var html = '';
         products.forEach(function(p) {
-          var img = (p.images && p.images[0]) ? p.images[0].src : '';
+          var img = (p.images && p.images[0]) ? p.images[0].src : ('images/products/' + p.handle + '/grooming-1.jpg');
           var v = (p.variants && p.variants[0]) || {};
           var price = v.price || '0';
           var vid = v.id || '';
