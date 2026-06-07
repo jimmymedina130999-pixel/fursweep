@@ -1020,7 +1020,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
     fetch(STORE_DOMAIN + '/products.json?limit=20&published_status=active')
       .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function(data) {
-        var products = (data.products || []).filter(function(p) { return p.handle !== 'test'; });
+        var products = (data.products || []).filter(function(p) { return p.handle !== 'test' && p.handle !== 'flything-pet-brush'; });
         if (!products.length) {
           grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text2);font-size:15px;">🐾 No products found — check back soon!</div>';
           return;
