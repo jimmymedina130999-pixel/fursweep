@@ -6,13 +6,13 @@
   <title>Flything — Happy Pets, Clean Homes</title>
   <meta property="og:title" content="Flything — Happy Pets, Clean Homes" />
   <meta property="og:description" content="Premium pet care products that remove hair instantly." />
-  <meta property="og:image" content="images/products/fursweep/fursweep-1.jpg" />
+  <meta property="og:image" content="https://cdn.shopify.com/s/files/1/1020/0547/3648/files/brush-1.jpg?v=1780345178" />
   <meta property="og:url" content="https://yf2yyf-bz.myshopify.com" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Flything — Happy Pets, Clean Homes" />
   <meta name="twitter:description" content="Premium pet care products that remove hair instantly." />
-  <meta name="twitter:image" content="images/products/fursweep/fursweep-1.jpg" />
+  <meta name="twitter:image" content="https://cdn.shopify.com/s/files/1/1020/0547/3648/files/brush-1.jpg?v=1780345178" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -40,7 +40,7 @@
       { "@type": "Offer", "name": "FurSweep™ 3 Pack", "price": "34.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "sku": "FUR-003", "url": "https://yf2yyf-bz.myshopify.com/products/fursweep-quitapelos-mascotas" }
     ],
     "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "12384" },
-    "image": "images/products/fursweep/fursweep-1.jpg"
+    "image": "https://cdn.shopify.com/s/files/1/1020/0547/3648/files/brush-1.jpg?v=1780345178"
   }
   </script>
   <style>
@@ -175,8 +175,11 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 .hero-visual { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; padding: 48px; }
 .hero-image-frame { position: relative; max-width: 520px; width: 100%; }
-.hero-img { width: 100%; border-radius: var(--radius); box-shadow: 0 24px 80px rgba(0,0,0,0.4); transform: perspective(1200px) rotateY(-6deg) scale(0.95); transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1); }
-.hero-image-frame:hover .hero-img { transform: perspective(1200px) rotateY(-2deg) scale(1); }
+.hero-img { width: 100%; aspect-ratio: 1/1.1; border-radius: var(--radius); box-shadow: 0 24px 80px rgba(0,0,0,0.4); transform: perspective(1200px) rotateY(-6deg) scale(0.95); transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1); overflow: hidden; position: relative; background: linear-gradient(135deg, #2d2d4e, #1a1a2e); display: flex; align-items: center; justify-content: center; }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+.hero-image-frame:hover .hero-img img { transform: scale(1.05); }
+.hero-img-placeholder { font-size: 80px; opacity: 0.15; animation: heroPulse 2s ease-in-out infinite; }
+@keyframes heroPulse { 0%,100%{transform:scale(1);opacity:0.15} 50%{transform:scale(1.1);opacity:0.25} }
 .hero-float {
   position: absolute; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px);
   border-radius: var(--radius-sm); padding: 12px 18px; display: flex; align-items: center; gap: 10px;
@@ -263,7 +266,10 @@ section { padding: 100px 0; }
 .compare-label { padding: 16px 20px; font-size: 14px; font-weight: 700; text-align: center; }
 .compare-card.bad .compare-label { background: linear-gradient(135deg, #FFE8E8, #FFD5D5); color: #E74C3C; }
 .compare-card.good .compare-label { background: linear-gradient(135deg, var(--success-light), #C8F7E0); color: #00856A; }
-.compare-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.compare-card .compare-img { width: 100%; aspect-ratio: 4/3; background: var(--bg); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.compare-card .compare-img img { width: 100%; height: 100%; object-fit: cover; }
+.compare-img-placeholder { font-size: 52px; opacity: 0.2; }
+.compare-card.good .compare-img-placeholder { opacity: 0.15; }
 .compare-card ul { padding: 20px; list-style: none; }
 .compare-card li { font-size: 13px; color: var(--text2); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
 .compare-card li:last-child { border-bottom: none; }
@@ -555,7 +561,9 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   </div>
   <div class="hero-visual">
     <div class="hero-image-frame">
-      <img src="images/products/fursweep/fursweep-1.jpg" alt="FurSweep product" class="hero-img" id="heroImg" />
+      <div class="hero-img" id="heroContainer">
+        <div class="hero-img-placeholder">🐾</div>
+      </div>
       <div class="hero-float n1"><span>🧹</span> One Pass — All Gone</div>
       <div class="hero-float n2"><span>♻️</span> Reusable — Years</div>
     </div>
@@ -677,7 +685,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
     <div class="compare-grid">
       <div class="compare-card bad">
         <div class="compare-label">😫 Without Flything</div>
-        <img src="images/products/fursweep/fursweep-3.jpg" alt="Before" loading="lazy" onerror="this.alt='Image unavailable'" />
+        <div class="compare-img" id="compareBefore"><div class="compare-img-placeholder">🧻</div></div>
         <ul>
           <li><span>🧻</span> Disposable rollers that waste money</li>
           <li><span>⏱️</span> 20+ minutes cleaning every day</li>
@@ -688,7 +696,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
       <div class="compare-vs">VS</div>
       <div class="compare-card good">
         <div class="compare-label">✨ With Flything</div>
-        <img src="images/products/fursweep/fursweep-2.jpg" alt="After" loading="lazy" onerror="this.alt='Image unavailable'" />
+        <div class="compare-img" id="compareAfter"><div class="compare-img-placeholder">✨</div></div>
         <ul>
           <li><span>♻️</span> Reusable — lasts for years</li>
           <li><span>⚡</span> One pass, 5 seconds — all gone</li>
@@ -1055,10 +1063,20 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
         });
         grid.innerHTML = html;
 
-        var firstImg = products[0] && products[0].images && products[0].images[0] && products[0].images[0].src;
-        if (firstImg) {
-          var heroImg = document.getElementById('heroImg');
-          if (heroImg) heroImg.src = firstImg;
+        var productImgs = products.filter(function(p) { return p.images && p.images.length > 0; }).map(function(p) { return p.images[0].src; });
+        if (productImgs.length > 0) {
+          var heroContainer = document.getElementById('heroContainer');
+          if (heroContainer) {
+            heroContainer.innerHTML = '<img src="' + productImgs[0] + '" alt="Featured product" loading="lazy" />';
+          }
+          var compareBefore = document.getElementById('compareBefore');
+          if (compareBefore && productImgs.length > 1) {
+            compareBefore.innerHTML = '<img src="' + productImgs[1] + '" alt="Before" loading="lazy" />';
+          }
+          var compareAfter = document.getElementById('compareAfter');
+          if (compareAfter) {
+            compareAfter.innerHTML = '<img src="' + productImgs[0] + '" alt="After" loading="lazy" />';
+          }
         }
       })
       .catch(function(err) {
